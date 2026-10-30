@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { fetchLiveFeed } from "@/lib/liveFeed";
+import { getLiveFeedSnapshot } from "@/lib/liveFeed";
 
 export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    const feed = await fetchLiveFeed();
+    const feed = await getLiveFeedSnapshot();
     return NextResponse.json(feed, {
       headers: {
         "Cache-Control": "no-store, max-age=0",
