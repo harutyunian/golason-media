@@ -3,94 +3,54 @@
 import { useEffect } from "react";
 import type { ThemeMode } from "@/lib/theme";
 
-const ORIG_BG_ATTR = "data-orig-bg";
-const ORIG_BG_IMG_ATTR = "data-orig-bg-img";
-const ORIG_COLOR_ATTR = "data-orig-color";
-const ORIG_BORDER_ATTR = "data-orig-border";
-const ORIG_SHADOW_ATTR = "data-orig-shadow";
+const ORIG_STYLE_ATTR = "data-orig-inline-style";
 
-function isDarkNavyColor(val: string): boolean {
-  const v = val.replace(/\s+/g, "").toLowerCase();
-  if (
-    v.includes("rgb(9,19,36") ||
-    v.includes("rgba(9,19,36") ||
-    v.includes("rgb(6,13,26") ||
-    v.includes("rgb(5,11,20") ||
-    v.includes("rgb(7,16,30") ||
-    v.includes("rgb(11,21,40") ||
-    v.includes("rgb(11,23,42") ||
-    v.includes("rgb(13,27,50") ||
-    v.includes("rgb(14,30,56") ||
-    v.includes("rgb(15,29,54") ||
-    v.includes("rgba(15,29,54") ||
-    v.includes("rgba(11,21,40") ||
-    v.includes("rgba(13,27,50") ||
-    v.includes("rgba(14,34,58") ||
-    v.includes("rgb(16,35,66") ||
-    v.includes("rgb(17,34,64") ||
-    v.includes("rgb(20,38,70") ||
-    v.includes("#091324") ||
-    v.includes("#060d1a") ||
-    v.includes("#0b1528") ||
-    v.includes("#0b172a") ||
-    v.includes("#0d1b32") ||
-    v.includes("#0f1d36") ||
-    v.includes("#112240")
-  ) {
-    return true;
-  }
-  return false;
-}
-
-function isLightWhiteText(val: string): boolean {
-  const v = val.replace(/\s+/g, "").toLowerCase();
-  return (
-    v === "rgb(255,255,255)" ||
-    v === "rgb(248,250,252)" ||
-    v === "rgb(241,245,249)" ||
-    v === "rgb(226,232,240)" ||
-    v === "rgb(203,213,225)" ||
-    v === "#ffffff" ||
-    v === "#fff" ||
-    v === "#f8fafc" ||
-    v === "#f1f5f9" ||
-    v === "#e2e8f0" ||
-    v === "#cbd5e1"
+function parseRgb(colorStr: string): [number, number, number, number] | null {
+  const m = colorStr.match(
+    /rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)(?:\s*,\s*([\d.]+))?\s*\)/i
   );
+  if (!m) return null;
+  return [
+    parseInt(m[1], 10),
+    parseInt(m[2], 10),
+    parseInt(m[3], 10),
+    m[4] !== undefined ? parseFloat(m[4]) : 1,
+  ];
 }
 
-function isMutedSlateText(val: string): boolean {
-  const v = val.replace(/\s+/g, "").toLowerCase();
+function isDarkSurfaceRgb(r: number, g: number, b: number, a: number): boolean {
+  if (a < 0.15) return false;
+  const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return lum < 55 && b >= r;
+}
+
+function isLightTextRgb(r: number, g: number, b: number): boolean {
+  const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return lum > 175;
+}
+
+function isDarkGradientString(bgImg: string): boolean {
+  if (!bgImg || bgImg === "none") return false;
+  const low = bgImg.replace(/\s+/g, "").toLowerCase();
   return (
-    v === "rgb(148,163,184)" ||
-    v === "#94a3b8" ||
-    v.includes("rgba(255,255,255,0.7") ||
-    v.includes("rgba(255,255,255,0.6") ||
-    v.includes("rgba(248,250,252,0.7")
+    low.includes("rgb(6,11,20") ||
+    low.includes("rgb(9,19,36") ||
+    low.includes("rgba(9,19,36") ||
+    low.includes("rgb(11,21,40") ||
+    low.includes("rgba(11,21,40") ||
+    low.includes("rgb(13,27,50") ||
+    low.includes("rgba(13,27,50") ||
+    low.includes("rgb(15,29,54") ||
+    low.includes("rgba(15,29,54") ||
+    low.includes("rgb(16,35,66") ||
+    low.includes("rgb(10,20,38") ||
+    low.includes("rgb(7,14,26") ||
+    low.includes("#060b14") ||
+    low.includes("#091324") ||
+    low.includes("#0b1528") ||
+    low.includes("#0d1b32") ||
+    low.includes("#0f1d36")
   );
-}
-
-function isVibrantBadgeOrPitch(el: HTMLElement): boolean {
-  if (el.closest("[data-keep-dark='true']")) return true;
-  const bg = (el.style.background || el.style.backgroundColor || el.style.backgroundImage || "")
-    .replace(/\s+/g, "")
-    .toLowerCase();
-  // Keep orange/gold/blue/green/red pills and dark green/charcoal pitch turf untouched
-  if (
-    bg.includes("255,98,0") ||
-    bg.includes("255,87,34") ||
-    bg.includes("34,158,217") ||
-    bg.includes("34,197,94") ||
-    bg.includes("22,163,74") ||
-    bg.includes("239,68,68") ||
-    bg.includes("220,38,38") ||
-    bg.includes("2,132,199") ||
-    bg.includes("34,36,40") ||
-    bg.includes("#222428")
-  ) {
-    return true;
-  }
-  return false;
 }
 
 export function LightThemeAdapter({ theme }: { theme: ThemeMode }) {
@@ -103,102 +63,113 @@ export function LightThemeAdapter({ theme }: { theme: ThemeMode }) {
 
       if (theme === "dark") {
         allElements.forEach((el) => {
-          if (el.hasAttribute(ORIG_BG_ATTR)) {
-            el.style.backgroundColor = el.getAttribute(ORIG_BG_ATTR) || "";
-            el.removeAttribute(ORIG_BG_ATTR);
-          }
-          if (el.hasAttribute(ORIG_BG_IMG_ATTR)) {
-            el.style.backgroundImage = el.getAttribute(ORIG_BG_IMG_ATTR) || "";
-            el.removeAttribute(ORIG_BG_IMG_ATTR);
-          }
-          if (el.hasAttribute(ORIG_COLOR_ATTR)) {
-            el.style.color = el.getAttribute(ORIG_COLOR_ATTR) || "";
-            el.removeAttribute(ORIG_COLOR_ATTR);
-          }
-          if (el.hasAttribute(ORIG_BORDER_ATTR)) {
-            el.style.borderColor = el.getAttribute(ORIG_BORDER_ATTR) || "";
-            el.removeAttribute(ORIG_BORDER_ATTR);
-          }
-          if (el.hasAttribute(ORIG_SHADOW_ATTR)) {
-            el.style.boxShadow = el.getAttribute(ORIG_SHADOW_ATTR) || "";
-            el.removeAttribute(ORIG_SHADOW_ATTR);
+          if (el.hasAttribute(ORIG_STYLE_ATTR)) {
+            const orig = el.getAttribute(ORIG_STYLE_ATTR) || "";
+            el.setAttribute("style", orig);
+            el.removeAttribute(ORIG_STYLE_ATTR);
           }
         });
         return;
       }
 
-      // Light mode adaptation
+      // Light Mode transformation
       allElements.forEach((el) => {
-        if (isVibrantBadgeOrPitch(el)) return;
+        if (el.closest("[data-keep-dark='true']")) return;
+        const tag = el.tagName.toLowerCase();
+        if (
+          tag === "svg" ||
+          tag === "path" ||
+          tag === "circle" ||
+          tag === "rect" ||
+          tag === "line" ||
+          tag === "script" ||
+          tag === "style"
+        ) {
+          return;
+        }
 
-        const inlineBg = el.style.backgroundColor;
-        const inlineBgImg = el.style.backgroundImage;
-        const inlineColor = el.style.color;
+        if (!el.hasAttribute(ORIG_STYLE_ATTR)) {
+          el.setAttribute(ORIG_STYLE_ATTR, el.getAttribute("style") || "");
+        }
 
-        if (inlineBg && isDarkNavyColor(inlineBg)) {
-          if (!el.hasAttribute(ORIG_BG_ATTR)) {
-            el.setAttribute(ORIG_BG_ATTR, inlineBg);
-          }
+        const cs = window.getComputedStyle(el);
+
+        // 1. Handle gradient-clipped text (e.g. white gradient headings)
+        const webkitClip =
+          (el.style as unknown as Record<string, string>).webkitBackgroundClip ||
+          cs.getPropertyValue("-webkit-background-clip");
+        if (webkitClip === "text") {
+          (el.style as unknown as Record<string, string>).webkitBackgroundClip =
+            "initial";
+          (el.style as unknown as Record<string, string>).webkitTextFillColor =
+            "#0F172A";
+          el.style.backgroundImage = "none";
+          el.style.color = "#0F172A";
+          return;
+        }
+
+        // 2. Check if element is a vibrant orange/blue/green/red button or badge
+        const bgRgb = parseRgb(cs.backgroundColor);
+        const bgImg = cs.backgroundImage;
+        const isVibrantBg =
+          (bgRgb &&
+            bgRgb[3] > 0.4 &&
+            ((bgRgb[0] > 180 && bgRgb[1] < 150) ||
+              (bgRgb[1] > 140 && bgRgb[0] < 80) ||
+              (bgRgb[2] > 180 && bgRgb[0] < 60))) ||
+          bgImg.includes("255, 98, 0") ||
+          bgImg.includes("255, 87, 34") ||
+          bgImg.includes("34, 158, 217");
+
+        if (isVibrantBg) {
+          return;
+        }
+
+        // 3. Transform dark background colors and dark gradients to clean White / Slate surfaces
+        let surfaceFlipped = false;
+        if (isDarkGradientString(bgImg)) {
+          el.style.backgroundImage = "none";
           el.style.backgroundColor = "#FFFFFF";
-          if (!el.hasAttribute(ORIG_SHADOW_ATTR)) {
-            el.setAttribute(ORIG_SHADOW_ATTR, el.style.boxShadow || "");
+          el.style.borderColor = "#E2E8F0";
+          el.style.boxShadow = "0 4px 18px rgba(15, 23, 42, 0.06)";
+          surfaceFlipped = true;
+        } else if (
+          bgRgb &&
+          isDarkSurfaceRgb(bgRgb[0], bgRgb[1], bgRgb[2], bgRgb[3])
+        ) {
+          const isInputOrPill =
+            tag === "input" ||
+            tag === "button" ||
+            tag === "select" ||
+            el.clientHeight < 52;
+          el.style.backgroundColor = isInputOrPill ? "#F1F5F9" : "#FFFFFF";
+          el.style.borderColor = "#CBD5E1";
+          if (!isInputOrPill) {
+            el.style.boxShadow = "0 4px 16px rgba(15, 23, 42, 0.05)";
           }
-          el.style.boxShadow = "0 6px 20px rgba(15, 23, 42, 0.06)";
+          surfaceFlipped = true;
         }
 
-        if (inlineBgImg && isDarkNavyColor(inlineBgImg)) {
-          if (!el.hasAttribute(ORIG_BG_IMG_ATTR)) {
-            el.setAttribute(ORIG_BG_IMG_ATTR, inlineBgImg);
-          }
-          el.style.backgroundImage =
-            "linear-gradient(135deg, #FFFFFF 0%, #F8FAFC 60%, #FFF7ED 100%)";
-          if (!el.hasAttribute(ORIG_SHADOW_ATTR)) {
-            el.setAttribute(ORIG_SHADOW_ATTR, el.style.boxShadow || "");
-          }
-          el.style.boxShadow = "0 8px 24px rgba(15, 23, 42, 0.07)";
-        }
-
-        if (inlineColor) {
-          if (isLightWhiteText(inlineColor)) {
-            // Only flip white text to dark navy if the element is not inside a vibrant button/pill
-            const parentBg = (
-              el.parentElement?.style.backgroundColor ||
-              el.parentElement?.style.background ||
-              ""
-            )
-              .replace(/\s+/g, "")
-              .toLowerCase();
-            const onVibrantParent =
-              parentBg.includes("255,98,0") ||
-              parentBg.includes("34,158,217") ||
-              parentBg.includes("22,163,74") ||
-              parentBg.includes("239,68,68");
-            if (!onVibrantParent) {
-              if (!el.hasAttribute(ORIG_COLOR_ATTR)) {
-                el.setAttribute(ORIG_COLOR_ATTR, inlineColor);
-              }
-              el.style.color = "#0F172A";
-            }
-          } else if (isMutedSlateText(inlineColor)) {
-            if (!el.hasAttribute(ORIG_COLOR_ATTR)) {
-              el.setAttribute(ORIG_COLOR_ATTR, inlineColor);
-            }
-            el.style.color = "#475569";
-          } else if (
-            inlineColor.replace(/\s+/g, "").toLowerCase() === "rgb(255,196,0)" ||
-            inlineColor.toLowerCase() === "#ffc400"
-          ) {
-            if (!el.hasAttribute(ORIG_COLOR_ATTR)) {
-              el.setAttribute(ORIG_COLOR_ATTR, inlineColor);
-            }
-            el.style.color = "#D97706";
+        // 4. Flip light/white text to high-contrast dark navy (#0F172A) or slate (#475569)
+        const textRgb = parseRgb(cs.color);
+        if (textRgb) {
+          const [tr, tg, tb] = textRgb;
+          if (tr > 230 && tg > 175 && tb < 50) {
+            el.style.color = "#B45309";
+          } else if (isLightTextRgb(tr, tg, tb)) {
+            el.style.color =
+              tr > 235 && tg > 235 && tb > 235 ? "#0F172A" : "#334155";
+          } else if (surfaceFlipped) {
+            el.style.color = "#0F172A";
           }
         }
       });
     };
 
     applyThemeToDom();
-    const timer = setTimeout(applyThemeToDom, 120);
+    const t1 = setTimeout(applyThemeToDom, 80);
+    const t2 = setTimeout(applyThemeToDom, 300);
+
     const observer = new MutationObserver(() => {
       if (theme === "light") {
         applyThemeToDom();
@@ -207,7 +178,8 @@ export function LightThemeAdapter({ theme }: { theme: ThemeMode }) {
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      clearTimeout(timer);
+      clearTimeout(t1);
+      clearTimeout(t2);
       observer.disconnect();
     };
   }, [theme]);
