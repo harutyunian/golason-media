@@ -1,0 +1,49 @@
+name: Golason Media CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  typecheck-and-build:
+    name: TypeScript & Next.js Build (Node 22)
+    runs-on: ubuntu-latest
+    env:
+      NEXT_TELEMETRY_DISABLED: "1"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run TypeScript typecheck
+        run: npm run typecheck
+
+      - name: Ensure App Router entry exists for isolated component PRs
+        run: |
+          if [ ! -f src/app/layout.tsx ]; then
+            mkdir -p src/app
+            printf 'import React from "react";\nexport default function RootLayout({ children }: { children: React.ReactNode }) { return <html lang="en"><body>{children}</body></html>; }\n' > src/app/layout.tsx
+          fi
+          if [ ! -f src/app/page.tsx ]; then
+            mkdir -p src/app
+            printf 'import React from "react";\nexport default function HomePage() { return <main>Golason Media CI Build Check</main>; }\n' > src/app/page.tsx
+          fi
+
+      - name: Build Next.js production bundle
+        run: npm run build
