@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { MOCK_NEWS_ARTICLES } from "@/lib/mockData";
+import { MOCK_NEWS } from "@/lib/mockData";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://golason.com";
@@ -26,7 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const articleRoutes: MetadataRoute.Sitemap = (MOCK_NEWS_ARTICLES || []).map(
+  const articleRoutes: MetadataRoute.Sitemap = (MOCK_NEWS || []).map(
     (art) => ({
       url: `${baseUrl}/news/${art.slug}`,
       lastModified: now,
