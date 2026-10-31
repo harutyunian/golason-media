@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { EDITORIAL_ARTICLES, EDITORIAL_MATCHES } from "@/lib/editorialData";
 import { MOCK_NEWS } from "@/lib/mockData";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -6,34 +7,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    {
-      url: baseUrl,
-      lastModified: now,
-      changeFrequency: "always",
-      priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/?lang=ru`,
-      lastModified: now,
-      changeFrequency: "always",
-      priority: 0.95,
-    },
-    {
-      url: `${baseUrl}/?lang=en`,
-      lastModified: now,
-      changeFrequency: "always",
-      priority: 0.95,
-    },
+    { url: baseUrl, lastModified: now, changeFrequency: "always", priority: 1.0 },
+    { url: `${baseUrl}/news`, lastModified: now, changeFrequency: "always", priority: 0.95 },
+    { url: `${baseUrl}/live`, lastModified: now, changeFrequency: "always", priority: 0.95 },
+    { url: `${baseUrl}/transfers`, lastModified: now, changeFrequency: "hourly", priority: 0.9 },
+    { url: `${baseUrl}/standings`, lastModified: now, changeFrequency: "hourly", priority: 0.9 },
+    { url: `${baseUrl}/search`, lastModified: now, changeFrequency: "daily", priority: 0.7 },
   ];
 
-  const articleRoutes: MetadataRoute.Sitemap = (MOCK_NEWS || []).map(
-    (art) => ({
-      url: `${baseUrl}/news/${art.slug}`,
-      lastModified: now,
-      changeFrequency: "hourly",
-      priority: 0.85,
-    })
-  );
+  const slugs = new Set<string>();
+  (EDITORIAL_ARTICLES || []).forEach((a) => slugs.add(a.slug));
+  (MOCK_NEWS || []).forEach((m) => slugs.add(m.slug));
 
-  return [...staticRoutes, ...articleRoutes];
+  const articleRoutes: MetadataRoute.Sitemap = Array.from(slugs).map((slug) => ({
+    url: `${baseUrl}/news/${slug}`,
+    lastModified: now,
+    changeFrequency: "hourly",
+    priority: 0.85,
+  }));
+
+  const matchRoutes: MetadataRoute.Sitemap = (EDITORIAL_MATCHES || []).map((m) => ({
+    url: `${baseUrl}/matches/${m.id}`,
+    lastModified: now,
+    changeFrequency: "always",
+    priority: 0.85,
+  }));
+
+  return [...staticRoutes, ...articleRoutes, ...matchRoutes];
 }
