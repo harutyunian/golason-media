@@ -5,20 +5,22 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F8FAFC" },
-    { media: "(prefers-color-scheme: dark)", color: "#091324" },
-  ],
+  themeColor: "#FFFFFF",
 };
 
 export const metadata: Metadata = {
   title: {
     default:
-      "GOLASON.COM x ФУТБОЛЬНАЯ ЖАРА — Футбольные Новости, Трансферы, Составы и Таблицы (Live Football News)",
+      "GOLASON.COM x ФУТБОЛЬНАЯ ЖАРА — Футбольные Новости, Матч-центр LIVE, Трансферы и Таблицы 2026/27",
     template: "%s | GOLASON.COM",
   },
   description:
-    "Двуязычный (RU/EN) футбольный медиа-портал: свежие новости футбола, Радар Трансферов (Tier 1-3), стартовые составы в стиле Sofascore, карточки замен, таблицы лиг и видео голов в Telegram @futbolnaya_jara.",
+    "Международное двуязычное (RU/EN) футбольное издание GOLASON.COM x Футбольная Жара: авторская аналитика, Матч-центр LIVE, стартовые составы Sofascore, Радар Трансферов (Tier 1–3), реальные турнирные таблицы 2026/27 и видео голов в Telegram @futbolnaya_jara.",
+  applicationName: "GOLASON.COM",
+  authors: [{ name: "Редакция GOLASON • Футбольная Жара", url: "https://golason.com" }],
+  creator: "GOLASON Editorial Desk",
+  publisher: "GOLASON Media",
+  category: "sports",
   keywords: [
     "футбол",
     "футбольные новости",
@@ -26,12 +28,16 @@ export const metadata: Metadata = {
     "Футбольная Жара",
     "Golason",
     "стартовые составы",
-    "таблицы лиг",
+    "таблицы лиг 2026/27",
     "Ла Лига",
     "АПЛ",
     "Лига Чемпионов",
+    "Серия А",
+    "Бундеслига",
     "Реал Мадрид",
     "Барселона",
+    "Манчестер Сити",
+    "Ливерпуль",
     "football news",
     "transfer radar",
     "tactical lineups",
@@ -43,11 +49,13 @@ export const metadata: Metadata = {
     languages: {
       "ru-RU": "https://golason.com/?lang=ru",
       "en-US": "https://golason.com/?lang=en",
+      "x-default": "https://golason.com",
     },
   },
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
@@ -57,21 +65,31 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "GOLASON.COM x ФУТБОЛЬНАЯ ЖАРА — Football News, Lineups & Transfer Radar",
+    title: "GOLASON.COM x ФУТБОЛЬНАЯ ЖАРА — Футбольные Новости, LIVE Матч-центр и Таблицы 2026/27",
     description:
-      "Свежие футбольные инсайды, Радар Трансферов, тактические схемы составов в стиле Sofascore, замены и видео голов 24/7.",
+      "Авторские футбольные статьи, тактические разборы, LIVE результаты матчей, составы команд и актуальные турнирные таблицы сезона 2026/27.",
     url: "https://golason.com",
-    siteName: "GOLASON.COM x Футбольная Жара",
+    siteName: "GOLASON.COM • Футбольная Жара",
     locale: "ru_RU",
     alternateLocale: ["en_US"],
     type: "website",
+    images: [
+      {
+        url: "https://golason.com/logo.jpg",
+        width: 512,
+        height: 512,
+        alt: "GOLASON.COM x Футбольная Жара",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "GOLASON.COM x ФУТБОЛЬНАЯ ЖАРА — Football News & Tactical Lineups",
+    title: "GOLASON.COM x ФУТБОЛЬНАЯ ЖАРА — Football News, Match Center & Standings",
     description:
-      "Bilingual (RU/EN) Football News, Transfer Reliability Radar, Sofascore Tactical Lineups & Live Match Highlights.",
+      "Bilingual (RU/EN) Football Newspaper: Matchday Chronicle, Tactical Analysis, Transfer Dossier & 2026/27 League Standings.",
+    images: ["https://golason.com/logo.jpg"],
   },
+  manifest: "/manifest.webmanifest",
 };
 
 export default function RootLayout({
@@ -79,14 +97,64 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const websiteJsonLd = {
+  const schemaGraphJsonLd = {
     "@context": "https://schema.org",
-    "@type": "NewsMediaOrganization",
-    name: "GOLASON.COM x Футбольная Жара",
-    url: "https://golason.com",
-    sameAs: ["https://t.me/futbolnaya_jara"],
-    description:
-      "Bilingual (RU/EN) Football News, Tactical Lineups, Transfer Reliability Radar & Live Match Center.",
+    "@graph": [
+      {
+        "@type": "NewsMediaOrganization",
+        "@id": "https://golason.com/#organization",
+        name: "GOLASON.COM • Футбольная Жара",
+        alternateName: ["GOLASON", "Футбольная Жара", "Futbolnaya Jara"],
+        url: "https://golason.com",
+        logo: {
+          "@type": "ImageObject",
+          url: "https://golason.com/logo.jpg",
+          width: 512,
+          height: 512,
+        },
+        sameAs: ["https://t.me/futbolnaya_jara"],
+        description:
+          "Двуязычное (RU/EN) футбольное издание: хроника матчей, тактическая аналитика, трансферное досье и live-статистика.",
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://golason.com/#website",
+        url: "https://golason.com",
+        name: "GOLASON.COM x Футбольная Жара",
+        inLanguage: ["ru-RU", "en-US"],
+        publisher: {
+          "@id": "https://golason.com/#organization",
+        },
+        potentialAction: {
+          "@type": "SearchAction",
+          target: {
+            "@type": "EntryPoint",
+            urlTemplate: "https://golason.com/search?q={search_term_string}",
+          },
+          "query-input": "required name=search_term_string",
+        },
+      },
+      {
+        "@type": "SiteNavigationElement",
+        "@id": "https://golason.com/#navigation",
+        name: [
+          "Главная",
+          "Новости и аналитика",
+          "Матч-центр LIVE",
+          "Трансферы",
+          "Таблицы 2026/27",
+          "Поиск",
+        ],
+        url: [
+          "https://golason.com/",
+          "https://golason.com/news",
+          "https://golason.com/live",
+          "https://golason.com/transfers",
+          "https://golason.com/standings",
+          "https://golason.com/search",
+        ],
+      },
+    ],
   };
 
   return (
@@ -104,7 +172,9 @@ export default function RootLayout({
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(schemaGraphJsonLd),
+          }}
         />
         <style
           dangerouslySetInnerHTML={{
@@ -117,42 +187,42 @@ export default function RootLayout({
                 padding: 0;
                 max-width: 100vw;
                 overflow-x: hidden;
+                background-color: #FFFFFF;
+                color: #111827;
                 -webkit-text-size-adjust: 100%;
               }
-              html[data-golason-theme="light"] body {
-                background-color: #F1F5F9 !important;
-                color: #0F172A !important;
-              }
-              html[data-golason-theme="dark"] body {
-                background-color: #060D1A !important;
-                color: #F8FAFC !important;
-              }
-              /* Mobile responsive rules */
-              @media (max-width: 768px) {
-                .golason-header-inner {
-                  padding: 10px 12px !important;
-                  gap: 10px !important;
-                }
-                .golason-nav-scroll {
-                  width: 100% !important;
-                  overflow-x: auto !important;
-                  flex-wrap: nowrap !important;
-                  padding-bottom: 4px !important;
-                  -webkit-overflow-scrolling: touch;
-                }
-                .golason-nav-scroll button {
-                  white-space: nowrap !important;
-                  flex-shrink: 0 !important;
-                  font-size: 12px !important;
-                  padding: 7px 12px !important;
-                }
-                .golason-main-container {
-                  padding: 16px 12px 48px !important;
-                  gap: 28px !important;
-                }
+              /* Tablet & Mobile Responsive Grid Rules (<= 1024px) */
+              @media (max-width: 1024px) {
+                .golason-2col-main-sidebar,
+                .golason-newspaper-12col-grid,
+                .golason-archive-12col-grid,
                 .golason-two-col-grid {
                   grid-template-columns: 1fr !important;
-                  gap: 20px !important;
+                  gap: 24px !important;
+                }
+                .golason-2col-main-sidebar > aside,
+                .golason-newspaper-sidebar-col {
+                  border-left: none !important;
+                  padding-left: 0 !important;
+                  border-top: 2px solid #111827 !important;
+                  padding-top: 24px !important;
+                }
+              }
+              /* Mobile Responsive Rules (<= 768px) */
+              @media (max-width: 768px) {
+                .golason-sublead-2col-grid,
+                .golason-archive-2col-grid,
+                .golason-editorial-horizontal-layout {
+                  grid-template-columns: 1fr !important;
+                  gap: 16px !important;
+                }
+                .golason-sublead-col-right {
+                  border-left: none !important;
+                  padding-left: 0 !important;
+                }
+                .golason-main-container {
+                  padding: 14px 12px 44px !important;
+                  gap: 22px !important;
                 }
                 .golason-pitch-scroll-wrap {
                   width: 100% !important;
@@ -160,12 +230,7 @@ export default function RootLayout({
                   -webkit-overflow-scrolling: touch;
                 }
                 .golason-pitch-scroll-wrap > div {
-                  min-width: 680px;
-                }
-                .golason-controls-row {
-                  width: 100% !important;
-                  justify-content: space-between !important;
-                  flex-wrap: wrap !important;
+                  min-width: 640px;
                 }
               }
             `,
@@ -176,8 +241,8 @@ export default function RootLayout({
         style={{
           margin: 0,
           padding: 0,
-          backgroundColor: "#F1F5F9",
-          color: "#0F172A",
+          backgroundColor: "#FFFFFF",
+          color: "#111827",
           fontFamily:
             "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
           minHeight: "100vh",

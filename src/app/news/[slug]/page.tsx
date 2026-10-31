@@ -170,26 +170,62 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
 
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "NewsArticle",
-    headline: article.titleRu,
-    alternativeHeadline: article.titleEn,
-    description: article.subtitleRu,
-    image: [article.imageUrl],
-    author: {
-      "@type": "Person",
-      name: article.authorRu,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "GOLASON.COM x Футбольная Жара",
-      logo: {
-        "@type": "ImageObject",
-        url: "https://golason.com/logo.jpg",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Главная",
+            item: "https://golason.com",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Новости и аналитика",
+            item: "https://golason.com/news",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: article.titleRu,
+            item: `https://golason.com/news/${article.slug}`,
+          },
+        ],
       },
-    },
-    mainEntityOfPage: `https://golason.com/news/${article.slug}`,
-    datePublished: new Date().toISOString(),
-    dateModified: new Date().toISOString(),
+      {
+        "@type": "NewsArticle",
+        headline: article.titleRu,
+        alternativeHeadline: article.titleEn,
+        description: article.subtitleRu,
+        articleSection: article.categoryRu,
+        inLanguage: ["ru-RU", "en-US"],
+        isAccessibleForFree: true,
+        image: [article.imageUrl],
+        author: {
+          "@type": "Person",
+          name: article.authorRu,
+          url: "https://golason.com/news",
+        },
+        publisher: {
+          "@type": "NewsMediaOrganization",
+          name: "GOLASON.COM • Футбольная Жара",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://golason.com/logo.jpg",
+            width: 512,
+            height: 512,
+          },
+        },
+        mainEntityOfPage: {
+          "@type": "WebPage",
+          "@id": `https://golason.com/news/${article.slug}`,
+        },
+        datePublished: new Date().toISOString(),
+        dateModified: new Date().toISOString(),
+      },
+    ],
   };
 
   return (
@@ -259,15 +295,16 @@ export default async function ArticleDetailPage({ params }: ArticlePageProps) {
         </nav>
 
         <div
+          className="golason-2col-main-sidebar"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 320px), 1fr))",
-            gap: "40px",
+            gridTemplateColumns: "minmax(0, 8fr) minmax(300px, 4fr)",
+            gap: "32px",
             alignItems: "start",
           }}
         >
-          {/* Left Reading Column (max 760px measure) */}
-          <article style={{ gridColumn: "span 2", maxWidth: "820px" }}>
+          {/* Left Reading Column */}
+          <article style={{ minWidth: 0, maxWidth: "820px" }}>
             <div
               style={{
                 display: "flex",

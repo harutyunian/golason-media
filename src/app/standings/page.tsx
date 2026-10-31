@@ -555,10 +555,10 @@ export default function StandingsHubPage() {
 
         {/* Main Two-Column Grid: Standings Table(s) + Top Scorers & Sidebar Ad */}
         <div
+          className="golason-2col-main-sidebar"
           style={{
             display: "grid",
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(min(100%, 400px), 1fr))",
+            gridTemplateColumns: "minmax(0, 8fr) minmax(300px, 4fr)",
             gap: "24px",
             alignItems: "start",
           }}
@@ -566,7 +566,7 @@ export default function StandingsHubPage() {
           {/* Left Primary Column: LeagueStandingsTable */}
           <div
             style={{
-              gridColumn: "span 2",
+              minWidth: 0,
               display: "flex",
               flexDirection: "column",
               gap: "24px",

@@ -1843,17 +1843,18 @@ export default function MatchReportDetailPage() {
 
         {/* Main Two-Column Content Grid + Right Sidebar */}
         <div
+          className="golason-2col-main-sidebar"
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 360px), 1fr))",
+            gridTemplateColumns: "minmax(0, 8fr) minmax(300px, 4fr)",
             gap: "24px",
             alignItems: "start",
           }}
         >
-          {/* Left / Primary Column (Spans 2 columns on desktop via flex/grid) */}
+          {/* Left / Primary Column */}
           <div
             style={{
-              gridColumn: "span 2",
+              minWidth: 0,
               display: "flex",
               flexDirection: "column",
               gap: "24px",
