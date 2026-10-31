@@ -77,61 +77,51 @@ export function MatchPill({
       : match.awayTeam.name;
 
   const tgUrl = match.telegramHighlightUrl || 'https://t.me/futbolnaya_jara';
+  const matchHref = `/matches/${match.id}`;
 
   const borderColor = isSelected
+    ? '#DC2626'
+    : isLive
     ? '#EA580C'
-    : isLive
-    ? 'rgba(255, 98, 0, 0.55)'
     : isHovered
-    ? '#94A3B8'
-    : '#E2E8F0';
-
-  const cardBackground = isSelected
-    ? 'linear-gradient(145deg, #FFF7ED 0%, #FFFFFF 100%)'
-    : isLive
-    ? 'linear-gradient(145deg, #FFFFFF 0%, #FFF7ED 100%)'
-    : '#FFFFFF';
+    ? '#9CA3AF'
+    : '#E5E7EB';
 
   return (
-    <div
-      role={onSelect ? 'button' : 'article'}
-      tabIndex={onSelect ? 0 : undefined}
+    <a
+      href={matchHref}
       aria-label={`${homeName} vs ${awayName} (${displayStatus})`}
-      onClick={() => onSelect?.(match)}
-      onKeyDown={(e) => {
-        if (onSelect && (e.key === 'Enter' || e.key === ' ')) {
-          e.preventDefault();
-          onSelect(match);
-        }
+      onClick={() => {
+        onSelect?.(match);
       }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{
-        minWidth: '218px',
-        maxWidth: '240px',
-        background: cardBackground,
+        minWidth: '220px',
+        maxWidth: '242px',
+        backgroundColor: '#FFFFFF',
         border: `1px solid ${borderColor}`,
-        borderRadius: '10px',
-        padding: '8px 11px',
+        padding: '9px 12px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        gap: '6px',
-        cursor: onSelect ? 'pointer' : 'default',
-        transition: 'transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease',
+        gap: '7px',
+        cursor: 'pointer',
+        textDecoration: 'none',
+        color: '#111827',
+        transition: 'border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease',
         transform: isHovered ? 'translateY(-1px)' : 'translateY(0)',
-        boxShadow: isLive
-          ? '0 4px 14px rgba(255, 98, 0, 0.12)'
-          : isHovered
-          ? '0 4px 12px rgba(15, 23, 42, 0.08)'
-          : '0 2px 6px rgba(15, 23, 42, 0.04)',
+        boxShadow: isHovered
+          ? '0 4px 12px rgba(17, 24, 39, 0.06)'
+          : '0 1px 2px rgba(17, 24, 39, 0.03)',
         flexShrink: 0,
         userSelect: 'none',
         position: 'relative',
         overflow: 'hidden',
+        boxSizing: 'border-box',
       }}
     >
-      {/* Top accent bar for LIVE matches */}
+      {/* Top 2px editorial accent bar for LIVE matches */}
       {isLive && (
         <div
           style={{
@@ -140,7 +130,7 @@ export function MatchPill({
             left: 0,
             right: 0,
             height: '2px',
-            background: 'linear-gradient(90deg, #FF6200 0%, #FFC400 50%, #FF6200 100%)',
+            backgroundColor: '#DC2626',
           }}
         />
       )}
@@ -158,9 +148,9 @@ export function MatchPill({
           style={{
             fontSize: '10px',
             fontWeight: 700,
-            letterSpacing: '0.06em',
+            letterSpacing: '0.07em',
             textTransform: 'uppercase',
-            color: '#64748B',
+            color: '#6B7280',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -175,25 +165,24 @@ export function MatchPill({
             alignItems: 'center',
             gap: '5px',
             padding: '2px 6px',
-            borderRadius: '999px',
             fontSize: '10px',
             fontWeight: 800,
-            letterSpacing: '0.04em',
-            background: isLive
-              ? 'rgba(255, 98, 0, 0.2)'
+            letterSpacing: '0.05em',
+            backgroundColor: isLive
+              ? '#FEF2F2'
               : isFinished
-              ? 'rgba(255, 255, 255, 0.08)'
-              : 'rgba(255, 196, 0, 0.12)',
+              ? '#F3F4F6'
+              : '#FFF7ED',
             color: isLive
-              ? 'var(--accent-orange, #FF6200)'
+              ? '#DC2626'
               : isFinished
-              ? '#94A3B8'
-              : 'var(--accent-gold, #FFC400)',
+              ? '#4B5563'
+              : '#EA580C',
             border: isLive
-              ? '1px solid rgba(255, 98, 0, 0.45)'
+              ? '1px solid #FECACA'
               : isFinished
-              ? '1px solid rgba(255, 255, 255, 0.08)'
-              : '1px solid rgba(255, 196, 0, 0.28)',
+              ? '1px solid #E5E7EB'
+              : '1px solid #FED7AA',
           }}
         >
           {isLive && (
@@ -203,8 +192,7 @@ export function MatchPill({
                 width: '6px',
                 height: '6px',
                 borderRadius: '50%',
-                backgroundColor: '#FF6200',
-                boxShadow: '0 0 8px #FF6200, 0 0 12px #FFC400',
+                backgroundColor: '#DC2626',
                 display: 'inline-block',
                 animation: 'golasonPulse 1.4s ease-in-out infinite',
               }}
@@ -215,7 +203,7 @@ export function MatchPill({
       </div>
 
       {/* Teams & Scores */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
         {/* Home Team Row */}
         <div
           style={{
@@ -238,17 +226,14 @@ export function MatchPill({
               teamId={match.homeTeam.id}
               teamName={match.homeTeam.name}
               teamNameRu={match.homeTeam.nameRu}
-              fallbackText={match.homeTeam.crest}
-              size={22}
+              fallbackText={match.homeTeam.shortName || match.homeTeam.name.slice(0, 3)}
+              size={20}
             />
             <span
               style={{
                 fontSize: '12.5px',
                 fontWeight: homeWinning || isLive ? 800 : 600,
-                color:
-                  isFinished && awayWinning
-                    ? '#64748B'
-                    : '#0F172A',
+                color: isFinished && awayWinning ? '#6B7280' : '#111827',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
@@ -258,14 +243,11 @@ export function MatchPill({
             </span>
             {(match.homeTeam.redCards ?? 0) > 0 && (
               <span
-                title={
-                  activeLang === 'ru' ? 'Красная карточка' : 'Red Card'
-                }
+                title={activeLang === 'ru' ? 'Красная карточка' : 'Red Card'}
                 style={{
                   width: '6px',
                   height: '9px',
-                  borderRadius: '1.5px',
-                  backgroundColor: '#EF4444',
+                  backgroundColor: '#DC2626',
                   display: 'inline-block',
                   flexShrink: 0,
                 }}
@@ -279,11 +261,10 @@ export function MatchPill({
               fontWeight: 800,
               fontVariantNumeric: 'tabular-nums',
               color: isUpcoming
-                ? '#94A3B8'
+                ? '#9CA3AF'
                 : isLive || homeWinning
-                ? '#EA580C'
-                : '#0F172A',
-              textShadow: 'none',
+                ? '#DC2626'
+                : '#111827',
             }}
           >
             {isUpcoming ? '—' : homeScore}
@@ -312,17 +293,14 @@ export function MatchPill({
               teamId={match.awayTeam.id}
               teamName={match.awayTeam.name}
               teamNameRu={match.awayTeam.nameRu}
-              fallbackText={match.awayTeam.crest}
-              size={22}
+              fallbackText={match.awayTeam.shortName || match.awayTeam.name.slice(0, 3)}
+              size={20}
             />
             <span
               style={{
                 fontSize: '12.5px',
                 fontWeight: awayWinning || isLive ? 800 : 600,
-                color:
-                  isFinished && homeWinning
-                    ? '#64748B'
-                    : '#0F172A',
+                color: isFinished && homeWinning ? '#6B7280' : '#111827',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
@@ -332,14 +310,11 @@ export function MatchPill({
             </span>
             {(match.awayTeam.redCards ?? 0) > 0 && (
               <span
-                title={
-                  activeLang === 'ru' ? 'Красная карточка' : 'Red Card'
-                }
+                title={activeLang === 'ru' ? 'Красная карточка' : 'Red Card'}
                 style={{
                   width: '6px',
                   height: '9px',
-                  borderRadius: '1.5px',
-                  backgroundColor: '#EF4444',
+                  backgroundColor: '#DC2626',
                   display: 'inline-block',
                   flexShrink: 0,
                 }}
@@ -353,11 +328,10 @@ export function MatchPill({
               fontWeight: 800,
               fontVariantNumeric: 'tabular-nums',
               color: isUpcoming
-                ? '#94A3B8'
+                ? '#9CA3AF'
                 : isLive || awayWinning
-                ? '#EA580C'
-                : '#0F172A',
-              textShadow: 'none',
+                ? '#DC2626'
+                : '#111827',
             }}
           >
             {isUpcoming ? '—' : awayScore}
@@ -365,10 +339,10 @@ export function MatchPill({
         </div>
       </div>
 
-      {/* Footer: Telegram Video Highlights Link */}
+      {/* Footer: Match Center Report + Telegram Video Action */}
       <div
         style={{
-          borderTop: '1px solid rgba(255, 255, 255, 0.06)',
+          borderTop: '1px solid #E5E7EB',
           paddingTop: '5px',
           display: 'flex',
           alignItems: 'center',
@@ -376,62 +350,74 @@ export function MatchPill({
           gap: '6px',
         }}
       >
-        <a
-          href={tgUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          onClick={(e) => e.stopPropagation()}
+        <span
+          role="link"
+          tabIndex={0}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (typeof window !== 'undefined') {
+              window.open(tgUrl, '_blank', 'noopener,noreferrer');
+            }
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              e.stopPropagation();
+              if (typeof window !== 'undefined') {
+                window.open(tgUrl, '_blank', 'noopener,noreferrer');
+              }
+            }
+          }}
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '5px',
             fontSize: '10.5px',
             fontWeight: 700,
-            color: isLive ? '#FFC400' : '#FF6200',
-            textDecoration: 'none',
+            color: '#EA580C',
             letterSpacing: '0.02em',
+            cursor: 'pointer',
           }}
         >
-          <span aria-hidden="true" style={{ fontSize: '11px' }}>
-            ▶
-          </span>
+          <svg
+            width="9"
+            height="9"
+            viewBox="0 0 12 12"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path d="M2.5 1.75L10.25 6L2.5 10.25V1.75Z" />
+          </svg>
           <span>
             {activeLang === 'ru'
               ? isUpcoming
-                ? 'Превью в TG'
+                ? 'Превью · TG'
                 : 'Видео голов · TG'
               : isUpcoming
-              ? 'TG Match Preview'
-              : 'TG Video Highlights'}
+              ? 'Preview · TG'
+              : 'Highlights · TG'}
           </span>
-        </a>
+        </span>
 
-        {match.highlightCount && match.highlightCount > 0 ? (
-          <span
-            style={{
-              fontSize: '9.5px',
-              fontWeight: 700,
-              color: '#091324',
-              backgroundColor: '#FFC400',
-              borderRadius: '4px',
-              padding: '1px 4px',
-            }}
-          >
-            {match.highlightCount} {activeLang === 'ru' ? 'клипа' : 'clips'}
-          </span>
-        ) : (
-          <span
-            style={{
-              fontSize: '9.5px',
-              fontWeight: 600,
-              color: 'rgba(148, 163, 184, 0.65)',
-            }}
-          >
-            @futbolnaya_jara
-          </span>
-        )}
+        <span
+          style={{
+            fontSize: '9.5px',
+            fontWeight: 700,
+            letterSpacing: '0.04em',
+            textTransform: 'uppercase',
+            color: '#4B5563',
+          }}
+        >
+          {match.highlightCount && match.highlightCount > 0
+            ? `${match.highlightCount} ${activeLang === 'ru' ? 'клипа' : 'clips'}`
+            : activeLang === 'ru'
+            ? 'Матч-центр'
+            : 'Match Center'}
+        </span>
       </div>
-    </div>
+    </a>
   );
 }
 

@@ -7,16 +7,16 @@ export interface LeagueFilterOption {
   id: TickerLeagueKey;
   labelEn: string;
   labelRu: string;
-  badge: string;
+  badge?: string;
 }
 
 export const TICKER_LEAGUE_FILTERS: LeagueFilterOption[] = [
-  { id: 'ALL', labelEn: 'ALL', labelRu: 'ВСЕ', badge: '🔥' },
-  { id: 'LA LIGA', labelEn: 'LA LIGA', labelRu: 'ЛА ЛИГА', badge: '🇪🇸' },
-  { id: 'EPL', labelEn: 'EPL', labelRu: 'АПЛ', badge: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-  { id: 'UCL', labelEn: 'UCL', labelRu: 'ЛЧ УЕФА', badge: '⭐' },
-  { id: 'SERIE A', labelEn: 'SERIE A', labelRu: 'СЕРИЯ А', badge: '🇮🇹' },
-  { id: 'SAUDI', labelEn: 'SAUDI', labelRu: 'САУД. ЛИГА', badge: '🇸🇦' },
+  { id: 'ALL', labelEn: 'ALL', labelRu: 'ВСЕ', badge: '' },
+  { id: 'LA LIGA', labelEn: 'LA LIGA', labelRu: 'ЛА ЛИГА', badge: '' },
+  { id: 'EPL', labelEn: 'EPL', labelRu: 'АПЛ', badge: '' },
+  { id: 'UCL', labelEn: 'UCL', labelRu: 'ЛЧ УЕФА', badge: '' },
+  { id: 'SERIE A', labelEn: 'SERIE A', labelRu: 'СЕРИЯ А', badge: '' },
+  { id: 'SAUDI', labelEn: 'SAUDI', labelRu: 'САУД. ЛИГА', badge: '' },
 ];
 
 export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
@@ -33,7 +33,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Real Madrid',
       nameRu: 'Реал Мадрид',
       shortName: 'RMA',
-      crest: '👑',
+      crest: 'RMA',
       crestBg: 'rgba(255, 196, 0, 0.22)',
       score: 3,
     },
@@ -42,7 +42,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Man City',
       nameRu: 'Ман Сити',
       shortName: 'MCI',
-      crest: '💠',
+      crest: 'MCI',
       crestBg: 'rgba(56, 189, 248, 0.22)',
       score: 2,
     },
@@ -63,7 +63,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Barcelona',
       nameRu: 'Барселона',
       shortName: 'BAR',
-      crest: '🔵',
+      crest: 'BAR',
       crestBg: 'rgba(220, 38, 38, 0.24)',
       score: 2,
     },
@@ -72,7 +72,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Atlético Madrid',
       nameRu: 'Атлетико М',
       shortName: 'ATM',
-      crest: '🔴',
+      crest: 'ATM',
       crestBg: 'rgba(239, 68, 68, 0.2)',
       score: 1,
       redCards: 1,
@@ -93,7 +93,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Arsenal',
       nameRu: 'Арсенал',
       shortName: 'ARS',
-      crest: '🛡️',
+      crest: 'ARS',
       crestBg: 'rgba(239, 68, 68, 0.25)',
       score: 2,
     },
@@ -102,7 +102,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Liverpool',
       nameRu: 'Ливерпуль',
       shortName: 'LIV',
-      crest: '🦅',
+      crest: 'LIV',
       crestBg: 'rgba(185, 28, 28, 0.28)',
       score: 2,
     },
@@ -121,7 +121,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Inter Milan',
       nameRu: 'Интер',
       shortName: 'INT',
-      crest: '🐍',
+      crest: 'INT',
       crestBg: 'rgba(37, 99, 235, 0.25)',
       score: 2,
     },
@@ -130,7 +130,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Juventus',
       nameRu: 'Ювентус',
       shortName: 'JUV',
-      crest: '🦓',
+      crest: 'JUV',
       crestBg: 'rgba(255, 255, 255, 0.14)',
       score: 0,
     },
@@ -150,7 +150,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Al-Nassr',
       nameRu: 'Аль-Наср',
       shortName: 'NAS',
-      crest: '⚡',
+      crest: 'NAS',
       crestBg: 'rgba(255, 196, 0, 0.24)',
       score: 2,
     },
@@ -159,7 +159,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Al-Hilal',
       nameRu: 'Аль-Хиляль',
       shortName: 'HIL',
-      crest: '🌙',
+      crest: 'HIL',
       crestBg: 'rgba(59, 130, 246, 0.24)',
       score: 1,
     },
@@ -178,7 +178,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Bayern Munich',
       nameRu: 'Бавария',
       shortName: 'BAY',
-      crest: '🔴',
+      crest: 'BAY',
       crestBg: 'rgba(220, 38, 38, 0.25)',
     },
     awayTeam: {
@@ -186,7 +186,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Paris SG',
       nameRu: 'ПСЖ',
       shortName: 'PSG',
-      crest: '🗼',
+      crest: 'PSG',
       crestBg: 'rgba(30, 64, 175, 0.28)',
     },
     telegramHighlightUrl: 'https://t.me/futbolnaya_jara/4832',
@@ -203,7 +203,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Real Sociedad',
       nameRu: 'Реал Сосьедад',
       shortName: 'RSO',
-      crest: '⚪',
+      crest: 'RSO',
       crestBg: 'rgba(59, 130, 246, 0.2)',
       score: 1,
     },
@@ -212,7 +212,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Villarreal',
       nameRu: 'Вильярреал',
       shortName: 'VIL',
-      crest: '🟡',
+      crest: 'VIL',
       crestBg: 'rgba(250, 204, 21, 0.22)',
       score: 1,
     },
@@ -231,7 +231,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'AC Milan',
       nameRu: 'Милан',
       shortName: 'MIL',
-      crest: '👹',
+      crest: 'MIL',
       crestBg: 'rgba(185, 28, 28, 0.25)',
     },
     awayTeam: {
@@ -239,7 +239,7 @@ export const DEFAULT_TICKER_MATCHES: TickerMatch[] = [
       name: 'Napoli',
       nameRu: 'Наполи',
       shortName: 'NAP',
-      crest: '🌊',
+      crest: 'NAP',
       crestBg: 'rgba(14, 165, 233, 0.25)',
     },
     telegramHighlightUrl: 'https://t.me/futbolnaya_jara/4835',
@@ -266,7 +266,6 @@ export function LiveScoreTicker({
   onLeagueChange,
 }: LiveScoreTickerProps) {
   const [activeLeague, setActiveLeague] = useState<TickerLeagueKey>(initialLeague);
-  const [onlyLive, setOnlyLive] = useState<boolean>(false);
   const [internalSelectedId, setInternalSelectedId] = useState<string | undefined>(
     selectedMatchId
   );
@@ -282,13 +281,12 @@ export function LiveScoreTicker({
 
   const filteredMatches = useMemo(() => {
     return matches.filter((m) => {
-      const leagueMatch =
+      return (
         activeLeague === 'ALL' ||
-        m.league.toUpperCase() === activeLeague.toUpperCase();
-      const liveMatch = !onlyLive || m.status === 'LIVE' || m.status === 'HT';
-      return leagueMatch && liveMatch;
+        m.league.toUpperCase() === activeLeague.toUpperCase()
+      );
     });
-  }, [matches, activeLeague, onlyLive]);
+  }, [matches, activeLeague]);
 
   const handleLeagueSelect = (leagueId: TickerLeagueKey) => {
     setActiveLeague(leagueId);
@@ -316,11 +314,9 @@ export function LiveScoreTicker({
         top: 0,
         zIndex: 50,
         width: '100%',
-        background: '#F8FAFC',
-        backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid #E2E8F0',
-        boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)',
-        color: '#0F172A',
+        backgroundColor: '#FFFFFF',
+        borderBottom: '1px solid #E5E7EB',
+        color: '#111827',
         fontFamily:
           'var(--font-sans, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif)',
       }}
@@ -337,14 +333,13 @@ export function LiveScoreTicker({
           }
         }
         .golason-ticker-scroll::-webkit-scrollbar {
-          height: 4px;
+          height: 3px;
         }
         .golason-ticker-scroll::-webkit-scrollbar-track {
-          background: rgba(9, 19, 36, 0.6);
+          background: #F3F4F6;
         }
         .golason-ticker-scroll::-webkit-scrollbar-thumb {
-          background: rgba(255, 98, 0, 0.45);
-          border-radius: 999px;
+          background: #D1D5DB;
         }
       `}</style>
 
@@ -352,13 +347,13 @@ export function LiveScoreTicker({
         style={{
           maxWidth: '1440px',
           margin: '0 auto',
-          padding: '8px 16px 10px',
+          padding: '8px 20px 10px',
           display: 'flex',
           flexDirection: 'column',
           gap: '8px',
         }}
       >
-        {/* Top Control Bar: Live Center Badge + League Filter Pills + Scroll Arrows */}
+        {/* Top Control Bar: Live Center Route Link + Clean League Filter Tabs + Scroll Arrows */}
         <div
           style={{
             display: 'flex',
@@ -368,7 +363,7 @@ export function LiveScoreTicker({
             flexWrap: 'wrap',
           }}
         >
-          {/* Left: Brand Live Indicator + Filter Tabs */}
+          {/* Left: LIVE ЦЕНТР Link (/live) + Pure Typography League Filter Tabs */}
           <div
             style={{
               display: 'flex',
@@ -378,32 +373,32 @@ export function LiveScoreTicker({
               paddingBottom: '2px',
             }}
           >
-            {/* Live Match Center Pill */}
-            <button
-              type="button"
-              onClick={() => setOnlyLive((prev) => !prev)}
+            {/* LIVE ЦЕНТР Direct Navigation Button -> /live */}
+            <a
+              href="/live"
+              onClick={() => {
+                if (typeof window !== 'undefined') {
+                  window.location.href = '/live';
+                }
+              }}
               title={
                 activeLang === 'ru'
-                  ? 'Показать только LIVE матчи'
-                  : 'Filter LIVE matches only'
+                  ? 'Перейти в Матч-центр LIVE'
+                  : 'Go to LIVE Match Center'
               }
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '6px',
-                padding: '4px 10px',
-                borderRadius: '6px',
-                border: onlyLive
-                  ? '1px solid #FFC400'
-                  : '1px solid rgba(255, 98, 0, 0.5)',
-                background: onlyLive
-                  ? 'linear-gradient(135deg, #FF6200 0%, #FFC400 100%)'
-                  : 'rgba(255, 98, 0, 0.16)',
-                color: onlyLive ? '#091324' : '#FFC400',
+                gap: '7px',
+                padding: '5px 11px',
+                border: '1px solid #DC2626',
+                backgroundColor: '#DC2626',
+                color: '#FFFFFF',
                 fontSize: '11px',
                 fontWeight: 800,
                 letterSpacing: '0.06em',
                 textTransform: 'uppercase',
+                textDecoration: 'none',
                 cursor: 'pointer',
                 flexShrink: 0,
               }}
@@ -411,31 +406,30 @@ export function LiveScoreTicker({
               <span
                 aria-hidden="true"
                 style={{
-                  width: '7px',
-                  height: '7px',
+                  width: '6px',
+                  height: '6px',
                   borderRadius: '50%',
-                  backgroundColor: onlyLive ? '#091324' : '#FF6200',
-                  boxShadow: onlyLive ? 'none' : '0 0 8px #FF6200',
+                  backgroundColor: '#FFFFFF',
                   animation: 'golasonPulse 1.4s ease-in-out infinite',
                 }}
               />
               <span>
                 {activeLang === 'ru' ? 'LIVE ЦЕНТР' : 'LIVE CENTER'} ({liveCount})
               </span>
-            </button>
+            </a>
 
             <span
               aria-hidden="true"
               style={{
                 width: '1px',
                 height: '18px',
-                backgroundColor: 'rgba(255, 255, 255, 0.12)',
-                margin: '0 2px',
+                backgroundColor: '#E5E7EB',
+                margin: '0 4px',
                 flexShrink: 0,
               }}
             />
 
-            {/* League Filter Pills: ALL, LA LIGA, EPL, UCL, SERIE A, SAUDI */}
+            {/* League Filter Tabs: ВСЕ, ЛА ЛИГА, АПЛ, ЛЧ УЕФА, СЕРИЯ А, САУД. ЛИГА (Zero Emojis) */}
             <div
               role="tablist"
               aria-label={
@@ -444,7 +438,7 @@ export function LiveScoreTicker({
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '5px',
+                gap: '4px',
               }}
             >
               {TICKER_LEAGUE_FILTERS.map((filter) => {
@@ -462,30 +456,22 @@ export function LiveScoreTicker({
                     style={{
                       display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '5px',
-                      padding: '4px 10px',
-                      borderRadius: '999px',
+                      justifyContent: 'center',
+                      padding: '5px 10px',
                       fontSize: '11px',
                       fontWeight: isActive ? 800 : 600,
-                      letterSpacing: '0.04em',
+                      letterSpacing: '0.05em',
+                      textTransform: 'uppercase',
                       cursor: 'pointer',
                       transition: 'all 0.15s ease',
                       border: isActive
-                        ? '1px solid #EA580C'
-                        : '1px solid #CBD5E1',
-                      background: isActive
-                        ? 'linear-gradient(135deg, #FF6200 0%, #FF8800 100%)'
-                        : '#FFFFFF',
-                      color: isActive ? '#FFFFFF' : '#334155',
-                      boxShadow: isActive
-                        ? '0 2px 10px rgba(255, 98, 0, 0.35)'
-                        : 'none',
+                        ? '1px solid #111827'
+                        : '1px solid #E5E7EB',
+                      backgroundColor: isActive ? '#111827' : '#FFFFFF',
+                      color: isActive ? '#FFFFFF' : '#374151',
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    <span aria-hidden="true" style={{ fontSize: '11px' }}>
-                      {filter.badge}
-                    </span>
                     <span>{label}</span>
                   </button>
                 );
@@ -508,19 +494,35 @@ export function LiveScoreTicker({
               style={{
                 fontSize: '11px',
                 fontWeight: 700,
-                color: 'var(--accent-gold, #FFC400)',
+                color: '#111827',
                 textDecoration: 'none',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '5px',
-                padding: '4px 9px',
-                borderRadius: '6px',
-                background: 'rgba(255, 196, 0, 0.1)',
-                border: '1px solid rgba(255, 196, 0, 0.25)',
+                gap: '6px',
+                padding: '5px 10px',
+                backgroundColor: '#F9FAFB',
+                border: '1px solid #E5E7EB',
                 whiteSpace: 'nowrap',
+                letterSpacing: '0.03em',
+                textTransform: 'uppercase',
               }}
             >
-              <span>⚡</span>
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <path
+                  d="M21 3L3 10.5L10.2 13.5M21 3L14.5 21L10.2 13.5M21 3L10.2 13.5"
+                  stroke="#DC2626"
+                  strokeWidth="2"
+                  strokeLinecap="square"
+                  strokeLinejoin="miter"
+                />
+              </svg>
               <span>
                 {activeLang === 'ru'
                   ? 'Футбольная Жара · TG'
@@ -538,19 +540,31 @@ export function LiveScoreTicker({
                 style={{
                   width: '26px',
                   height: '26px',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(255, 255, 255, 0.14)',
-                  background: 'rgba(15, 29, 54, 0.9)',
-                  color: '#F8FAFC',
+                  border: '1px solid #E5E7EB',
+                  backgroundColor: '#FFFFFF',
+                  color: '#111827',
                   cursor: 'pointer',
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '12px',
-                  fontWeight: 800,
+                  padding: 0,
                 }}
               >
-                ‹
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M10 3.5L5.5 8L10 12.5"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="square"
+                  />
+                </svg>
               </button>
               <button
                 type="button"
@@ -561,19 +575,31 @@ export function LiveScoreTicker({
                 style={{
                   width: '26px',
                   height: '26px',
-                  borderRadius: '6px',
-                  border: '1px solid rgba(255, 255, 255, 0.14)',
-                  background: 'rgba(15, 29, 54, 0.9)',
-                  color: '#F8FAFC',
+                  border: '1px solid #E5E7EB',
+                  backgroundColor: '#FFFFFF',
+                  color: '#111827',
                   cursor: 'pointer',
                   display: 'inline-flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '12px',
-                  fontWeight: 800,
+                  padding: 0,
                 }}
               >
-                ›
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M6 3.5L10.5 8L6 12.5"
+                    stroke="currentColor"
+                    strokeWidth="1.75"
+                    strokeLinecap="square"
+                  />
+                </svg>
               </button>
             </div>
           </div>
@@ -607,9 +633,9 @@ export function LiveScoreTicker({
               style={{
                 width: '100%',
                 padding: '12px 16px',
-                borderRadius: '8px',
-                border: '1px dashed rgba(255, 196, 0, 0.25)',
-                color: '#94A3B8',
+                border: '1px solid #E5E7EB',
+                backgroundColor: '#F9FAFB',
+                color: '#6B7280',
                 fontSize: '12px',
                 textAlign: 'center',
               }}
