@@ -640,3 +640,1231 @@ export const EDITORIAL_ARTICLES: EditorialArticle[] = [
     tagsEn: ['Transfers', 'Liverpool', 'AS Monaco', 'Maghnes Akliouche']
   }
 ];
+
+export const EDITORIAL_MATCHES: EditorialMatchDetail[] = [
+  {
+    id: 'ucl-rma-mci',
+    leagueKey: 'ucl',
+    leagueRu: 'Лига чемпионов УЕФА',
+    leagueEn: 'UEFA Champions League',
+    roundRu: 'Общий этап • Тур 4',
+    roundEn: 'League Phase • Matchday 4',
+    status: "LIVE 78'",
+    statusRu: "ИДЕТ МАТЧ • 78'",
+    statusEn: "LIVE • 78'",
+    kickoffRu: '30 октября 2026, 23:00 МСК',
+    kickoffEn: 'October 30, 2026 • 20:00 UTC',
+    stadiumRu: 'Сантьяго Бернабеу, Мадрид',
+    stadiumEn: 'Santiago Bernabeu, Madrid',
+    refereeRu: 'Клеман Тюрпен (Франция)',
+    refereeEn: 'Clement Turpin (France)',
+    attendance: '81 044',
+    homeTeamRu: 'Реал Мадрид',
+    homeTeamEn: 'Real Madrid',
+    homeShortName: 'RMA',
+    homeLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png',
+    homeScore: 3,
+    homeFormation: '4-3-1-2',
+    awayTeamRu: 'Манчестер Сити',
+    awayTeamEn: 'Manchester City',
+    awayShortName: 'MCI',
+    awayLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/382.png',
+    awayScore: 2,
+    awayFormation: '3-2-4-1',
+    homeTeam: {
+      id: 'real-madrid',
+      nameRu: 'Реал Мадрид',
+      nameEn: 'Real Madrid',
+      shortName: 'RMA',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png',
+      score: 3,
+      formation: '4-3-1-2',
+      coachRu: 'Карло Анчелотти',
+      coachEn: 'Carlo Ancelotti'
+    },
+    awayTeam: {
+      id: 'man-city',
+      nameRu: 'Манчестер Сити',
+      nameEn: 'Manchester City',
+      shortName: 'MCI',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/382.png',
+      score: 2,
+      formation: '3-2-4-1',
+      coachRu: 'Пеп Гвардиола',
+      coachEn: 'Pep Guardiola'
+    },
+    events: [
+      {
+        id: 'rma-mci-1',
+        minute: "11'",
+        type: 'goal',
+        team: 'away',
+        playerRu: 'Эрлинг Холанд',
+        playerEn: 'Erling Haaland',
+        secondaryPlayerRu: 'Кевин Де Брюйне',
+        secondaryPlayerEn: 'Kevin De Bruyne',
+        detailRu: 'Удар в касание с линии вратарской после проникающей передачи Де Брюйне',
+        detailEn: 'First-time finish from six yards off a disguised De Bruyne through-ball',
+        scoreAfter: '0 - 1'
+      },
+      {
+        id: 'rma-mci-2',
+        minute: "26'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Винисиус Жуниор',
+        playerEn: 'Vinicius Junior',
+        secondaryPlayerRu: 'Джуд Беллингем',
+        secondaryPlayerEn: 'Jude Bellingham',
+        detailRu: 'Обводящий удар в дальний верхний угол после смещения с левого крыла',
+        detailEn: 'Curled strike into the far top corner after cutting inside from the left flank',
+        scoreAfter: '1 - 1'
+      },
+      {
+        id: 'rma-mci-3',
+        minute: "39'",
+        type: 'yellow-card',
+        team: 'away',
+        playerRu: 'Мануэль Аканджи',
+        playerEn: 'Manuel Akanji',
+        detailRu: 'Тактический фол в центральном круге против убегавшего в прорыв Мбаппе',
+        detailEn: 'Tactical pullback in the center circle to halt Mbappe on the counter'
+      },
+      {
+        id: 'rma-mci-4',
+        minute: "54'",
+        type: 'goal',
+        team: 'away',
+        playerRu: 'Фил Фоден',
+        playerEn: 'Phil Foden',
+        secondaryPlayerRu: 'Бернарду Силва',
+        secondaryPlayerEn: 'Bernardo Silva',
+        detailRu: 'Мощный удар левой ногой с 20 метров в притирку с перекладиной',
+        detailEn: 'Left-footed thunderbolt from 20 meters into the roof of the net',
+        scoreAfter: '1 - 2'
+      },
+      {
+        id: 'rma-mci-5',
+        minute: "62'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Килиан Мбаппе',
+        playerEn: 'Kylian Mbappe',
+        secondaryPlayerRu: 'Федерико Вальверде',
+        secondaryPlayerEn: 'Federico Valverde',
+        detailRu: 'Рывок за спину Рубену Диашу и точный удар низом под опорную ногу Эдерсона',
+        detailEn: 'Diagonal sprint behind Ruben Dias and low finish past Ederson',
+        scoreAfter: '2 - 2'
+      },
+      {
+        id: 'rma-mci-6',
+        minute: "69'",
+        type: 'substitution',
+        team: 'home',
+        playerRu: 'Лука Модрич',
+        playerEn: 'Luka Modric',
+        secondaryPlayerRu: 'Орельен Тчуамени',
+        secondaryPlayerEn: 'Aurelien Tchouameni',
+        detailRu: 'Переход мадридцев к более вертикальному розыгрышу мяча из глубины',
+        detailEn: 'Tactical switch to accelerate vertical ball progression from deep midfield'
+      },
+      {
+        id: 'rma-mci-7',
+        minute: "75'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Джуд Беллингем',
+        playerEn: 'Jude Bellingham',
+        secondaryPlayerRu: 'Лука Модрич',
+        secondaryPlayerEn: 'Luka Modric',
+        detailRu: 'Врывание вторым темпом в штрафную и удар головой после подачи Модрича',
+        detailEn: 'Late second-wave arrival into the box to head home Modric’s clipped cross',
+        scoreAfter: '3 - 2'
+      }
+    ],
+    stats: [
+      {
+        labelRu: 'Владение мячом',
+        labelEn: 'Ball Possession',
+        homeValue: '44%',
+        awayValue: '56%',
+        homePercent: 44,
+        awayPercent: 56
+      },
+      {
+        labelRu: 'Ожидаемые голы (xG)',
+        labelEn: 'Expected Goals (xG)',
+        homeValue: '2.48',
+        awayValue: '1.92',
+        homePercent: 56,
+        awayPercent: 44
+      },
+      {
+        labelRu: 'Удары (в створ)',
+        labelEn: 'Total Shots (On Target)',
+        homeValue: '15 (7)',
+        awayValue: '14 (6)',
+        homePercent: 52,
+        awayPercent: 48
+      },
+      {
+        labelRu: 'Большие шансы',
+        labelEn: 'Big Chances Created',
+        homeValue: '4',
+        awayValue: '3',
+        homePercent: 57,
+        awayPercent: 43
+      }
+    ],
+    reportTitleRu:
+      'Европейская классика в Мадриде: выход Модрича и гол Беллингема переворачивают дуэль с «Манчестер Сити»',
+    reportTitleEn:
+      'Modern European Classic in Madrid: Modric and Bellingham Turn the Tide Against Manchester City',
+    reportRu: [
+      'Противостояние «Реал Мадрид» и «Манчестер Сити» давно превратилось в главное тактическое зеркало современной Лиги чемпионов. Команда Пепа Гвардиолы начала встречу с привычного территориального доминирования в структуре 3-2-4-1, быстро открыв счет усилиями Эрлинга Холанда после тонкой паузы Кевина Де Брюйне в правом полуфланге.',
+      'Однако мадридцы вновь продемонстрировали уникальную способность выживать под давлением и наказывать за малейшую потерю концентрации в переходных фазах. Ответный мяч Винисиуса Жуниора на 26-й минуте и реактивный прорыв Килиана Мбаппе во втором тайме вскрыли уязвимость высокой линии «горожан» без профильного разрушителя в опорной зоне.',
+      'Решающим фактором последней четверти часа стал выход Луки Модрича на 69-й минуте. Хорватский маэстро первым же длинным переводом расшатал компактность гостей, а затем вырезал выверенную подачу на голову набежавшему из глубины Джуду Беллингему — 3:2 к 78-й минуте встречи.'
+    ],
+    reportEn: [
+      'Real Madrid against Manchester City has evolved into the defining tactical rivalry of modern Champions League football. Pep Guardiola’s visitors asserted early territorial authority in their 3-2-4-1 shape, drawing first blood in the 11th minute when Kevin De Bruyne slipped Erling Haaland through the right channel.',
+      'Yet Carlo Ancelotti’s side once again displayed their unmatched capacity to absorb pressure and punish structural exposure in transition. Vinicius Junior’s curling equalizer and Kylian Mbappe’s blistering 62nd-minute breakaway exposed the space behind City’s advanced defensive line.',
+      'The decisive swing arrived with Luka Modric’s 69th-minute introduction. Within six minutes of stepping onto the pitch, the veteran playmaker lofted an inch-perfect cross onto the forehead of a surging Jude Bellingham to hand Madrid a 3-2 lead.'
+    ],
+    relatedArticleSlugs: [
+      'man-city-bayern-munich-champions-league-tactical-blueprint',
+      'global-club-power-rankings-top-20-tactical-metrics',
+      'manchester-city-premier-league-title-race-rodri-void'
+    ],
+    telegramHighlightUrl: 'https://t.me/futbolnaya_jara/4821'
+  },
+  {
+    id: 'laliga-bar-atm',
+    leagueKey: 'la-liga',
+    leagueRu: 'Ла Лига',
+    leagueEn: 'La Liga',
+    roundRu: '12-й тур',
+    roundEn: 'Matchweek 12',
+    status: "LIVE 64'",
+    statusRu: "ИДЕТ МАТЧ • 64'",
+    statusEn: "LIVE • 64'",
+    kickoffRu: '30 октября 2026, 22:15 МСК',
+    kickoffEn: 'October 30, 2026 • 19:15 UTC',
+    stadiumRu: 'Олимпийский стадион имени Луиса Компаниса, Барселона',
+    stadiumEn: 'Estadi Olimpic Lluis Companys, Barcelona',
+    refereeRu: 'Хесус Хиль Мансано (Испания)',
+    refereeEn: 'Jesus Gil Manzano (Spain)',
+    attendance: '48 920',
+    homeTeamRu: 'Барселона',
+    homeTeamEn: 'Barcelona',
+    homeShortName: 'BAR',
+    homeLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png',
+    homeScore: 2,
+    homeFormation: '4-2-3-1',
+    awayTeamRu: 'Атлетико Мадрид',
+    awayTeamEn: 'Atletico Madrid',
+    awayShortName: 'ATM',
+    awayLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/1068.png',
+    awayScore: 1,
+    awayFormation: '5-3-2',
+    homeTeam: {
+      id: 'barcelona',
+      nameRu: 'Барселона',
+      nameEn: 'Barcelona',
+      shortName: 'BAR',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png',
+      score: 2,
+      formation: '4-2-3-1',
+      coachRu: 'Ханси Флик',
+      coachEn: 'Hansi Flick'
+    },
+    awayTeam: {
+      id: 'atletico',
+      nameRu: 'Атлетико Мадрид',
+      nameEn: 'Atletico Madrid',
+      shortName: 'ATM',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/1068.png',
+      score: 1,
+      formation: '5-3-2',
+      coachRu: 'Диего Симеоне',
+      coachEn: 'Diego Simeone'
+    },
+    events: [
+      {
+        id: 'bar-atm-1',
+        minute: "17'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Ламин Ямаль',
+        playerEn: 'Lamine Yamal',
+        secondaryPlayerRu: 'Педри',
+        secondaryPlayerEn: 'Pedri',
+        detailRu: 'Фирменный удар левой ногой с угла штрафной в дальнюю девятку ворот Облака',
+        detailEn: 'Signature left-footed curler from the corner of the box past Jan Oblak',
+        scoreAfter: '1 - 0'
+      },
+      {
+        id: 'bar-atm-2',
+        minute: "34'",
+        type: 'goal',
+        team: 'away',
+        playerRu: 'Хулиан Альварес',
+        playerEn: 'Julian Alvarez',
+        secondaryPlayerRu: 'Антуан Гризманн',
+        secondaryPlayerEn: 'Antoine Griezmann',
+        detailRu: 'Завершение молниеносной контратаки «Атлетико» ударом между ног вратарю',
+        detailEn: 'Clinical counter-attacking finish off Antoine Griezmann’s reverse pass',
+        scoreAfter: '1 - 1'
+      },
+      {
+        id: 'bar-atm-3',
+        minute: "49'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Роберт Левандовски',
+        playerEn: 'Robert Lewandowski',
+        secondaryPlayerRu: 'Ламин Ямаль',
+        secondaryPlayerEn: 'Lamine Yamal',
+        detailRu: 'Игра на опережение во вратарской после выверенного кросса Ямаля тривелой',
+        detailEn: 'Near-post redirection following Lamine Yamal’s outside-of-the-boot delivery',
+        scoreAfter: '2 - 1'
+      },
+      {
+        id: 'bar-atm-4',
+        minute: "58'",
+        type: 'red-card',
+        team: 'away',
+        playerRu: 'Коке',
+        playerEn: 'Koke',
+        detailRu: 'Вторая желтая карточка за срыв опасной атаки Педри перед радиусом штрафной',
+        detailEn: 'Second bookable offense for halting Pedri’s central surge on the edge of the arc'
+      }
+    ],
+    stats: [
+      {
+        labelRu: 'Владение мячом',
+        labelEn: 'Ball Possession',
+        homeValue: '67%',
+        awayValue: '33%',
+        homePercent: 67,
+        awayPercent: 33
+      },
+      {
+        labelRu: 'Ожидаемые голы (xG)',
+        labelEn: 'Expected Goals (xG)',
+        homeValue: '2.14',
+        awayValue: '0.86',
+        homePercent: 71,
+        awayPercent: 29
+      },
+      {
+        labelRu: 'Удары (в створ)',
+        labelEn: 'Total Shots (On Target)',
+        homeValue: '16 (8)',
+        awayValue: '6 (2)',
+        homePercent: 73,
+        awayPercent: 27
+      }
+    ],
+    reportTitleRu:
+      'Мастер-класс Ламина Ямаля на Монжуике: «Барселона» дожимает оставшийся вдесятером «Атлетико»',
+    reportTitleEn:
+      'Lamine Yamal’s Montjuic Masterclass: Barcelona Press Advantage Against Ten-Man Atletico Madrid',
+    reportRu: [
+      'Против насыщенного блока 5-3-2 Диего Симеоне «Барселона» Ханси Флика сделала ставку на максимальную ширину атаки и индивидуальную магию Ламина Ямаля. Уже на 17-й минуте девятнадцатилетний вингер раскачал Рейнилду на правом краю и уложил мяч точно в дальний верхний угол ворот Яна Облака.',
+      '«Атлетико» сумел временно восстановить равновесие до перерыва благодаря образцовому переходу из обороны в атаку с участием Антуана Гризманна и Хулиана Альвареса, однако сразу после старта второго тайма связка Ямаля и Роберта Левандовски вновь сработала безотказно.',
+      'Удаление капитана гостей Коке на 58-й минуте за фол на Педри окончательно передало инициативу в руки каталонцев, которые методично раскачивают оборону мадридцев в поисках третьего мяча.'
+    ],
+    reportEn: [
+      'Confronted with Diego Simeone’s compact 5-3-2 low block, Hansi Flick’s Barcelona leaned on maximum touchline width and the individual brilliance of Lamine Yamal. The teenager broke the deadlock in the 17th minute, isolating his marker before curling an unstoppable strike beyond Jan Oblak.',
+      'Atletico briefly restored parity through a clinical transition finished by Julian Alvarez off Antoine Griezmann’s pass, but Barcelona reclaimed the lead four minutes into the second half when Yamal’s trivela cross found Robert Lewandowski inside the six-yard box.',
+      'Koke’s 58th-minute dismissal for a second yellow card on Pedri has left Atletico down to ten men as Barcelona dominate possession in pursuit of a third goal.'
+    ],
+    relatedArticleSlugs: [
+      'barcelona-lamine-yamal-hansi-flick-high-line-evolution',
+      'real-madrid-el-clasico-tactical-autopsy-bernabeu'
+    ],
+    telegramHighlightUrl: 'https://t.me/futbolnaya_jara/4824'
+  },
+  {
+    id: 'epl-ars-liv',
+    leagueKey: 'epl',
+    leagueRu: 'Английская Премьер-лига',
+    leagueEn: 'English Premier League',
+    roundRu: '10-й тур',
+    roundEn: 'Matchweek 10',
+    status: "LIVE 83'",
+    statusRu: "ИДЕТ МАТЧ • 83'",
+    statusEn: "LIVE • 83'",
+    kickoffRu: '30 октября 2026, 21:30 МСК',
+    kickoffEn: 'October 30, 2026 • 18:30 UTC',
+    stadiumRu: 'Эмирейтс, Лондон',
+    stadiumEn: 'Emirates Stadium, London',
+    refereeRu: 'Энтони Тейлор (Англия)',
+    refereeEn: 'Anthony Taylor (England)',
+    attendance: '60 704',
+    homeTeamRu: 'Арсенал',
+    homeTeamEn: 'Arsenal',
+    homeShortName: 'ARS',
+    homeLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/359.png',
+    homeScore: 2,
+    homeFormation: '4-3-3',
+    awayTeamRu: 'Ливерпуль',
+    awayTeamEn: 'Liverpool',
+    awayShortName: 'LIV',
+    awayLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png',
+    awayScore: 2,
+    awayFormation: '4-2-3-1',
+    homeTeam: {
+      id: 'arsenal',
+      nameRu: 'Арсенал',
+      nameEn: 'Arsenal',
+      shortName: 'ARS',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/359.png',
+      score: 2,
+      formation: '4-3-3',
+      coachRu: 'Микель Артета',
+      coachEn: 'Mikel Arteta'
+    },
+    awayTeam: {
+      id: 'liverpool',
+      nameRu: 'Ливерпуль',
+      nameEn: 'Liverpool',
+      shortName: 'LIV',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png',
+      score: 2,
+      formation: '4-2-3-1',
+      coachRu: 'Арне Слот',
+      coachEn: 'Arne Slot'
+    },
+    events: [
+      {
+        id: 'ars-liv-1',
+        minute: "9'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Букайо Сака',
+        playerEn: 'Bukayo Saka',
+        secondaryPlayerRu: 'Мартин Эдегор',
+        secondaryPlayerEn: 'Martin Odegaard',
+        detailRu: 'Рывок за спину Робертсону и мощный удар под перекладину с острого угла',
+        detailEn: 'Inside-channel run behind Robertson and emphatic finish into the roof of the net',
+        scoreAfter: '1 - 0'
+      },
+      {
+        id: 'ars-liv-2',
+        minute: "24'",
+        type: 'goal',
+        team: 'away',
+        playerRu: 'Вирджил ван Дейк',
+        playerEn: 'Virgil van Dijk',
+        secondaryPlayerRu: 'Трент Александер-Арнольд',
+        secondaryPlayerEn: 'Trent Alexander-Arnold',
+        detailRu: 'Удар головой в упор после подачи углового от Александер-Арнольда',
+        detailEn: 'Towering close-range header from Trent Alexander-Arnold’s inswinging corner',
+        scoreAfter: '1 - 1'
+      },
+      {
+        id: 'ars-liv-3',
+        minute: "43'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Кай Хаверц',
+        playerEn: 'Kai Havertz',
+        secondaryPlayerRu: 'Деклан Райс',
+        secondaryPlayerEn: 'Declan Rice',
+        detailRu: 'Подрезанный удар головой в дальний угол со штрафного в исполнении Райса',
+        detailEn: 'Glancing header into the far corner from Declan Rice’s whipped free-kick',
+        scoreAfter: '2 - 1'
+      },
+      {
+        id: 'ars-liv-4',
+        minute: "69'",
+        type: 'goal',
+        team: 'away',
+        playerRu: 'Мохамед Салах',
+        playerEn: 'Mohamed Salah',
+        secondaryPlayerRu: 'Дарвин Нуньес',
+        secondaryPlayerEn: 'Darwin Nunez',
+        detailRu: 'Быстрая вертикальная трехходовка с диагональю Трента и пасом Нуньеса под удар Салаху',
+        detailEn: 'Lightning three-pass transition initiated by Alexander-Arnold and squared by Nunez',
+        scoreAfter: '2 - 2'
+      },
+      {
+        id: 'ars-liv-5',
+        minute: "72'",
+        type: 'substitution',
+        team: 'home',
+        playerRu: 'Леандро Троссард',
+        playerEn: 'Leandro Trossard',
+        secondaryPlayerRu: 'Габриэл Мартинелли',
+        secondaryPlayerEn: 'Gabriel Martinelli',
+        detailRu: 'Усиление комбинационной игры между линиями на левом фланге атаки «Арсенала»',
+        detailEn: 'Fresh legs in the left half-space to test Liverpool’s right defensive flank'
+      }
+    ],
+    stats: [
+      {
+        labelRu: 'Владение мячом',
+        labelEn: 'Ball Possession',
+        homeValue: '48%',
+        awayValue: '52%',
+        homePercent: 48,
+        awayPercent: 52
+      },
+      {
+        labelRu: 'Ожидаемые голы (xG)',
+        labelEn: 'Expected Goals (xG)',
+        homeValue: '1.78',
+        awayValue: '1.84',
+        homePercent: 49,
+        awayPercent: 51
+      },
+      {
+        labelRu: 'Удары (в створ)',
+        labelEn: 'Total Shots (On Target)',
+        homeValue: '12 (5)',
+        awayValue: '13 (5)',
+        homePercent: 48,
+        awayPercent: 52
+      }
+    ],
+    reportTitleRu:
+      'Битва за вершину АПЛ в Северном Лондоне: ван Дейк и Салах дважды отыгрывают преимущество «Арсенала»',
+    reportTitleEn:
+      'Summit Clash in North London: Van Dijk and Salah Twice Pull Liverpool Level at Arsenal',
+    reportRu: [
+      'Центральный матч десятого тура Премьер-лиги на стадионе «Эмирейтс» полностью оправдал статус главного тактического противостояния английской осени. Первый тайм прошел под знаком эталонных стандартов: на быстрый гол Букайо Сака с игры капитан гостей Вирджил ван Дейк ответил точным ударом головой после подачи углового, но перед самым перерывом Деклан Райс и Кай Хаверц вновь вывели лондонцев вперед.',
+      'Во второй половине встречи Арне Слот перехватил инициативу в центре поля за счет более высокой позиции Райана Гравенберха и Доминика Собослаи. «Арсенал» оказался вынужден опуститься в глубокий позиционный блок, охраняя минимальный перевес.',
+      'Расплата наступила на 69-й минуте: фирменная разрезающая передача Трента Александер-Арнольда по правому коридору вывела Дарвина Нуньеса на оперативный простор, а Мохамед Салах хладнокровно вколотил мяч в сетку, установив счет 2:2 перед финальным штурмом.'
+    ],
+    reportEn: [
+      'Matchweek 10’s headline fixture at the Emirates Stadium delivered every ounce of tactical intensity promised by a meeting of Premier League title contenders. After Bukayo Saka fired Arsenal ahead inside nine minutes, the first half became a showcase of dead-ball execution as Virgil van Dijk and Kai Havertz traded headers.',
+      'Following the interval, Arne Slot tilted midfield control toward Liverpool by advancing Ryan Gravenberch and Alexis Mac Allister ten yards higher, pinning Arsenal into a deeper defensive shell.',
+      'Liverpool’s patience paid off in the 69th minute when Trent Alexander-Arnold split the left channel for Darwin Nunez to tee up Mohamed Salah for a clinical 2-2 equalizer.'
+    ],
+    relatedArticleSlugs: [
+      'virgil-van-dijk-liverpool-arsenal-title-statement',
+      'trent-alexander-arnold-real-madrid-liverpool-contract-dossier',
+      'liverpool-transfer-move-monaco-midfielder-maghnes-akliouche'
+    ],
+    telegramHighlightUrl: 'https://t.me/futbolnaya_jara/4829'
+  },
+  {
+    id: 'seriea-int-juv',
+    leagueKey: 'serie-a',
+    leagueRu: 'Серия А',
+    leagueEn: 'Serie A',
+    roundRu: '10-й тур • Дерби Италии',
+    roundEn: 'Matchweek 10 • Derby d’Italia',
+    status: 'FT',
+    statusRu: 'ЗАВЕРШЕН • 2:0',
+    statusEn: 'FULL TIME • 2-0',
+    kickoffRu: '30 октября 2026, 20:00 МСК',
+    kickoffEn: 'October 30, 2026 • 17:00 UTC',
+    stadiumRu: 'Джузеппе Меацца (Сан-Сиро), Милан',
+    stadiumEn: 'Stadio Giuseppe Meazza (San Siro), Milan',
+    refereeRu: 'Марко Гуида (Италия)',
+    refereeEn: 'Marco Guida (Italy)',
+    attendance: '75 584',
+    homeTeamRu: 'Интер',
+    homeTeamEn: 'Inter Milan',
+    homeShortName: 'INT',
+    homeLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/110.png',
+    homeScore: 2,
+    homeFormation: '3-5-2',
+    awayTeamRu: 'Ювентус',
+    awayTeamEn: 'Juventus',
+    awayShortName: 'JUV',
+    awayLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/111.png',
+    awayScore: 0,
+    awayFormation: '4-2-3-1',
+    homeTeam: {
+      id: 'inter',
+      nameRu: 'Интер',
+      nameEn: 'Inter Milan',
+      shortName: 'INT',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/110.png',
+      score: 2,
+      formation: '3-5-2',
+      coachRu: 'Симоне Индзаги',
+      coachEn: 'Simone Inzaghi'
+    },
+    awayTeam: {
+      id: 'juventus',
+      nameRu: 'Ювентус',
+      nameEn: 'Juventus',
+      shortName: 'JUV',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/111.png',
+      score: 0,
+      formation: '4-2-3-1',
+      coachRu: 'Тьяго Мотта',
+      coachEn: 'Thiago Motta'
+    },
+    events: [
+      {
+        id: 'int-juv-1',
+        minute: "22'",
+        type: 'penalty-goal',
+        team: 'home',
+        playerRu: 'Хакан Чалханоглу',
+        playerEn: 'Hakan Calhanoglu',
+        detailRu: 'Безукоризненный удар с пенальти в левый верхний угол после фола на Маркусе Тюраме',
+        detailEn: 'Unstoppable penalty into the top-left corner after Marcus Thuram was fouled in the box',
+        scoreAfter: '1 - 0'
+      },
+      {
+        id: 'int-juv-2',
+        minute: "51'",
+        type: 'yellow-card',
+        team: 'away',
+        playerRu: 'Мануэль Локателли',
+        playerEn: 'Manuel Locatelli',
+        detailRu: 'Грубый подкат в центральной зоне против Николо Бареллы',
+        detailEn: 'Late sliding challenge on Nicolo Barella in central midfield'
+      },
+      {
+        id: 'int-juv-3',
+        minute: "67'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Лаутаро Мартинес',
+        playerEn: 'Lautaro Martinez',
+        secondaryPlayerRu: 'Федерико Димарко',
+        secondaryPlayerEn: 'Federico Dimarco',
+        detailRu: 'Удар в касание с одиннадцатиметровой отметки после прострела Димарко с левого крыла',
+        detailEn: 'First-time clinical sweep from the penalty spot following Dimarco’s low cutback',
+        scoreAfter: '2 - 0'
+      },
+      {
+        id: 'int-juv-4',
+        minute: "78'",
+        type: 'substitution',
+        team: 'home',
+        playerRu: 'Петр Зелиньски',
+        playerEn: 'Piotr Zielinski',
+        secondaryPlayerRu: 'Генрих Мхитарян',
+        secondaryPlayerEn: 'Henrikh Mkhitaryan',
+        detailRu: 'Освежение центральной оси полузащиты для удержания контроля мяча',
+        detailEn: 'Fresh legs in central midfield to see out the clean-sheet victory'
+      }
+    ],
+    stats: [
+      {
+        labelRu: 'Владение мячом',
+        labelEn: 'Ball Possession',
+        homeValue: '54%',
+        awayValue: '46%',
+        homePercent: 54,
+        awayPercent: 46
+      },
+      {
+        labelRu: 'Ожидаемые голы (xG)',
+        labelEn: 'Expected Goals (xG)',
+        homeValue: '2.21',
+        awayValue: '0.64',
+        homePercent: 78,
+        awayPercent: 22
+      },
+      {
+        labelRu: 'Удары (в створ)',
+        labelEn: 'Total Shots (On Target)',
+        homeValue: '15 (6)',
+        awayValue: '8 (2)',
+        homePercent: 65,
+        awayPercent: 35
+      }
+    ],
+    reportTitleRu:
+      'Тактический монолит Симоне Индзаги: «Интер» всухую переиграл «Ювентус» в Дерби Италии',
+    reportTitleEn:
+      'Simone Inzaghi’s Tactical Monolith: Inter Blank Juventus 2-0 in Commanding Derby d’Italia',
+    reportRu: [
+      'Дерби Италии на переполненном «Сан-Сиро» стало демонстрацией зрелости чемпионской структуры «Интера». Подопечные Симоне Индзаги с первых минут перекрыли кислород полузащите «Ювентуса», а на 22-й минуте Хакан Чалханоглу продлил свою безупречную серию пенальти после фола на реактивном Маркусе Тюраме.',
+      'Во втором тайме «нерадзурри» образцово использовали ширину поля через подключения Алессандро Бастони и Федерико Димарко. Именно прострел левого латераля сборной Италии на 67-й минуте позволил капитану Лаутаро Мартинесу снять все вопросы о победителе точным ударом в касание.',
+      'Оборонительная тройка хозяев не позволила Душану Влаховичу нанести ни одного прицельного удара из пределов вратарской, оформив гроссмейстерскую победу со счетом 2:0.'
+    ],
+    reportEn: [
+      'The Derby d’Italia in front of over 75,000 supporters at San Siro showcased the tactical maturity of Simone Inzaghi’s Inter. The hosts suffocated Juventus’s central progression from the opening whistle, taking a 22nd-minute lead when Hakan Calhanoglu dispatched an unstoppable penalty after Marcus Thuram was clipped inside the box.',
+      'After the break, Inter exploited the flanks ruthlessly through Alessandro Bastoni and Federico Dimarco. In the 67th minute, Dimarco’s whipped low cutback found captain Lautaro Martinez, who swept home first-time to double the advantage.',
+      'Inter’s back three marshaled Dusan Vlahovic effortlessly throughout the ninety minutes, sealing a clinical 2-0 clean-sheet triumph.'
+    ],
+    relatedArticleSlugs: [
+      'inter-ac-milan-new-725m-san-siro-stadium-project',
+      'christian-pulisic-ac-milan-contract-extension-serie-a'
+    ],
+    telegramHighlightUrl: 'https://t.me/futbolnaya_jara/4815'
+  },
+  {
+    id: 'saudi-nas-hil',
+    leagueKey: 'saudi',
+    leagueRu: 'Саудовская Про-лига',
+    leagueEn: 'Saudi Pro League',
+    roundRu: '9-й тур • Дерби Эр-Рияда',
+    roundEn: 'Matchweek 9 • Riyadh Derby',
+    status: "LIVE 51'",
+    statusRu: "ИДЕТ МАТЧ • 51'",
+    statusEn: "LIVE • 51'",
+    kickoffRu: '30 октября 2026, 21:00 МСК',
+    kickoffEn: 'October 30, 2026 • 18:00 UTC',
+    stadiumRu: 'Аль-Авваль Парк, Эр-Рияд',
+    stadiumEn: 'Al-Awwal Park, Riyadh',
+    refereeRu: 'Шимон Марчиняк (Польша)',
+    refereeEn: 'Szymon Marciniak (Poland)',
+    attendance: '25 000',
+    homeTeamRu: 'Аль-Наср',
+    homeTeamEn: 'Al-Nassr',
+    homeShortName: 'NAS',
+    homeLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/817.png',
+    homeScore: 2,
+    homeFormation: '4-2-3-1',
+    awayTeamRu: 'Аль-Хиляль',
+    awayTeamEn: 'Al-Hilal',
+    awayShortName: 'HIL',
+    awayLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/929.png',
+    awayScore: 1,
+    awayFormation: '4-3-3',
+    homeTeam: {
+      id: 'al-nassr',
+      nameRu: 'Аль-Наср',
+      nameEn: 'Al-Nassr',
+      shortName: 'NAS',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/817.png',
+      score: 2,
+      formation: '4-2-3-1',
+      coachRu: 'Стефано Пиоли',
+      coachEn: 'Stefano Pioli'
+    },
+    awayTeam: {
+      id: 'al-hilal',
+      nameRu: 'Аль-Хиляль',
+      nameEn: 'Al-Hilal',
+      shortName: 'HIL',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/929.png',
+      score: 1,
+      formation: '4-3-3',
+      coachRu: 'Жорже Жезуш',
+      coachEn: 'Jorge Jesus'
+    },
+    events: [
+      {
+        id: 'nas-hil-1',
+        minute: "19'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Криштиану Роналду',
+        playerEn: 'Cristiano Ronaldo',
+        secondaryPlayerRu: 'Садио Мане',
+        secondaryPlayerEn: 'Sadio Mane',
+        detailRu: 'Прыжок на высоту 2,56 метра и мощный удар головой после навеса Садио Мане',
+        detailEn: 'Towering header into the far corner off Sadio Mane’s pinpoint cross',
+        scoreAfter: '1 - 0'
+      },
+      {
+        id: 'nas-hil-2',
+        minute: "37'",
+        type: 'goal',
+        team: 'away',
+        playerRu: 'Александар Митрович',
+        playerEn: 'Aleksandar Mitrovic',
+        secondaryPlayerRu: 'Сергей Милинкович-Савич',
+        secondaryPlayerEn: 'Sergej Milinkovic-Savic',
+        detailRu: 'Удар с разворота из центральной зоны штрафной после скидки Милинковича-Савича',
+        detailEn: 'Sharp half-volley inside the box following Milinkovic-Savic’s cushioned knockdown',
+        scoreAfter: '1 - 1'
+      },
+      {
+        id: 'nas-hil-3',
+        minute: "48'",
+        type: 'penalty-goal',
+        team: 'home',
+        playerRu: 'Криштиану Роналду',
+        playerEn: 'Cristiano Ronaldo',
+        detailRu: 'Уверенный удар с одиннадцатиметровой отметки — дубль капитана «Аль-Насра»',
+        detailEn: 'Emphatic penalty conversion to complete his brace early in the second half',
+        scoreAfter: '2 - 1'
+      }
+    ],
+    stats: [
+      {
+        labelRu: 'Владение мячом',
+        labelEn: 'Ball Possession',
+        homeValue: '49%',
+        awayValue: '51%',
+        homePercent: 49,
+        awayPercent: 51
+      },
+      {
+        labelRu: 'Ожидаемые голы (xG)',
+        labelEn: 'Expected Goals (xG)',
+        homeValue: '1.95',
+        awayValue: '1.31',
+        homePercent: 60,
+        awayPercent: 40
+      },
+      {
+        labelRu: 'Удары (в створ)',
+        labelEn: 'Total Shots (On Target)',
+        homeValue: '11 (6)',
+        awayValue: '10 (4)',
+        homePercent: 52,
+        awayPercent: 48
+      }
+    ],
+    reportTitleRu:
+      'Дубль Криштиану Роналду в дерби Эр-Рияда: «Аль-Наср» ведет в принципиальном матче против «Аль-Хиляля»',
+    reportTitleEn:
+      'Cristiano Ronaldo Brace Ignites Riyadh Derby as Al-Nassr Lead Al-Hilal at Al-Awwal Park',
+    reportRu: [
+      'Главное дерби Ближнего Востока на стадионе «Аль-Авваль Парк» началось под диктовку хозяев, ведомых Криштиану Роналду. На 19-й минуте португальский капитан замкнул кросс Садио Мане фирменным ударом головой в противоход Яссину Буну.',
+      '«Аль-Хиляль» ответил сербской комбинацией Сергея Милинковича-Савича и Александара Митровича в концовке первого тайма, однако сразу после перерыва Роналду вновь вывел команду Стефано Пиоли вперед, безупречно реализовав одиннадцатиметровый удар.'
+    ],
+    reportEn: [
+      'The Riyadh Derby at Al-Awwal Park burst into life through Cristiano Ronaldo’s enduring aerial prowess, as the Al-Nassr captain rose to power home Sadio Mane’s cross in the 19th minute.',
+      'Although Aleksandar Mitrovic leveled before the interval off a Sergej Milinkovic-Savic knockdown, Ronaldo restored Al-Nassr’s advantage from the penalty spot three minutes into the second half.'
+    ],
+    relatedArticleSlugs: [
+      'global-club-power-rankings-top-20-tactical-metrics'
+    ],
+    telegramHighlightUrl: 'https://t.me/futbolnaya_jara/4830'
+  },
+  {
+    id: 'ucl-bay-psg',
+    leagueKey: 'ucl',
+    leagueRu: 'Лига чемпионов УЕФА',
+    leagueEn: 'UEFA Champions League',
+    roundRu: 'Общий этап • Тур 4',
+    roundEn: 'League Phase • Matchday 4',
+    status: '22:00 MSK',
+    statusRu: 'МАТЧ ДНЯ • 22:00 МСК',
+    statusEn: 'FEATURED CLASH • 20:00 UTC',
+    kickoffRu: '30 октября 2026, 22:00 МСК',
+    kickoffEn: 'October 30, 2026 • 20:00 UTC',
+    stadiumRu: 'Альянц Арена, Мюнхен',
+    stadiumEn: 'Allianz Arena, Munich',
+    refereeRu: 'Иштван Ковач (Румыния)',
+    refereeEn: 'Istvan Kovacs (Romania)',
+    attendance: '75 024',
+    homeTeamRu: 'Бавария',
+    homeTeamEn: 'Bayern Munich',
+    homeShortName: 'BAY',
+    homeLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png',
+    homeScore: 2,
+    homeFormation: '4-2-3-1',
+    awayTeamRu: 'ПСЖ',
+    awayTeamEn: 'Paris Saint-Germain',
+    awayShortName: 'PSG',
+    awayLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png',
+    awayScore: 1,
+    awayFormation: '4-3-3',
+    homeTeam: {
+      id: 'bayern',
+      nameRu: 'Бавария',
+      nameEn: 'Bayern Munich',
+      shortName: 'BAY',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/132.png',
+      score: 2,
+      formation: '4-2-3-1',
+      coachRu: 'Венсан Компани',
+      coachEn: 'Vincent Kompany'
+    },
+    awayTeam: {
+      id: 'psg',
+      nameRu: 'ПСЖ',
+      nameEn: 'Paris Saint-Germain',
+      shortName: 'PSG',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/160.png',
+      score: 1,
+      formation: '4-3-3',
+      coachRu: 'Луис Энрике',
+      coachEn: 'Luis Enrique'
+    },
+    events: [
+      {
+        id: 'bay-psg-1',
+        minute: "15'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Гарри Кейн',
+        playerEn: 'Harry Kane',
+        secondaryPlayerRu: 'Майкл Олисе',
+        secondaryPlayerEn: 'Michael Olise',
+        detailRu: 'Удар в нижний угол после смещения Олисе с правого фланга и тонкого паса вразрез',
+        detailEn: 'Low clinical finish after Michael Olise drifted inside from the right wing',
+        scoreAfter: '1 - 0'
+      },
+      {
+        id: 'bay-psg-2',
+        minute: "38'",
+        type: 'goal',
+        team: 'away',
+        playerRu: 'Ашраф Хакими',
+        playerEn: 'Achraf Hakimi',
+        secondaryPlayerRu: 'Витинья',
+        secondaryPlayerEn: 'Vitinha',
+        detailRu: 'Стремительное подключение правого защитника в центр штрафной и удар под перекладину',
+        detailEn: 'Blistering blind-side surge into the penalty box to rifle home Vitinha’s pass',
+        scoreAfter: '1 - 1'
+      },
+      {
+        id: 'bay-psg-3',
+        minute: "64'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Джамал Мусиала',
+        playerEn: 'Jamal Musiala',
+        secondaryPlayerRu: 'Гарри Кейн',
+        secondaryPlayerEn: 'Harry Kane',
+        detailRu: 'Сольный проход через двух защитников после стенки с опустившимся в глубину Кейном',
+        detailEn: 'Slaloming solo finish inside the box following a one-two with deep-lying Harry Kane',
+        scoreAfter: '2 - 1'
+      }
+    ],
+    stats: [
+      {
+        labelRu: 'Владение мячом',
+        labelEn: 'Ball Possession',
+        homeValue: '53%',
+        awayValue: '47%',
+        homePercent: 53,
+        awayPercent: 47
+      },
+      {
+        labelRu: 'Ожидаемые голы (xG)',
+        labelEn: 'Expected Goals (xG)',
+        homeValue: '2.08',
+        awayValue: '1.42',
+        homePercent: 59,
+        awayPercent: 41
+      },
+      {
+        labelRu: 'Удары (в створ)',
+        labelEn: 'Total Shots (On Target)',
+        homeValue: '14 (6)',
+        awayValue: '11 (4)',
+        homePercent: 56,
+        awayPercent: 44
+      }
+    ],
+    reportTitleRu:
+      'Дуэль высокого прессинга на «Альянц Арене»: связка Кейна и Мусиалы против гибридных атак Хакими',
+    reportTitleEn:
+      'High-Pressing Duel at the Allianz Arena: Kane and Musiala Outduel Hakimi’s Hybrid Surges',
+    reportRu: [
+      'Встреча «Баварии» Венсана Компани и «ПСЖ» Луиса Энрике стала столкновением двух самых смелых прессинг-систем европейского сезона. Хозяева открыли счет на 15-й минуте благодаря сыгранности Майкла Олисе и Гарри Кейна в правом полуфланге.',
+      'Парижане ответили своим главным тактическим оружием — вертикальным рывком Ашрафа Хакими в зону центрфорварда под передачу Витиньи, однако во втором тайме индивидуальное мастерство Джамала Мусиалы после тонкой скидки Кейна принесло мюнхенцам решающий перевес.'
+    ],
+    reportEn: [
+      'Bayern Munich’s meeting with Paris Saint-Germain at the Allianz Arena pitted two of Europe’s boldest pressing systems head-to-head. Harry Kane opened the scoring inside fifteen minutes after combining smoothly with Michael Olise in the right half-space.',
+      'Although Achraf Hakimi equalized with a trademark blind-side run into the penalty area off Vitinha’s pass, Jamal Musiala settled the contest in the 64th minute after playing a sharp wall-pass with Kane.'
+    ],
+    relatedArticleSlugs: [
+      'achraf-hakimi-hat-trick-psg-luis-enrique-positional-freedom',
+      'harry-kane-gerd-muller-trophy-bayern-scoring-evolution',
+      'man-city-bayern-munich-champions-league-tactical-blueprint'
+    ],
+    telegramHighlightUrl: 'https://t.me/futbolnaya_jara/4832'
+  },
+  {
+    id: 'match-el-clasico',
+    leagueKey: 'la-liga',
+    leagueRu: 'Ла Лига • Эль-Класико',
+    leagueEn: 'La Liga • El Clasico',
+    roundRu: '11-й тур',
+    roundEn: 'Matchweek 11',
+    status: 'FT',
+    statusRu: 'ЗАВЕРШЕН • 3:2',
+    statusEn: 'FULL TIME • 3-2',
+    kickoffRu: '30 октября 2026, 23:00 МСК',
+    kickoffEn: 'October 30, 2026 • 20:00 UTC',
+    stadiumRu: 'Сантьяго Бернабеу, Мадрид',
+    stadiumEn: 'Santiago Bernabeu, Madrid',
+    refereeRu: 'Хосе Мария Санчес Мартинес (Испания)',
+    refereeEn: 'Jose Maria Sanchez Martinez (Spain)',
+    attendance: '83 186',
+    homeTeamRu: 'Реал Мадрид',
+    homeTeamEn: 'Real Madrid',
+    homeShortName: 'RMA',
+    homeLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png',
+    homeScore: 3,
+    homeFormation: '4-3-1-2',
+    awayTeamRu: 'Барселона',
+    awayTeamEn: 'Barcelona',
+    awayShortName: 'BAR',
+    awayLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png',
+    awayScore: 2,
+    awayFormation: '4-2-3-1',
+    homeTeam: {
+      id: 'real-madrid',
+      nameRu: 'Реал Мадрид',
+      nameEn: 'Real Madrid',
+      shortName: 'RMA',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png',
+      score: 3,
+      formation: '4-3-1-2',
+      coachRu: 'Карло Анчелотти',
+      coachEn: 'Carlo Ancelotti'
+    },
+    awayTeam: {
+      id: 'barcelona',
+      nameRu: 'Барселона',
+      nameEn: 'Barcelona',
+      shortName: 'BAR',
+      logoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png',
+      score: 2,
+      formation: '4-2-3-1',
+      coachRu: 'Ханси Флик',
+      coachEn: 'Hansi Flick'
+    },
+    events: [
+      {
+        id: 'elc-1',
+        minute: "14'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Килиан Мбаппе',
+        playerEn: 'Kylian Mbappe',
+        secondaryPlayerRu: 'Джуд Беллингем',
+        secondaryPlayerEn: 'Jude Bellingham',
+        detailRu: 'Диагональный рывок из глубины за спину Кубарси и мягкий удар над плечом тер Штегена',
+        detailEn: 'Timed curved sprint from deep behind Cubarsi and dinked finish over ter Stegen',
+        scoreAfter: '1 - 0'
+      },
+      {
+        id: 'elc-2',
+        minute: "29'",
+        type: 'goal',
+        team: 'away',
+        playerRu: 'Ламин Ямаль',
+        playerEn: 'Lamine Yamal',
+        secondaryPlayerRu: 'Педри',
+        secondaryPlayerEn: 'Pedri',
+        detailRu: 'Удар внешней стороной левой стопы в дальний верхний угол с 17 метров',
+        detailEn: 'Audacious left-footed trivela curler into the top corner from 17 yards',
+        scoreAfter: '1 - 1'
+      },
+      {
+        id: 'elc-3',
+        minute: "51'",
+        type: 'goal',
+        team: 'away',
+        playerRu: 'Роберт Левандовски',
+        playerEn: 'Robert Lewandowski',
+        secondaryPlayerRu: 'Ламин Ямаль',
+        secondaryPlayerEn: 'Lamine Yamal',
+        detailRu: 'Удар головой в противоход Куртуа после радиоуправляемой подачи Ямаля',
+        detailEn: 'Cushioned header back across Courtois from Lamine Yamal’s pinpoint cross',
+        scoreAfter: '1 - 2'
+      },
+      {
+        id: 'elc-4',
+        minute: "63'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Килиан Мбаппе',
+        playerEn: 'Kylian Mbappe',
+        secondaryPlayerRu: 'Винисиус Жуниор',
+        secondaryPlayerEn: 'Vinicius Junior',
+        detailRu: 'Завершение контратаки 2-в-1 после прострела Винисиуса вдоль линии вратарской',
+        detailEn: 'Clinical tap-in to cap a blistering two-on-one transition led by Vinicius Junior',
+        scoreAfter: '2 - 2'
+      },
+      {
+        id: 'elc-5',
+        minute: "68'",
+        type: 'substitution',
+        team: 'home',
+        playerRu: 'Лука Модрич',
+        playerEn: 'Luka Modric',
+        secondaryPlayerRu: 'Орельен Тчуамени',
+        secondaryPlayerEn: 'Aurelien Tchouameni',
+        detailRu: 'Ключевая тактическая замена Анчелотти для контроля ритма и разрезающих передач',
+        detailEn: 'Ancelotti’s decisive midfield adjustment to unlock Barcelona’s high line'
+      },
+      {
+        id: 'elc-6',
+        minute: "79'",
+        type: 'goal',
+        team: 'home',
+        playerRu: 'Килиан Мбаппе',
+        playerEn: 'Kylian Mbappe',
+        secondaryPlayerRu: 'Федерико Вальверде',
+        secondaryPlayerEn: 'Federico Valverde',
+        detailRu: 'Хет-трик Мбаппе: выход один на один после предголевой передачи Модрича и прострела Вальверде',
+        detailEn: 'Hat-trick complete: clinical finish after Modric released Valverde down the right channel',
+        scoreAfter: '3 - 2'
+      },
+      {
+        id: 'elc-7',
+        minute: "84'",
+        type: 'substitution',
+        team: 'home',
+        playerRu: 'Эндрик',
+        playerEn: 'Endrick',
+        secondaryPlayerRu: 'Килиан Мбаппе',
+        secondaryPlayerEn: 'Kylian Mbappe',
+        detailRu: 'Стоячая овация «Сантьяго Бернабеу» автору хет-трика и свежий прессинг от Эндрика',
+        detailEn: 'Standing ovation at the Bernabeu for the hat-trick hero as Endrick enters'
+      }
+    ],
+    stats: [
+      {
+        labelRu: 'Владение мячом',
+        labelEn: 'Ball Possession',
+        homeValue: '46%',
+        awayValue: '54%',
+        homePercent: 46,
+        awayPercent: 54
+      },
+      {
+        labelRu: 'Ожидаемые голы (xG)',
+        labelEn: 'Expected Goals (xG)',
+        homeValue: '2.84',
+        awayValue: '2.05',
+        homePercent: 58,
+        awayPercent: 42
+      },
+      {
+        labelRu: 'Удары (в створ)',
+        labelEn: 'Total Shots (On Target)',
+        homeValue: '17 (9)',
+        awayValue: '14 (6)',
+        homePercent: 55,
+        awayPercent: 45
+      },
+      {
+        labelRu: 'Офсайды',
+        labelEn: 'Offsides',
+        homeValue: '4',
+        awayValue: '1',
+        homePercent: 80,
+        awayPercent: 20
+      }
+    ],
+    reportTitleRu:
+      'Хет-трик Мбаппе против рекорда Ямаля: «Реал Мадрид» одержал волевую победу 3:2 в «Эль-Класико»',
+    reportTitleEn:
+      'Mbappe’s Hat-Trick Outshines Yamal’s Historic Night as Real Madrid Edge Barcelona 3-2 in El Clasico',
+    reportRu: [
+      'Осеннее «Эль-Класико» на «Сантьяго Бернабеу» вошло в золотой фонд испанского футбола как дуэль двух противоположных игровых философий. Ультравысокая линия обороны Ханси Флика на протяжении сорока минут держала хозяев в напряжении, а феноменальный Ламин Ямаль записал на свой счет гол и результативную передачу на Роберта Левандовски к 51-й минуте.',
+      'Перелом наступил тогда, когда «Реал» отказался от прямолинейных забросов в пользу подготовленных врываний из глубины через Джуда Беллингема и Федерико Вальверде. Килиан Мбаппе скорректировал угол старта своих рывков и сначала сравнял счет с передачи Винисиуса на 63-й минуте, а на 79-й минуте оформил свой первый хет-трик в «Эль-Класико».',
+      'Выход Луки Модрича в середине второго тайма и энергичное появление Эндрика в концовке позволили мадридцам спокойно довести дело до победы 3:2 и возглавить турнирную таблицу Ла Лиги.'
+    ],
+    reportEn: [
+      'Autumn’s El Clasico at the Santiago Bernabeu delivered an instant tactical classic between contrasting footballing ideologies. Hansi Flick’s ultra-high line initially disrupted Madrid’s rhythm, while teenage phenomenon Lamine Yamal curled home a stunning equalizer and assisted Robert Lewandowski to put Barcelona 2-1 ahead early in the second half.',
+      'Madrid’s response hinged on recalibrating their launch angles through Jude Bellingham and Federico Valverde. Starting his sprints deeper inside his own half, Kylian Mbappe leveled in the 63rd minute off a Vinicius Junior square ball before completing a historic Bernabeu hat-trick in the 79th minute.',
+      'Guided by Luka Modric’s late tempo control and a lively cameo from Endrick, Carlo Ancelotti’s side closed out a 3-2 victory to reclaim top spot in La Liga.'
+    ],
+    relatedArticleSlugs: [
+      'real-madrid-el-clasico-tactical-autopsy-bernabeu',
+      'barcelona-lamine-yamal-hansi-flick-high-line-evolution'
+    ],
+    telegramHighlightUrl: 'https://t.me/futbolnaya_jara'
+  }
+];
+
+export const EDITORIAL_TRANSFERS: TransferDealItem[] = [
+  {
+    id: 'tr-trent-rma',
+    playerRu: 'Трент Александер-Арнольд',
+    playerEn: 'Trent Alexander-Arnold',
+    positionRu: 'Правый защитник',
+    positionEn: 'Right-Back',
+    age: 28,
+    fromClubRu: 'Ливерпуль',
+    fromClubEn: 'Liverpool',
+    fromClubLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png',
+    toClubRu: 'Реал Мадрид',
+    toClubEn: 'Real Madrid',
+    toClubLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/86.png',
+    feeRu: 'Переговоры по контракту / приоритетная цель',
+    feeEn: 'Priority Target / Contract Talks',
+    status: 'advanced',
+    statusLabelRu: 'Продвинутая стадия',
+    statusLabelEn: 'Advanced Talks',
+    reliability: 90,
+    source: 'The Athletic / David Ornstein',
+    summaryRu:
+      'Мадридский «Реал» рассматривает вице-капитана «Ливерпуля» как ключевое усиление правого фланга обороны, пока мерсисайдцы ведут диалог о продлении соглашения.',
+    summaryEn:
+      'Real Madrid have identified Liverpool’s vice-captain as their marquee right-sided target while Anfield officials push to finalize a contract renewal.',
+    relatedArticleSlug: 'trent-alexander-arnold-real-madrid-liverpool-contract-dossier'
+  },
+  {
+    id: 'tr-pulisic-milan',
+    playerRu: 'Кристиан Пулишич',
+    playerEn: 'Christian Pulisic',
+    positionRu: 'Атакующий полузащитник / Вингер',
+    positionEn: 'Attacking Midfielder / Winger',
+    age: 28,
+    fromClubRu: 'Милан',
+    fromClubEn: 'AC Milan',
+    fromClubLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/103.png',
+    toClubRu: 'Милан (до 2029)',
+    toClubEn: 'AC Milan (Extension to 2029)',
+    toClubLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/103.png',
+    feeRu: 'Официальное продление контракта',
+    feeEn: 'Official Contract Extension',
+    status: 'confirmed',
+    statusLabelRu: 'Согласовано',
+    statusLabelEn: 'Confirmed',
+    reliability: 100,
+    source: 'AC Milan Official / Fabrizio Romano',
+    summaryRu:
+      '«Милан» согласовал новый долгосрочный контракт с лидером сборной США до лета 2029 года с повышением оклада до уровня топ-звезд Серии А.',
+    summaryEn:
+      'AC Milan have locked in a long-term extension through 2029 on upgraded wages for their most productive attacking player.',
+    relatedArticleSlug: 'christian-pulisic-ac-milan-contract-extension-serie-a'
+  },
+  {
+    id: 'tr-akliouche-liv',
+    playerRu: 'Магнес Аклиуш',
+    playerEn: 'Maghnes Akliouche',
+    positionRu: 'Атакующий полузащитник',
+    positionEn: 'Attacking Midfielder',
+    age: 24,
+    fromClubRu: 'Монако',
+    fromClubEn: 'AS Monaco',
+    fromClubLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/174.png',
+    toClubRu: 'Ливерпуль',
+    toClubEn: 'Liverpool',
+    toClubLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/364.png',
+    feeRu: 'Оценка €58 млн',
+    feeEn: '€58M Valuation',
+    status: 'negotiating',
+    statusLabelRu: 'Консультации со скаутами',
+    statusLabelEn: 'Scouting & Talks',
+    reliability: 75,
+    source: 'L’Équipe / RMC Sport',
+    summaryRu:
+      'Скаутский департамент «Ливерпуля» четырежды просматривал креативного хавбека «Монако» в матчах Лиги чемпионов и готовит почву для трансфера.',
+    summaryEn:
+      'Liverpool scouts have attended four consecutive AS Monaco fixtures to evaluate the 24-year-old French playmaker.',
+    relatedArticleSlug: 'liverpool-transfer-move-monaco-midfielder-maghnes-akliouche'
+  },
+  {
+    id: 'tr-yamal-barca',
+    playerRu: 'Ламин Ямаль',
+    playerEn: 'Lamine Yamal',
+    positionRu: 'Правый вингер',
+    positionEn: 'Right Winger',
+    age: 19,
+    fromClubRu: 'Барселона',
+    fromClubEn: 'Barcelona',
+    fromClubLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png',
+    toClubRu: 'Барселона (клаусула €1 млрд)',
+    toClubEn: 'Barcelona (€1B Clause)',
+    toClubLogoUrl: 'https://a.espncdn.com/i/teamlogos/soccer/500/83.png',
+    feeRu: 'Отступные €1 000 млн',
+    feeEn: '€1,000M Release Clause',
+    status: 'confirmed',
+    statusLabelRu: 'Контракт закреплен',
+    statusLabelEn: 'Locked In',
+    reliability: 100,
+    source: 'FC Barcelona Official',
+    summaryRu:
+      'Каталонский клуб защитил своего главного вундеркинда долгосрочным соглашением до 2031 года с отступными в один миллиард евро.',
+    summaryEn:
+      'Barcelona have secured their generational academy graduate on a long-term deal through 2031 protected by a €1B release clause.',
+    relatedArticleSlug: 'barcelona-lamine-yamal-hansi-flick-high-line-evolution'
+  }
+];
