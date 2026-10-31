@@ -56,6 +56,10 @@ export const REAL_EDITORIAL_ARTICLES: EditorialArticle[] = (
   imageUrl: a.imageUrl,
   imageCaptionRu: a.imageCaptionRu,
   imageCaptionEn: a.imageCaptionEn,
+  clubLogoUrl:
+    SNAPSHOT_CLUB_LOGOS[(a.clubNameEn || "").toLowerCase()] ||
+    SNAPSHOT_CLUB_LOGOS[(a.clubNameRu || "").toLowerCase()] ||
+    "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
   clubNameRu: a.clubNameRu,
   clubNameEn: a.clubNameEn,
   relatedMatchId: a.relatedMatchId || "401879248",
@@ -283,5 +287,6 @@ export const REAL_EDITORIAL_MATCHES: EditorialMatchDetail[] = (
     `${m.homeTeam.nameEn} face ${m.awayTeam.nameEn} in ${m.competitionEn} action at ${m.stadiumEn}. Match status: ${m.statusTextEn}.`,
     `Both sides enter the fixture focused on midfield control, transition speed, and set-piece execution.`,
   ],
+  telegramHighlightUrl: "https://t.me/futbolnaya_jara",
   relatedArticleSlugs: [],
 }));
