@@ -549,6 +549,31 @@ export function NewspaperFrontPage({
   const [standingsLeague, setStandingsLeague] = useState<"laliga" | "epl">(
     "laliga"
   );
+  const [liveArticles, setLiveArticles] = useState<EditorialArticleInput[]>(
+    articles && articles.length > 0 ? articles : REAL_EDITORIAL_ARTICLES
+  );
+
+  React.useEffect(() => {
+    let mounted = true;
+    const fetchLatest = async () => {
+      try {
+        const res = await fetch("/api/articles", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (mounted && Array.isArray(data.articles) && data.articles.length > 0) {
+          setLiveArticles(data.articles);
+        }
+      } catch {
+        // Ignore
+      }
+    };
+    fetchLatest();
+    const timer = setInterval(fetchLatest, 120000);
+    return () => {
+      mounted = false;
+      clearInterval(timer);
+    };
+  }, []);
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -562,7 +587,9 @@ export function NewspaperFrontPage({
 
   const filteredArticles = useMemo(() => {
     const sourceList =
-      articles && articles.length > 0 ? articles : REAL_EDITORIAL_ARTICLES;
+      liveArticles && liveArticles.length > 0
+        ? liveArticles
+        : REAL_EDITORIAL_ARTICLES;
     return sourceList.filter((item) => {
       if (selectedCategory !== "all" && item.category !== selectedCategory) {
         return false;

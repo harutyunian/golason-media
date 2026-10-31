@@ -19,11 +19,27 @@ export default function EditorialNewsArchivePage() {
     useState<EditorialCategoryId>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"river" | "grid">("river");
+  const [liveArticles, setLiveArticles] = useState(FRONT_PAGE_ARTICLES);
+
+  React.useEffect(() => {
+    let mounted = true;
+    fetch("/api/articles", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (mounted && data && Array.isArray(data.articles) && data.articles.length > 0) {
+          setLiveArticles(data.articles);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const isRu = lang === "ru";
 
   const filteredArticles = useMemo(() => {
-    return FRONT_PAGE_ARTICLES.filter((article) => {
+    return liveArticles.filter((article) => {
       if (
         selectedCategory !== "all" &&
         article.category !== selectedCategory
