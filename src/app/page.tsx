@@ -24,11 +24,9 @@ export default function GolasonHomePage() {
   const [activeSection, setActiveSection] = useState<NavSection>("all");
 
   useEffect(() => {
+    setTheme("light");
     try {
-      const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
-      if (saved === "light" || saved === "dark") {
-        setTheme(saved);
-      }
+      window.localStorage.setItem(THEME_STORAGE_KEY, "light");
     } catch {
       // ignore storage errors
     }
@@ -95,24 +93,21 @@ export default function GolasonHomePage() {
         >
           {/* Left: Brand Emblem + Title */}
           <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div
-              data-keep-dark="true"
+            <img
+              src="/logo.jpg"
+              alt="GOLASON x Футбольная Жара"
+              width={46}
+              height={46}
               style={{
-                width: "44px",
-                height: "44px",
+                width: "46px",
+                height: "46px",
                 borderRadius: "50%",
-                background: "linear-gradient(135deg, #FF6200 0%, #FFC400 100%)",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontSize: "22px",
-                boxShadow: "0 4px 14px rgba(255, 98, 0, 0.4)",
-                border: isLight ? "2px solid #0F172A" : "2px solid #FFF",
+                objectFit: "cover",
+                boxShadow: "0 4px 14px rgba(255, 98, 0, 0.35)",
+                border: "2px solid #FF6200",
                 flexShrink: 0,
               }}
-            >
-              ⚽
-            </div>
+            />
             <div>
               <div
                 style={{
@@ -202,63 +197,11 @@ export default function GolasonHomePage() {
             })}
           </nav>
 
-          {/* Right: Theme Toggle (☀️ Light / 🌙 Dark) + RU/EN Toggle + Telegram CTA */}
+          {/* Right: RU/EN Toggle + Telegram CTA */}
           <div
             className="golason-controls-row"
             style={{ display: "flex", alignItems: "center", gap: "8px" }}
           >
-            {/* Theme Toggle Pill */}
-            <div
-              data-keep-dark="true"
-              style={{
-                display: "inline-flex",
-                background: isLight ? "#E2E8F0" : "#0B172A",
-                padding: "3px",
-                borderRadius: "999px",
-                border: isLight
-                  ? "1px solid #CBD5E1"
-                  : "1px solid rgba(255, 196, 0, 0.35)",
-              }}
-            >
-              <button
-                data-keep-dark="true"
-                onClick={() => handleThemeChange("light")}
-                style={{
-                  cursor: "pointer",
-                  border: "none",
-                  background: isLight ? "#FFFFFF" : "transparent",
-                  color: isLight ? "#0F172A" : "#94A3B8",
-                  fontWeight: 800,
-                  fontSize: "12px",
-                  padding: "5px 10px",
-                  borderRadius: "999px",
-                  boxShadow: isLight
-                    ? "0 2px 6px rgba(15, 23, 42, 0.12)"
-                    : "none",
-                }}
-              >
-                ☀️ {isRu ? "Светлая" : "Light"}
-              </button>
-              <button
-                data-keep-dark="true"
-                onClick={() => handleThemeChange("dark")}
-                style={{
-                  cursor: "pointer",
-                  border: "none",
-                  background: !isLight
-                    ? "linear-gradient(135deg, #FF6200 0%, #FFC400 100%)"
-                    : "transparent",
-                  color: !isLight ? "#091324" : "#475569",
-                  fontWeight: 800,
-                  fontSize: "12px",
-                  padding: "5px 10px",
-                  borderRadius: "999px",
-                }}
-              >
-                🌙 {isRu ? "Тёмная" : "Dark"}
-              </button>
-            </div>
-
             {/* Language Toggle Pill */}
             <div
               data-keep-dark="true"

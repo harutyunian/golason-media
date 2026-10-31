@@ -316,12 +316,11 @@ export function LiveScoreTicker({
         top: 0,
         zIndex: 50,
         width: '100%',
-        background:
-          'linear-gradient(180deg, var(--bg-navy, #091324) 0%, rgba(9, 19, 36, 0.96) 100%)',
+        background: '#F8FAFC',
         backdropFilter: 'blur(12px)',
-        borderBottom: '1px solid rgba(255, 98, 0, 0.32)',
-        boxShadow: '0 8px 28px rgba(0, 0, 0, 0.48)',
-        color: '#F8FAFC',
+        borderBottom: '1px solid #E2E8F0',
+        boxShadow: '0 4px 16px rgba(15, 23, 42, 0.05)',
+        color: '#0F172A',
         fontFamily:
           'var(--font-sans, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif)',
       }}
@@ -472,12 +471,12 @@ export function LiveScoreTicker({
                       cursor: 'pointer',
                       transition: 'all 0.15s ease',
                       border: isActive
-                        ? '1px solid var(--accent-gold, #FFC400)'
-                        : '1px solid rgba(255, 255, 255, 0.1)',
+                        ? '1px solid #EA580C'
+                        : '1px solid #CBD5E1',
                       background: isActive
                         ? 'linear-gradient(135deg, #FF6200 0%, #FF8800 100%)'
-                        : 'rgba(15, 29, 54, 0.85)',
-                      color: isActive ? '#FFFFFF' : '#CBD5E1',
+                        : '#FFFFFF',
+                      color: isActive ? '#FFFFFF' : '#334155',
                       boxShadow: isActive
                         ? '0 2px 10px rgba(255, 98, 0, 0.35)'
                         : 'none',

@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { ClubLogo } from '@/lib/clubLogos';
 
 export type QualificationZone =
   | 'ucl'
@@ -109,12 +110,12 @@ export function StandingsRow({
     entry.goalDiff > 0 ? `+${entry.goalDiff}` : `${entry.goalDiff}`;
 
   const rowBackground = isActiveTeam
-    ? 'linear-gradient(90deg, rgba(255, 196, 0, 0.2) 0%, rgba(255, 98, 0, 0.1) 60%, rgba(9, 19, 36, 0.85) 100%)'
+    ? '#FFF7ED'
     : isHovered
-    ? 'rgba(255, 255, 255, 0.05)'
+    ? '#F8FAFC'
     : entry.rank % 2 === 0
-    ? 'rgba(13, 25, 46, 0.55)'
-    : 'transparent';
+    ? '#F8FAFC'
+    : '#FFFFFF';
 
   const renderFormPill = (res: FormResult, idx: number) => {
     const isWin = res === 'W';
@@ -239,25 +240,13 @@ export function StandingsRow({
             gap: '9px',
           }}
         >
-          <span
-            aria-hidden="true"
-            style={{
-              width: '24px',
-              height: '24px',
-              borderRadius: '50%',
-              background: entry.crestBg || 'rgba(255, 255, 255, 0.08)',
-              border: isActiveTeam
-                ? '1px solid #FFC400'
-                : '1px solid rgba(255, 255, 255, 0.14)',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              fontSize: '12px',
-              flexShrink: 0,
-            }}
-          >
-            {entry.crest}
-          </span>
+          <ClubLogo
+            teamId={entry.teamId}
+            teamName={entry.teamName}
+            teamNameRu={entry.teamNameRu}
+            fallbackText={entry.crest}
+            size={24}
+          />
 
           <div
             style={{
@@ -273,8 +262,8 @@ export function StandingsRow({
                 fontSize: '13px',
                 fontWeight: isActiveTeam || entry.rank <= 4 ? 700 : 600,
                 color: isActiveTeam
-                  ? 'var(--accent-gold, #FFC400)'
-                  : '#F8FAFC',
+                  ? '#EA580C'
+                  : '#0F172A',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',

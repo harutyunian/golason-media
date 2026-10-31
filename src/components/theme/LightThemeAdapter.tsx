@@ -19,38 +19,29 @@ function parseRgb(colorStr: string): [number, number, number, number] | null {
 }
 
 function isDarkSurfaceRgb(r: number, g: number, b: number, a: number): boolean {
-  if (a < 0.15) return false;
+  if (a < 0.12) return false;
   const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  return lum < 55 && b >= r;
+  return lum < 78;
 }
 
 function isLightTextRgb(r: number, g: number, b: number): boolean {
   const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
-  return lum > 175;
+  return lum > 170;
 }
 
-function isDarkGradientString(bgImg: string): boolean {
+function hasDarkRgbInGradient(bgImg: string): boolean {
   if (!bgImg || bgImg === "none") return false;
-  const low = bgImg.replace(/\s+/g, "").toLowerCase();
-  return (
-    low.includes("rgb(6,11,20") ||
-    low.includes("rgb(9,19,36") ||
-    low.includes("rgba(9,19,36") ||
-    low.includes("rgb(11,21,40") ||
-    low.includes("rgba(11,21,40") ||
-    low.includes("rgb(13,27,50") ||
-    low.includes("rgba(13,27,50") ||
-    low.includes("rgb(15,29,54") ||
-    low.includes("rgba(15,29,54") ||
-    low.includes("rgb(16,35,66") ||
-    low.includes("rgb(10,20,38") ||
-    low.includes("rgb(7,14,26") ||
-    low.includes("#060b14") ||
-    low.includes("#091324") ||
-    low.includes("#0b1528") ||
-    low.includes("#0d1b32") ||
-    low.includes("#0f1d36")
+  const matches = Array.from(
+    bgImg.matchAll(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/gi)
   );
+  for (const m of matches) {
+    const r = parseInt(m[1], 10);
+    const g = parseInt(m[2], 10);
+    const b = parseInt(m[3], 10);
+    const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+    if (lum < 78) return true;
+  }
+  return false;
 }
 
 export function LightThemeAdapter({ theme }: { theme: ThemeMode }) {
@@ -61,18 +52,6 @@ export function LightThemeAdapter({ theme }: { theme: ThemeMode }) {
     const applyThemeToDom = () => {
       const allElements = document.querySelectorAll<HTMLElement>("body *");
 
-      if (theme === "dark") {
-        allElements.forEach((el) => {
-          if (el.hasAttribute(ORIG_STYLE_ATTR)) {
-            const orig = el.getAttribute(ORIG_STYLE_ATTR) || "";
-            el.setAttribute("style", orig);
-            el.removeAttribute(ORIG_STYLE_ATTR);
-          }
-        });
-        return;
-      }
-
-      // Light Mode transformation
       allElements.forEach((el) => {
         if (el.closest("[data-keep-dark='true']")) return;
         const tag = el.tagName.toLowerCase();
@@ -83,7 +62,8 @@ export function LightThemeAdapter({ theme }: { theme: ThemeMode }) {
           tag === "rect" ||
           tag === "line" ||
           tag === "script" ||
-          tag === "style"
+          tag === "style" ||
+          tag === "img"
         ) {
           return;
         }
@@ -94,7 +74,7 @@ export function LightThemeAdapter({ theme }: { theme: ThemeMode }) {
 
         const cs = window.getComputedStyle(el);
 
-        // 1. Handle gradient-clipped text (e.g. white gradient headings)
+        // 1. Handle gradient-clipped text
         const webkitClip =
           (el.style as unknown as Record<string, string>).webkitBackgroundClip ||
           cs.getPropertyValue("-webkit-background-clip");
@@ -108,26 +88,28 @@ export function LightThemeAdapter({ theme }: { theme: ThemeMode }) {
           return;
         }
 
-        // 2. Check if element is a vibrant orange/blue/green/red button or badge
         const bgRgb = parseRgb(cs.backgroundColor);
         const bgImg = cs.backgroundImage;
-        const isVibrantBg =
-          (bgRgb &&
-            bgRgb[3] > 0.4 &&
-            ((bgRgb[0] > 180 && bgRgb[1] < 150) ||
-              (bgRgb[1] > 140 && bgRgb[0] < 80) ||
-              (bgRgb[2] > 180 && bgRgb[0] < 60))) ||
-          bgImg.includes("255, 98, 0") ||
-          bgImg.includes("255, 87, 34") ||
-          bgImg.includes("34, 158, 217");
 
-        if (isVibrantBg) {
+        // 2. Keep bright orange, blue, green, red buttons/badges untouched
+        const isPureVibrantPill =
+          (bgRgb &&
+            bgRgb[3] > 0.45 &&
+            ((bgRgb[0] > 180 && bgRgb[1] < 155 && bgRgb[2] < 80) ||
+              (bgRgb[1] > 140 && bgRgb[0] < 90) ||
+              (bgRgb[2] > 175 && bgRgb[0] < 70))) ||
+          ((bgImg.includes("255, 98, 0") ||
+            bgImg.includes("255, 87, 34") ||
+            bgImg.includes("34, 158, 217")) &&
+            !hasDarkRgbInGradient(bgImg));
+
+        if (isPureVibrantPill) {
           return;
         }
 
-        // 3. Transform dark background colors and dark gradients to clean White / Slate surfaces
+        // 3. Convert any dark gradient or dark surface to crisp White / Slate
         let surfaceFlipped = false;
-        if (isDarkGradientString(bgImg)) {
+        if (hasDarkRgbInGradient(bgImg)) {
           el.style.backgroundImage = "none";
           el.style.backgroundColor = "#FFFFFF";
           el.style.borderColor = "#E2E8F0";
@@ -141,7 +123,7 @@ export function LightThemeAdapter({ theme }: { theme: ThemeMode }) {
             tag === "input" ||
             tag === "button" ||
             tag === "select" ||
-            el.clientHeight < 52;
+            el.clientHeight < 48;
           el.style.backgroundColor = isInputOrPill ? "#F1F5F9" : "#FFFFFF";
           el.style.borderColor = "#CBD5E1";
           if (!isInputOrPill) {
@@ -150,7 +132,7 @@ export function LightThemeAdapter({ theme }: { theme: ThemeMode }) {
           surfaceFlipped = true;
         }
 
-        // 4. Flip light/white text to high-contrast dark navy (#0F172A) or slate (#475569)
+        // 4. Flip light/white text to dark navy (#0F172A) or slate (#475569)
         const textRgb = parseRgb(cs.color);
         if (textRgb) {
           const [tr, tg, tb] = textRgb;
@@ -167,13 +149,11 @@ export function LightThemeAdapter({ theme }: { theme: ThemeMode }) {
     };
 
     applyThemeToDom();
-    const t1 = setTimeout(applyThemeToDom, 80);
-    const t2 = setTimeout(applyThemeToDom, 300);
+    const t1 = setTimeout(applyThemeToDom, 60);
+    const t2 = setTimeout(applyThemeToDom, 250);
 
     const observer = new MutationObserver(() => {
-      if (theme === "light") {
-        applyThemeToDom();
-      }
+      applyThemeToDom();
     });
     observer.observe(document.body, { childList: true, subtree: true });
 

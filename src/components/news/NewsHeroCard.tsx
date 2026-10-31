@@ -120,12 +120,12 @@ export function NewsHeroCard({
         borderRadius: "20px",
         overflow: "hidden",
         background:
-          "linear-gradient(135deg, #0A1128 0%, #101B3B 52%, #2D1820 82%, #FF5722 140%)",
-        border: "1px solid rgba(255, 87, 34, 0.38)",
+          "linear-gradient(135deg, #FFFFFF 0%, #FFF7ED 70%, #FFEDD5 100%)",
+        border: "1px solid #FDBA74",
         boxShadow:
-          "0 20px 45px rgba(5, 10, 25, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.12)",
+          "0 12px 32px rgba(15, 23, 42, 0.07)",
         padding: "28px",
-        color: "#F8FAFC",
+        color: "#0F172A",
       }}
     >
       {/* Decorative Fiery Orange & Midnight Navy radial glow overlay */}
@@ -192,9 +192,9 @@ export function NewsHeroCard({
               gap: "5px",
               padding: "4px 10px",
               borderRadius: "999px",
-              backgroundColor: "rgba(15, 23, 42, 0.78)",
-              border: "1px solid rgba(148, 163, 184, 0.25)",
-              color: "#E2E8F0",
+              backgroundColor: "#F1F5F9",
+              border: "1px solid #CBD5E1",
+              color: "#334155",
               fontSize: "12px",
               fontWeight: 600,
             }}
@@ -207,7 +207,7 @@ export function NewsHeroCard({
         <span
           style={{
             fontSize: "12px",
-            color: "#94A3B8",
+            color: "#64748B",
             fontWeight: 500,
           }}
         >
@@ -233,7 +233,7 @@ export function NewsHeroCard({
               lineHeight: 1.2,
               fontWeight: 900,
               letterSpacing: "-0.02em",
-              color: "#FFFFFF",
+              color: "#0F172A",
               margin: "0 0 14px 0",
             }}
           >
@@ -244,7 +244,7 @@ export function NewsHeroCard({
             style={{
               fontSize: "15px",
               lineHeight: 1.65,
-              color: "#CBD5E1",
+              color: "#334155",
               margin: "0 0 18px 0",
             }}
           >
@@ -266,9 +266,9 @@ export function NewsHeroCard({
                   style={{
                     fontSize: "11px",
                     fontWeight: 700,
-                    color: "#FF8A65",
-                    backgroundColor: "rgba(255, 87, 34, 0.12)",
-                    border: "1px solid rgba(255, 87, 34, 0.28)",
+                    color: "#C2410C",
+                    backgroundColor: "#FFF7ED",
+                    border: "1px solid #FDBA74",
                     padding: "3px 9px",
                     borderRadius: "6px",
                   }}
@@ -286,8 +286,8 @@ export function NewsHeroCard({
             display: "flex",
             flexDirection: "column",
             gap: "14px",
-            backgroundColor: "rgba(10, 17, 40, 0.65)",
-            border: "1px solid rgba(255, 255, 255, 0.1)",
+            backgroundColor: "#FFFFFF",
+            border: "1px solid #E2E8F0",
             borderRadius: "14px",
             padding: "16px",
           }}
@@ -298,7 +298,7 @@ export function NewsHeroCard({
               fontWeight: 800,
               textTransform: "uppercase",
               letterSpacing: "0.08em",
-              color: "#94A3B8",
+              color: "#64748B",
             }}
           >
             {activeLocale === "ru"

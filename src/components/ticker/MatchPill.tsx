@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { ClubLogo } from '@/lib/clubLogos';
 
 export type MatchStatus = 'LIVE' | 'HT' | 'FT' | 'UPCOMING';
 
@@ -78,18 +79,18 @@ export function MatchPill({
   const tgUrl = match.telegramHighlightUrl || 'https://t.me/futbolnaya_jara';
 
   const borderColor = isSelected
-    ? 'var(--accent-gold, #FFC400)'
+    ? '#EA580C'
     : isLive
     ? 'rgba(255, 98, 0, 0.55)'
     : isHovered
-    ? 'rgba(255, 196, 0, 0.4)'
-    : 'rgba(255, 255, 255, 0.09)';
+    ? '#94A3B8'
+    : '#E2E8F0';
 
   const cardBackground = isSelected
-    ? 'linear-gradient(145deg, rgba(255, 98, 0, 0.18) 0%, rgba(9, 19, 36, 0.98) 100%)'
+    ? 'linear-gradient(145deg, #FFF7ED 0%, #FFFFFF 100%)'
     : isLive
-    ? 'linear-gradient(145deg, rgba(22, 38, 66, 0.96) 0%, rgba(9, 19, 36, 0.98) 100%)'
-    : 'linear-gradient(145deg, rgba(14, 27, 49, 0.95) 0%, rgba(9, 19, 36, 0.98) 100%)';
+    ? 'linear-gradient(145deg, #FFFFFF 0%, #FFF7ED 100%)'
+    : '#FFFFFF';
 
   return (
     <div
@@ -120,10 +121,10 @@ export function MatchPill({
         transition: 'transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease',
         transform: isHovered ? 'translateY(-1px)' : 'translateY(0)',
         boxShadow: isLive
-          ? '0 4px 16px rgba(255, 98, 0, 0.14)'
+          ? '0 4px 14px rgba(255, 98, 0, 0.12)'
           : isHovered
-          ? '0 4px 14px rgba(0, 0, 0, 0.35)'
-          : '0 2px 8px rgba(0, 0, 0, 0.22)',
+          ? '0 4px 12px rgba(15, 23, 42, 0.08)'
+          : '0 2px 6px rgba(15, 23, 42, 0.04)',
         flexShrink: 0,
         userSelect: 'none',
         position: 'relative',
@@ -159,7 +160,7 @@ export function MatchPill({
             fontWeight: 700,
             letterSpacing: '0.06em',
             textTransform: 'uppercase',
-            color: 'rgba(184, 199, 224, 0.72)',
+            color: '#64748B',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -233,34 +234,21 @@ export function MatchPill({
               flex: 1,
             }}
           >
-            <span
-              aria-hidden="true"
-              style={{
-                width: '20px',
-                height: '20px',
-                borderRadius: '50%',
-                background:
-                  match.homeTeam.crestBg || 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.14)',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '11px',
-                fontWeight: 800,
-                color: '#FFFFFF',
-                flexShrink: 0,
-              }}
-            >
-              {match.homeTeam.crest}
-            </span>
+            <ClubLogo
+              teamId={match.homeTeam.id}
+              teamName={match.homeTeam.name}
+              teamNameRu={match.homeTeam.nameRu}
+              fallbackText={match.homeTeam.crest}
+              size={22}
+            />
             <span
               style={{
                 fontSize: '12.5px',
-                fontWeight: homeWinning || isLive ? 700 : 600,
+                fontWeight: homeWinning || isLive ? 800 : 600,
                 color:
                   isFinished && awayWinning
-                    ? 'rgba(226, 232, 240, 0.62)'
-                    : '#F8FAFC',
+                    ? '#64748B'
+                    : '#0F172A',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
@@ -291,14 +279,11 @@ export function MatchPill({
               fontWeight: 800,
               fontVariantNumeric: 'tabular-nums',
               color: isUpcoming
-                ? 'rgba(148, 163, 184, 0.5)'
+                ? '#94A3B8'
                 : isLive || homeWinning
-                ? 'var(--accent-gold, #FFC400)'
-                : '#E2E8F0',
-              textShadow:
-                isLive || homeWinning
-                  ? '0 0 10px rgba(255, 196, 0, 0.28)'
-                  : 'none',
+                ? '#EA580C'
+                : '#0F172A',
+              textShadow: 'none',
             }}
           >
             {isUpcoming ? '—' : homeScore}
@@ -323,34 +308,21 @@ export function MatchPill({
               flex: 1,
             }}
           >
-            <span
-              aria-hidden="true"
-              style={{
-                width: '20px',
-                height: '20px',
-                borderRadius: '50%',
-                background:
-                  match.awayTeam.crestBg || 'rgba(255, 255, 255, 0.08)',
-                border: '1px solid rgba(255, 255, 255, 0.14)',
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '11px',
-                fontWeight: 800,
-                color: '#FFFFFF',
-                flexShrink: 0,
-              }}
-            >
-              {match.awayTeam.crest}
-            </span>
+            <ClubLogo
+              teamId={match.awayTeam.id}
+              teamName={match.awayTeam.name}
+              teamNameRu={match.awayTeam.nameRu}
+              fallbackText={match.awayTeam.crest}
+              size={22}
+            />
             <span
               style={{
                 fontSize: '12.5px',
-                fontWeight: awayWinning || isLive ? 700 : 600,
+                fontWeight: awayWinning || isLive ? 800 : 600,
                 color:
                   isFinished && homeWinning
-                    ? 'rgba(226, 232, 240, 0.62)'
-                    : '#F8FAFC',
+                    ? '#64748B'
+                    : '#0F172A',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
@@ -381,14 +353,11 @@ export function MatchPill({
               fontWeight: 800,
               fontVariantNumeric: 'tabular-nums',
               color: isUpcoming
-                ? 'rgba(148, 163, 184, 0.5)'
+                ? '#94A3B8'
                 : isLive || awayWinning
-                ? 'var(--accent-gold, #FFC400)'
-                : '#E2E8F0',
-              textShadow:
-                isLive || awayWinning
-                  ? '0 0 10px rgba(255, 196, 0, 0.28)'
-                  : 'none',
+                ? '#EA580C'
+                : '#0F172A',
+              textShadow: 'none',
             }}
           >
             {isUpcoming ? '—' : awayScore}
