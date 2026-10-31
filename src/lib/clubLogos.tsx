@@ -1,6 +1,28 @@
 "use client";
 
 import React, { useState } from "react";
+import rawSnapshot from "./realDataSnapshot.json";
+
+const DYNAMIC_LOGO_MAP: Record<string, string> = {};
+for (const m of rawSnapshot.matches || []) {
+  for (const side of [m.homeTeam, m.awayTeam]) {
+    if (side?.logoUrl) {
+      if (side.id) DYNAMIC_LOGO_MAP[String(side.id).toLowerCase()] = side.logoUrl;
+      if (side.nameEn) DYNAMIC_LOGO_MAP[side.nameEn.toLowerCase()] = side.logoUrl;
+      if (side.nameRu) DYNAMIC_LOGO_MAP[side.nameRu.toLowerCase()] = side.logoUrl;
+    }
+  }
+}
+for (const lg of Object.values(rawSnapshot.standings || {})) {
+  const entries = (lg as { entries?: Array<{ teamId?: string; teamName?: string; teamNameRu?: string; logoUrl?: string }> }).entries || [];
+  for (const row of entries) {
+    if (row?.logoUrl) {
+      if (row.teamId) DYNAMIC_LOGO_MAP[String(row.teamId).toLowerCase()] = row.logoUrl;
+      if (row.teamName) DYNAMIC_LOGO_MAP[row.teamName.toLowerCase()] = row.logoUrl;
+      if (row.teamNameRu) DYNAMIC_LOGO_MAP[row.teamNameRu.toLowerCase()] = row.logoUrl;
+    }
+  }
+}
 
 const CLUB_LOGO_MAP: Record<string, string> = {
   // Spain - La Liga
@@ -146,11 +168,17 @@ export function getClubLogoUrl(
     .map((s) => (s as string).trim().toLowerCase());
 
   for (const c of candidates) {
+    if (DYNAMIC_LOGO_MAP[c]) return DYNAMIC_LOGO_MAP[c];
     if (CLUB_LOGO_MAP[c]) return CLUB_LOGO_MAP[c];
   }
   for (const c of candidates) {
     for (const [key, url] of Object.entries(CLUB_LOGO_MAP)) {
       if (c.includes(key) || key.includes(c)) {
+        return url;
+      }
+    }
+    for (const [key, url] of Object.entries(DYNAMIC_LOGO_MAP)) {
+      if (key.length > 3 && (c.includes(key) || key.includes(c))) {
         return url;
       }
     }

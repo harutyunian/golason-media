@@ -5,6 +5,10 @@ import {
   EditorialSearchResult,
   TransferDealItem,
 } from './editorialTypes';
+import {
+  REAL_EDITORIAL_ARTICLES,
+  REAL_EDITORIAL_MATCHES,
+} from './realDataBridge';
 
 export const EDITORIAL_CATEGORY_LABELS: Record<
   EditorialCategory,
@@ -19,6 +23,7 @@ export const EDITORIAL_CATEGORY_LABELS: Record<
 };
 
 export const EDITORIAL_ARTICLES: EditorialArticle[] = [
+  ...REAL_EDITORIAL_ARTICLES,
   {
     id: 'art-1',
     slug: 'real-madrid-el-clasico-tactical-autopsy-bernabeu',
@@ -642,6 +647,7 @@ export const EDITORIAL_ARTICLES: EditorialArticle[] = [
 ];
 
 export const EDITORIAL_MATCHES: EditorialMatchDetail[] = [
+  ...REAL_EDITORIAL_MATCHES,
   {
     id: 'ucl-rma-mci',
     leagueKey: 'ucl',

@@ -16,6 +16,7 @@ import {
   ARSENAL_LINEUP,
   LIVERPOOL_LINEUP,
 } from "@/lib/mockData";
+import rawSnapshot from "@/lib/realDataSnapshot.json";
 
 type PortalLang = "ru" | "en";
 type CompetitionId = "UCL" | "LA LIGA" | "EPL" | "SERIE A" | "SAUDI";
@@ -130,7 +131,66 @@ const COMPETITION_ORDER: CompetitionId[] = [
   "SAUDI",
 ];
 
+const REAL_SNAPSHOT_LIVE_MATCHES: LiveCenterMatch[] = (
+  rawSnapshot.matches || []
+).map((m) => {
+  const validComp: CompetitionId =
+    m.tickerLeague === "LA LIGA" ||
+    m.tickerLeague === "EPL" ||
+    m.tickerLeague === "SERIE A" ||
+    m.tickerLeague === "UCL" ||
+    m.tickerLeague === "SAUDI"
+      ? (m.tickerLeague as CompetitionId)
+      : "UCL";
+  return {
+    id: String(m.id),
+    competitionId: validComp,
+    stageRu: `${m.competitionRu} • ${m.dateLabelRu}`,
+    stageEn: `${m.competitionEn} • ${m.dateLabelRu}`,
+    status: (m.status as MatchStatusCode) || "UPCOMING",
+    minuteLabelRu: m.statusTextRu,
+    minuteLabelEn: m.statusTextEn,
+    venueRu: m.stadiumRu || "Стадион матча",
+    venueEn: m.stadiumEn || "Match Stadium",
+    refereeRu: "Официальная бригада арбитров",
+    refereeEn: "Official Match Referee",
+    homeTeam: {
+      id: m.homeTeam.nameEn,
+      nameRu: m.homeTeam.nameRu,
+      nameEn: m.homeTeam.nameEn,
+      shortName: m.homeTeam.shortName,
+      score: m.homeTeam.score,
+      formation: "4-3-3",
+      primaryColor: "#16A34A",
+    },
+    awayTeam: {
+      id: m.awayTeam.nameEn,
+      nameRu: m.awayTeam.nameRu,
+      nameEn: m.awayTeam.nameEn,
+      shortName: m.awayTeam.shortName,
+      score: m.awayTeam.score,
+      formation: "4-2-3-1",
+      primaryColor: "#0284C7",
+    },
+    scorers: (m.events || [])
+      .filter((ev) => ev.type === "goal")
+      .map((ev) => ({
+        minute: ev.minute,
+        playerRu: ev.playerRu,
+        playerEn: ev.playerEn,
+        team: (ev.teamSide as "home" | "away") || "home",
+      })),
+    possessionHome: 53,
+    xgHome: m.homeTeam.score > 0 ? (m.homeTeam.score * 0.82 + 0.4).toFixed(2) : "1.18",
+    xgAway: m.awayTeam.score > 0 ? (m.awayTeam.score * 0.78 + 0.35).toFixed(2) : "0.94",
+    shotsOnTargetHome: Math.max(3, m.homeTeam.score * 2 + 2),
+    shotsOnTargetAway: Math.max(2, m.awayTeam.score * 2 + 2),
+    telegramUrl: "https://t.me/futbolnaya_jara",
+  };
+});
+
 const LIVE_CENTER_MATCHES: LiveCenterMatch[] = [
+  ...REAL_SNAPSHOT_LIVE_MATCHES,
   {
     id: "ucl-rma-mci",
     competitionId: "UCL",

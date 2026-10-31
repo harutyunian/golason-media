@@ -2,6 +2,7 @@
 
 import React, { useMemo, useState } from 'react';
 import { StandingsEntry, StandingsRow } from './StandingsRow';
+import { REAL_MULTI_LEAGUE_STANDINGS } from '@/lib/realDataBridge';
 
 export type StandingsLeagueId =
   | 'LA LIGA'
@@ -768,7 +769,7 @@ export function LeagueStandingsTable({
   initialLeague = 'LA LIGA',
   activeTeamIds = [],
   compact: initialCompact = false,
-  leaguesData = DEFAULT_MULTI_LEAGUE_STANDINGS,
+  leaguesData = REAL_MULTI_LEAGUE_STANDINGS,
   onSelectTeam,
   onLeagueChange,
 }: LeagueStandingsTableProps) {

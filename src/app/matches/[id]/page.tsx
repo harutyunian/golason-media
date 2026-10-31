@@ -19,6 +19,7 @@ import {
   ARSENAL_LINEUP,
   LIVERPOOL_LINEUP,
 } from "@/lib/mockData";
+import rawSnapshot from "@/lib/realDataSnapshot.json";
 
 type PortalLang = "ru" | "en";
 type MatchDetailTab = "all" | "report" | "tactics" | "highlights";
@@ -1038,6 +1039,92 @@ const MATCH_DOSSIERS: Record<string, DetailedMatchDossier> = {
 
 function resolveMatchDossier(rawId: string): DetailedMatchDossier {
   if (MATCH_DOSSIERS[rawId]) return MATCH_DOSSIERS[rawId];
+
+  const realMatch = (rawSnapshot.matches || []).find(
+    (m) => String(m.id) === String(rawId)
+  );
+  if (realMatch) {
+    const scorers = (realMatch.events || [])
+      .filter((ev) => ev.type === "goal")
+      .map((ev) => ({
+        minute: ev.minute,
+        playerRu: ev.playerRu,
+        playerEn: ev.playerEn,
+        team: (ev.teamSide as "home" | "away") || "home",
+        scoreAfter: `${realMatch.homeTeam.score}:${realMatch.awayTeam.score}`,
+      }));
+
+    const timeline: TimelineEventItem[] = (realMatch.events || []).map((ev) => ({
+      minute: ev.minute,
+      type: ev.type === "goal" ? "goal" : ev.type === "substitution" ? "sub" : "card",
+      team: (ev.teamSide as "home" | "away") || "home",
+      titleRu: `${ev.detailRu}: ${ev.playerRu}`,
+      titleEn: `${ev.detailEn}: ${ev.playerEn}`,
+      detailRu: `${ev.playerRu} (${ev.teamSide === "home" ? realMatch.homeTeam.nameRu : realMatch.awayTeam.nameRu})`,
+      detailEn: `${ev.playerEn} (${ev.teamSide === "home" ? realMatch.homeTeam.nameEn : realMatch.awayTeam.nameEn})`,
+    }));
+
+    return {
+      id: String(realMatch.id),
+      leagueRu: realMatch.competitionRu,
+      leagueEn: realMatch.competitionEn,
+      stageRu: `Сезон 2026/27 • ${realMatch.dateLabelRu}`,
+      stageEn: `2026/27 Season • ${realMatch.dateLabelRu}`,
+      status: (realMatch.status as "LIVE" | "HT" | "FT" | "UPCOMING") || "UPCOMING",
+      minuteRu: realMatch.statusTextRu,
+      minuteEn: realMatch.statusTextEn,
+      stadiumRu: realMatch.stadiumRu || "Стадион матча",
+      stadiumEn: realMatch.stadiumEn || "Match Stadium",
+      refereeRu: "Официальная бригада УЕФА / ФИФА",
+      refereeEn: "Official Match Referee",
+      attendance: realMatch.attendance ? String(realMatch.attendance) : "44,200",
+      heroPhotoUrl: "https://a.espncdn.com/photo/2026/1030/r1738425_1296x729_16-9.jpg",
+      homeTeam: {
+        id: realMatch.homeTeam.nameEn,
+        nameRu: realMatch.homeTeam.nameRu,
+        nameEn: realMatch.homeTeam.nameEn,
+        shortName: realMatch.homeTeam.shortName,
+        score: realMatch.homeTeam.score,
+        formation: "4-3-3",
+        coachRu: "Главный тренер",
+        coachEn: "Head Coach",
+        primaryColor: "#16A34A",
+      },
+      awayTeam: {
+        id: realMatch.awayTeam.nameEn,
+        nameRu: realMatch.awayTeam.nameRu,
+        nameEn: realMatch.awayTeam.nameEn,
+        shortName: realMatch.awayTeam.shortName,
+        score: realMatch.awayTeam.score,
+        formation: "4-2-3-1",
+        coachRu: "Главный тренер",
+        coachEn: "Head Coach",
+        primaryColor: "#0284C7",
+      },
+      scorers,
+      headlineRu: `${realMatch.homeTeam.nameRu} — ${realMatch.awayTeam.nameRu}: обзор матча, составы и статистика (${realMatch.competitionRu})`,
+      headlineEn: `${realMatch.homeTeam.nameEn} vs ${realMatch.awayTeam.nameEn}: Match Center, Lineups & Tactical Analysis`,
+      leadRu: `Матч турнира «${realMatch.competitionRu}» между «${realMatch.homeTeam.nameRu}» и «${realMatch.awayTeam.nameRu}» на стадионе «${realMatch.stadiumRu}». Текущий статус: ${realMatch.statusTextRu}.`,
+      leadEn: `${realMatch.homeTeam.nameEn} face ${realMatch.awayTeam.nameEn} in ${realMatch.competitionEn} at ${realMatch.stadiumEn}. Status: ${realMatch.statusTextEn}.`,
+      reportParagraphsRu: [
+        `Противостояние «${realMatch.homeTeam.nameRu}» и «${realMatch.awayTeam.nameRu}» в рамках турнира «${realMatch.competitionRu}» проходит на арене «${realMatch.stadiumRu}». Обе команды подходят к матчу с максимальной турнирной мотивацией.`,
+        scorers.length > 0
+          ? `Забитые мячи в матче: ${scorers.map((s) => `${s.playerRu} (${s.minute})`).join(", ")}. Высокая плотность борьбы в центральной зоне и быстрые переходы определили рисунок встречи.`
+          : `Тактический рисунок встречи строится вокруг борьбы за инициативу в центре поля, прессинга на чужой половине и стандартов у ворот обоих голкиперов.`,
+      ],
+      reportParagraphsEn: [
+        `${realMatch.homeTeam.nameEn} and ${realMatch.awayTeam.nameEn} meet at ${realMatch.stadiumEn} in a key ${realMatch.competitionEn} fixture.`,
+        `Tactical discipline, transition speed, and midfield control remain central to both managers' game plans.`,
+      ],
+      timeline: timeline.length > 0 ? timeline : MATCH_DOSSIERS["ucl-rma-mci"].timeline,
+      stats: MATCH_DOSSIERS["ucl-rma-mci"].stats,
+      relatedArticleSlug: (rawSnapshot.articles || [])[0]?.slug || "real-madrid-el-clasico-tactical-autopsy-bernabeu",
+      relatedArticleTitleRu: (rawSnapshot.articles || [])[0]?.titleRu || "Аналитический разбор тура",
+      relatedArticleTitleEn: (rawSnapshot.articles || [])[0]?.titleEn || "Tactical Matchday Breakdown",
+      telegramUrl: "https://t.me/futbolnaya_jara",
+    };
+  }
+
   if (rawId === "match-real-barca") return MATCH_DOSSIERS["match-el-clasico"];
   if (rawId === "match-arsenal-liverpool") return MATCH_DOSSIERS["epl-ars-liv"];
   if (rawId === "match-alnassr-alhilal") return MATCH_DOSSIERS["saudi-nas-hil"];
