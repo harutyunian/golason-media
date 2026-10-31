@@ -1868,3 +1868,185 @@ export const EDITORIAL_TRANSFERS: TransferDealItem[] = [
     relatedArticleSlug: 'barcelona-lamine-yamal-hansi-flick-high-line-evolution'
   }
 ];
+
+const MATCH_ID_ALIASES: Record<string, string> = {
+  'match-real-barca': 'match-el-clasico',
+  'el-clasico': 'match-el-clasico',
+  'match-arsenal-liverpool': 'epl-ars-liv',
+  'match-alnassr-alhilal': 'saudi-nas-hil',
+  'match-psg-monaco': 'ucl-bay-psg',
+  'match-bayern-dortmund': 'ucl-bay-psg',
+  'laliga-soc-vil': 'laliga-bar-atm',
+  'seriea-mil-nap': 'seriea-int-juv'
+};
+
+export function getEditorialArticleBySlug(
+  slug: string
+): EditorialArticle | undefined {
+  if (!slug) return undefined;
+  const normalized = decodeURIComponent(slug).trim().toLowerCase();
+  return (
+    EDITORIAL_ARTICLES.find(
+      (article) =>
+        article.slug.toLowerCase() === normalized ||
+        article.id.toLowerCase() === normalized
+    ) ??
+    EDITORIAL_ARTICLES.find((article) =>
+      article.slug.toLowerCase().includes(normalized)
+    )
+  );
+}
+
+export function getEditorialMatchById(
+  id: string
+): EditorialMatchDetail | undefined {
+  if (!id) return undefined;
+  const normalized = decodeURIComponent(id).trim().toLowerCase();
+  const targetId = MATCH_ID_ALIASES[normalized] ?? normalized;
+  return EDITORIAL_MATCHES.find(
+    (match) => match.id.toLowerCase() === targetId
+  );
+}
+
+export function searchEditorialContent(query: string): EditorialSearchResult {
+  const normalized = (query ?? '').trim().toLowerCase();
+
+  if (!normalized) {
+    return Object.assign([...EDITORIAL_ARTICLES], {
+      articles: [...EDITORIAL_ARTICLES],
+      matches: [...EDITORIAL_MATCHES],
+      transfers: [...EDITORIAL_TRANSFERS]
+    });
+  }
+
+  const matchedArticles = EDITORIAL_ARTICLES.filter((article) => {
+    const haystack = [
+      article.slug,
+      article.category,
+      article.categoryLabelRu,
+      article.categoryLabelEn,
+      article.titleRu,
+      article.titleEn,
+      article.subtitleRu,
+      article.subtitleEn,
+      ...article.bodyRu,
+      ...article.bodyEn,
+      article.authorRu,
+      article.authorEn,
+      article.clubNameRu ?? '',
+      article.clubNameEn ?? '',
+      article.transferSource ?? '',
+      ...(article.tagsRu ?? []),
+      ...(article.tagsEn ?? [])
+    ]
+      .join(' ')
+      .toLowerCase();
+
+    return haystack.includes(normalized);
+  });
+
+  const matchedMatches = EDITORIAL_MATCHES.filter((match) => {
+    const haystack = [
+      match.id,
+      match.leagueRu,
+      match.leagueEn,
+      match.homeTeamRu,
+      match.homeTeamEn,
+      match.awayTeamRu,
+      match.awayTeamEn,
+      match.stadiumRu,
+      match.stadiumEn,
+      match.refereeRu,
+      match.refereeEn,
+      match.reportTitleRu,
+      match.reportTitleEn,
+      ...match.reportRu,
+      ...match.reportEn,
+      ...match.events.map((e) => `${e.playerRu} ${e.playerEn} ${e.detailRu} ${e.detailEn}`)
+    ]
+      .join(' ')
+      .toLowerCase();
+
+    return haystack.includes(normalized);
+  });
+
+  const matchedTransfers = EDITORIAL_TRANSFERS.filter((transfer) => {
+    const haystack = [
+      transfer.playerRu,
+      transfer.playerEn,
+      transfer.fromClubRu,
+      transfer.fromClubEn,
+      transfer.toClubRu,
+      transfer.toClubEn,
+      transfer.source,
+      transfer.summaryRu,
+      transfer.summaryEn
+    ]
+      .join(' ')
+      .toLowerCase();
+
+    return haystack.includes(normalized);
+  });
+
+  return Object.assign([...matchedArticles], {
+    articles: matchedArticles,
+    matches: matchedMatches,
+    transfers: matchedTransfers
+  });
+}
+
+export function getEditorialArticlesByCategory(
+  category?: EditorialCategory | 'all'
+): EditorialArticle[] {
+  if (!category || category === 'all') {
+    return EDITORIAL_ARTICLES;
+  }
+  return EDITORIAL_ARTICLES.filter((article) => article.category === category);
+}
+
+export function getLeadEditorialArticle(): EditorialArticle {
+  return (
+    EDITORIAL_ARTICLES.find((article) => article.isLeadStory) ??
+    EDITORIAL_ARTICLES[0]
+  );
+}
+
+export function getTrendingEditorialArticles(limit = 5): EditorialArticle[] {
+  return EDITORIAL_ARTICLES.filter((article) => article.isTrending).slice(
+    0,
+    limit
+  );
+}
+
+export function getRelatedEditorialArticles(
+  slug: string,
+  limit = 3
+): EditorialArticle[] {
+  const current = getEditorialArticleBySlug(slug);
+  if (!current) {
+    return EDITORIAL_ARTICLES.slice(0, limit);
+  }
+  const sameCategoryOrMatch = EDITORIAL_ARTICLES.filter(
+    (item) =>
+      item.slug !== current.slug &&
+      (item.category === current.category ||
+        item.relatedMatchId === current.relatedMatchId)
+  );
+  const others = EDITORIAL_ARTICLES.filter(
+    (item) =>
+      item.slug !== current.slug &&
+      !sameCategoryOrMatch.some((s) => s.slug === item.slug)
+  );
+  return [...sameCategoryOrMatch, ...others].slice(0, limit);
+}
+
+export function getArticlesForMatch(matchId: string): EditorialArticle[] {
+  const match = getEditorialMatchById(matchId);
+  const canonicalId = match?.id ?? matchId;
+  return EDITORIAL_ARTICLES.filter(
+    (article) =>
+      article.relatedMatchId === canonicalId ||
+      article.relatedMatchId === matchId ||
+      (match?.relatedArticleSlugs ?? []).includes(article.slug)
+  );
+}
