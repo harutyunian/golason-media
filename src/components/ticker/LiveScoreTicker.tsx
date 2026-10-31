@@ -2,6 +2,7 @@
 
 import React, { useMemo, useRef, useState } from 'react';
 import { MatchPill, TickerLeagueKey, TickerMatch } from './MatchPill';
+import { REAL_TICKER_MATCHES } from '@/lib/realDataBridge';
 
 export interface LeagueFilterOption {
   id: TickerLeagueKey;
@@ -257,7 +258,7 @@ export interface LiveScoreTickerProps {
 }
 
 export function LiveScoreTicker({
-  matches = DEFAULT_TICKER_MATCHES,
+  matches = REAL_TICKER_MATCHES,
   lang,
   locale,
   initialLeague = 'ALL',

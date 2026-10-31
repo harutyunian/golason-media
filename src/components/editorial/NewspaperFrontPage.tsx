@@ -6,6 +6,11 @@ import { useRouter } from "next/navigation";
 import { ClubLogo } from "@/lib/clubLogos";
 import { MOCK_STANDINGS } from "@/lib/mockData";
 import {
+  REAL_EDITORIAL_ARTICLES,
+  REAL_FRONT_PAGE_MATCHES,
+  REAL_MULTI_LEAGUE_STANDINGS,
+} from "@/lib/realDataBridge";
+import {
   ArticleCard,
   EditorialArticleInput,
   EditorialCategoryId,
@@ -530,7 +535,7 @@ export const EDITORIAL_CATEGORY_TABS: {
 export function NewspaperFrontPage({
   lang,
   locale,
-  articles = FRONT_PAGE_ARTICLES,
+  articles = REAL_EDITORIAL_ARTICLES,
   initialCategory = "all",
   className = "",
 }: NewspaperFrontPageProps) {
@@ -557,7 +562,7 @@ export function NewspaperFrontPage({
 
   const filteredArticles = useMemo(() => {
     const sourceList =
-      articles && articles.length > 0 ? articles : FRONT_PAGE_ARTICLES;
+      articles && articles.length > 0 ? articles : REAL_EDITORIAL_ARTICLES;
     return sourceList.filter((item) => {
       if (selectedCategory !== "all" && item.category !== selectedCategory) {
         return false;
@@ -627,8 +632,34 @@ export function NewspaperFrontPage({
     return unique;
   }, []);
 
+  const sidebarLiveMatches =
+    REAL_FRONT_PAGE_MATCHES.length > 0
+      ? REAL_FRONT_PAGE_MATCHES.slice(0, 7)
+      : SIDEBAR_LIVE_MATCHES;
+
+  const realStandingsEntries =
+    standingsLeague === "laliga"
+      ? REAL_MULTI_LEAGUE_STANDINGS["LA LIGA"]?.entries
+      : REAL_MULTI_LEAGUE_STANDINGS["EPL"]?.entries;
+
   const currentStandings =
-    MOCK_STANDINGS[standingsLeague] ?? MOCK_STANDINGS.laliga;
+    realStandingsEntries && realStandingsEntries.length > 0
+      ? realStandingsEntries.map((r) => ({
+          rank: r.rank,
+          leagueKey: standingsLeague,
+          team: { ru: r.teamNameRu || r.teamName, en: r.teamName },
+          shortName: r.shortName || r.teamName.slice(0, 3).toUpperCase(),
+          played: r.played,
+          won: r.won,
+          drawn: r.drawn,
+          lost: r.lost,
+          goalsFor: r.goalsFor,
+          goalsAgainst: r.goalsAgainst,
+          goalDiff: r.goalDiff,
+          points: r.points,
+          form: r.form,
+        }))
+      : MOCK_STANDINGS[standingsLeague] ?? MOCK_STANDINGS.laliga;
 
   return (
     <div
@@ -1487,19 +1518,17 @@ export function NewspaperFrontPage({
               </div>
 
               <div style={{ display: "flex", flexDirection: "column" }}>
-                {SIDEBAR_LIVE_MATCHES.map((m, idx) => {
+                {sidebarLiveMatches.map((m, idx) => {
                   const isLive = m.status === "LIVE" || m.status === "HT";
                   return (
                     <Link
                       key={m.id}
                       href={`/matches/${m.id}`}
                       style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "6px",
+                        display: "block",
                         padding: "11px 14px",
                         borderBottom:
-                          idx < SIDEBAR_LIVE_MATCHES.length - 1
+                          idx < sidebarLiveMatches.length - 1
                             ? "1px solid #E5E7EB"
                             : "none",
                         textDecoration: "none",
