@@ -87,11 +87,18 @@ export default function EditorialNewsArchivePage() {
       <style
         dangerouslySetInnerHTML={{
           __html: `
+            .golason-news-archive-page ::selection {
+              background-color: #111827;
+              color: #FFFFFF;
+            }
             .golason-editorial-card-link:hover .golason-editorial-card-photo {
               transform: scale(1.028);
             }
             .golason-editorial-card-link:hover .golason-editorial-card-headline {
               color: #DC2626 !important;
+              text-decoration: underline;
+              text-underline-offset: 3px;
+              text-decoration-thickness: 1.5px;
             }
             .golason-news-archive-page a:focus-visible,
             .golason-news-archive-page button:focus-visible,

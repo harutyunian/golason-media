@@ -584,12 +584,12 @@ export function NewspaperFrontPage({
   }, [articles, selectedCategory, searchQuery]);
 
   const leadStory =
-    filteredArticles.find((a) => a.isLeadStory) ??
+    filteredArticles.find((a: EditorialArticleInput) => a.isLeadStory) ??
     filteredArticles[0] ??
     FRONT_PAGE_ARTICLES[0];
 
   const remainingStories = filteredArticles.filter(
-    (a) => a.id !== leadStory.id
+    (a: EditorialArticleInput) => a.id !== leadStory.id
   );
 
   const subLeadStories =
@@ -602,11 +602,14 @@ export function NewspaperFrontPage({
     if (afterSubLeads.length >= 8) {
       return afterSubLeads;
     }
-    const existingIds = new Set(afterSubLeads.map((a) => a.id));
-    constsupplement = FRONT_PAGE_ARTICLES.filter(
-      (a) => a.id !== leadStory.id && !existingIds.has(a.id)
+    const existingIds = new Set(
+      afterSubLeads.map((a: EditorialArticleInput) => a.id)
     );
-    return [...afterSubLeads, ...constsupplement].slice(0, 9);
+    const supplement = FRONT_PAGE_ARTICLES.filter(
+      (a: EditorialArticleInput) =>
+        a.id !== leadStory.id && !existingIds.has(a.id)
+    );
+    return [...afterSubLeads, ...supplement].slice(0, 9);
   }, [remainingStories, leadStory.id]);
 
   const mostReadTop5 = useMemo(() => {
@@ -640,11 +643,18 @@ export function NewspaperFrontPage({
       <style
         dangerouslySetInnerHTML={{
           __html: `
+            .golason-newspaper-frontpage ::selection {
+              background-color: #111827;
+              color: #FFFFFF;
+            }
             .golason-editorial-card-link:hover .golason-editorial-card-photo {
               transform: scale(1.028);
             }
             .golason-editorial-card-link:hover .golason-editorial-card-headline {
               color: #DC2626 !important;
+              text-decoration: underline;
+              text-underline-offset: 3px;
+              text-decoration-thickness: 1.5px;
             }
             .golason-editorial-card-link:focus-visible,
             .golason-newspaper-frontpage a:focus-visible,
