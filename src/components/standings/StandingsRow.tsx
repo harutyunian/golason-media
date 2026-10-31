@@ -51,24 +51,24 @@ export function getZoneMetadata(
   switch (zone) {
     case 'ucl':
       return {
-        color: '#FFC400',
-        bg: 'rgba(255, 196, 0, 0.16)',
+        color: '#16A34A',
+        bg: '#F0FDF4',
         label:
           lang === 'ru'
-            ? 'Лига чемпионов УЕФА / Элита'
+            ? 'Лига чемпионов УЕФА'
             : 'Champions League Qualification',
       };
     case 'uel':
       return {
-        color: '#FF6200',
-        bg: 'rgba(255, 98, 0, 0.16)',
+        color: '#2563EB',
+        bg: '#EFF6FF',
         label: lang === 'ru' ? 'Лига Европы УЕФА' : 'Europa League Qualification',
       };
     case 'uecl':
     case 'playoff':
       return {
-        color: '#38BDF8',
-        bg: 'rgba(56, 189, 248, 0.16)',
+        color: '#D97706',
+        bg: '#FFFBEB',
         label:
           lang === 'ru'
             ? 'Лига конференций / Плей-офф'
@@ -76,14 +76,14 @@ export function getZoneMetadata(
       };
     case 'relegation':
       return {
-        color: '#EF4444',
-        bg: 'rgba(239, 68, 68, 0.16)',
+        color: '#DC2626',
+        bg: '#FEF2F2',
         label: lang === 'ru' ? 'Зона вылета' : 'Relegation Zone',
       };
     default:
       return {
         color: 'transparent',
-        bg: 'rgba(255, 255, 255, 0.05)',
+        bg: '#F3F4F6',
         label: '',
       };
   }
@@ -112,25 +112,17 @@ export function StandingsRow({
   const rowBackground = isActiveTeam
     ? '#FFF7ED'
     : isHovered
-    ? '#F8FAFC'
+    ? '#F3F4F6'
     : entry.rank % 2 === 0
-    ? '#F8FAFC'
+    ? '#F9FAFB'
     : '#FFFFFF';
 
   const renderFormPill = (res: FormResult, idx: number) => {
     const isWin = res === 'W';
     const isDraw = res === 'D';
-    const bg = isWin
-      ? 'rgba(16, 185, 129, 0.22)'
-      : isDraw
-      ? 'rgba(148, 163, 184, 0.2)'
-      : 'rgba(239, 68, 68, 0.22)';
-    const border = isWin
-      ? 'rgba(16, 185, 129, 0.5)'
-      : isDraw
-      ? 'rgba(148, 163, 184, 0.4)'
-      : 'rgba(239, 68, 68, 0.5)';
-    const color = isWin ? '#34D399' : isDraw ? '#CBD5E1' : '#F87171';
+    const bg = isWin ? '#DCFCE7' : isDraw ? '#F3F4F6' : '#FEE2E2';
+    const border = isWin ? '#86EFAC' : isDraw ? '#D1D5DB' : '#FCA5A5';
+    const color = isWin ? '#15803D' : isDraw ? '#4B5563' : '#B91C1C';
     const text =
       activeLang === 'ru'
         ? isWin
@@ -144,8 +136,8 @@ export function StandingsRow({
       <span
         key={`${entry.teamId}-form-${idx}`}
         style={{
-          width: '18px',
-          height: '18px',
+          width: '20px',
+          height: '20px',
           borderRadius: '4px',
           background: bg,
           border: `1px solid ${border}`,
@@ -171,8 +163,8 @@ export function StandingsRow({
       style={{
         background: rowBackground,
         cursor: onSelectTeam ? 'pointer' : 'default',
-        transition: 'background 0.15s ease',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.06)',
+        transition: 'background 0.12s ease',
+        borderBottom: '1px solid #E5E7EB',
       }}
     >
       {/* Rank + Qualification Zone Indicator */}
@@ -185,59 +177,55 @@ export function StandingsRow({
           fontVariantNumeric: 'tabular-nums',
         }}
       >
-        {/* Left Qualification Zone Bar */}
         <span
           aria-hidden="true"
           style={{
             position: 'absolute',
             left: 0,
-            top: '3px',
-            bottom: '3px',
-            width: '3.5px',
-            borderRadius: '0 4px 4px 0',
-            backgroundColor: isActiveTeam ? '#FF6200' : zoneMeta.color,
-            boxShadow:
-              entry.zone === 'ucl' || isActiveTeam
-                ? `0 0 8px ${isActiveTeam ? '#FF6200' : zoneMeta.color}`
-                : 'none',
+            top: '2px',
+            bottom: '2px',
+            width: '3px',
+            backgroundColor: isActiveTeam ? '#EA580C' : zoneMeta.color,
           }}
         />
         <span
           style={{
-            width: '22px',
-            height: '22px',
-            borderRadius: '6px',
+            width: '24px',
+            height: '24px',
+            borderRadius: '4px',
             display: 'inline-flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontSize: '11.5px',
+            fontSize: '12px',
             fontWeight: 800,
             backgroundColor: isActiveTeam
-              ? 'var(--accent-gold, #FFC400)'
-              : zoneMeta.bg,
+              ? '#FFEDD5'
+              : entry.zone && entry.zone !== 'none'
+              ? zoneMeta.bg
+              : '#F3F4F6',
             color: isActiveTeam
-              ? '#091324'
+              ? '#C2410C'
               : entry.zone && entry.zone !== 'none'
               ? zoneMeta.color
-              : '#CBD5E1',
+              : '#374151',
           }}
         >
           {entry.rank}
         </span>
       </td>
 
-      {/* Club Crest + Name + Active Match Badge */}
+      {/* Club Crest + Name */}
       <td
         style={{
           padding: '10px 8px',
-          minWidth: '165px',
+          minWidth: '150px',
         }}
       >
         <div
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '9px',
+            gap: '10px',
           }}
         >
           <ClubLogo
@@ -259,11 +247,9 @@ export function StandingsRow({
           >
             <span
               style={{
-                fontSize: '13px',
+                fontSize: '13.5px',
                 fontWeight: isActiveTeam || entry.rank <= 4 ? 700 : 600,
-                color: isActiveTeam
-                  ? '#EA580C'
-                  : '#0F172A',
+                color: isActiveTeam ? '#C2410C' : '#111827',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
@@ -278,26 +264,16 @@ export function StandingsRow({
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '4px',
-                  padding: '1px 6px',
-                  borderRadius: '999px',
-                  fontSize: '9.5px',
+                  padding: '2px 6px',
+                  borderRadius: '4px',
+                  fontSize: '10px',
                   fontWeight: 800,
                   letterSpacing: '0.04em',
-                  backgroundColor: 'rgba(255, 98, 0, 0.24)',
-                  border: '1px solid rgba(255, 196, 0, 0.55)',
-                  color: '#FFC400',
+                  backgroundColor: '#FEF2F2',
+                  border: '1px solid #FECACA',
+                  color: '#DC2626',
                 }}
               >
-                <span
-                  aria-hidden="true"
-                  style={{
-                    width: '5px',
-                    height: '5px',
-                    borderRadius: '50%',
-                    backgroundColor: '#FF6200',
-                    boxShadow: '0 0 6px #FF6200',
-                  }}
-                />
                 <span>{entry.liveMatchScore || 'LIVE'}</span>
               </span>
             )}
@@ -310,24 +286,24 @@ export function StandingsRow({
         style={{
           padding: '10px 6px',
           textAlign: 'center',
-          fontSize: '12.5px',
+          fontSize: '13px',
           fontWeight: 600,
-          color: '#CBD5E1',
+          color: '#374151',
           fontVariantNumeric: 'tabular-nums',
         }}
       >
         {entry.played}
       </td>
 
-      {/* Won / Drawn / Lost (shown when not compact) */}
+      {/* Won / Drawn / Lost */}
       {!compact && (
         <>
           <td
             style={{
               padding: '10px 6px',
               textAlign: 'center',
-              fontSize: '12px',
-              color: '#94A3B8',
+              fontSize: '13px',
+              color: '#4B5563',
               fontVariantNumeric: 'tabular-nums',
             }}
           >
@@ -337,8 +313,8 @@ export function StandingsRow({
             style={{
               padding: '10px 6px',
               textAlign: 'center',
-              fontSize: '12px',
-              color: '#94A3B8',
+              fontSize: '13px',
+              color: '#4B5563',
               fontVariantNumeric: 'tabular-nums',
             }}
           >
@@ -348,8 +324,8 @@ export function StandingsRow({
             style={{
               padding: '10px 6px',
               textAlign: 'center',
-              fontSize: '12px',
-              color: '#94A3B8',
+              fontSize: '13px',
+              color: '#4B5563',
               fontVariantNumeric: 'tabular-nums',
             }}
           >
@@ -363,48 +339,48 @@ export function StandingsRow({
         style={{
           padding: '10px 6px',
           textAlign: 'center',
-          fontSize: '12.5px',
+          fontSize: '13px',
           fontWeight: 700,
           color:
             entry.goalDiff > 0
-              ? '#34D399'
+              ? '#15803D'
               : entry.goalDiff < 0
-              ? '#F87171'
-              : '#94A3B8',
+              ? '#B91C1C'
+              : '#4B5563',
           fontVariantNumeric: 'tabular-nums',
         }}
       >
         {formattedGD}
       </td>
 
-      {/* Points (Fiery Gold for active or UCL zone teams) */}
+      {/* Points (Crisp Dark Ink for all rows) */}
       <td
         style={{
           padding: '10px 10px',
           textAlign: 'center',
-          fontSize: '13.5px',
+          fontSize: '14px',
           fontWeight: 800,
           fontVariantNumeric: 'tabular-nums',
-          color:
-            isActiveTeam || entry.zone === 'ucl'
-              ? 'var(--accent-gold, #FFC400)'
-              : '#FFFFFF',
+          color: '#111827',
         }}
       >
         <span
           style={{
             display: 'inline-block',
-            minWidth: '28px',
-            padding: '2px 6px',
-            borderRadius: '6px',
+            minWidth: '30px',
+            padding: '3px 7px',
+            borderRadius: '4px',
             backgroundColor: isActiveTeam
-              ? 'rgba(255, 98, 0, 0.28)'
+              ? '#FFEDD5'
               : entry.zone === 'ucl'
-              ? 'rgba(255, 196, 0, 0.12)'
-              : 'rgba(255, 255, 255, 0.05)',
+              ? '#F0FDF4'
+              : '#F3F4F6',
             border: isActiveTeam
-              ? '1px solid rgba(255, 196, 0, 0.5)'
-              : '1px solid transparent',
+              ? '1px solid #FDBA74'
+              : entry.zone === 'ucl'
+              ? '1px solid #BBF7D0'
+              : '1px solid #E5E7EB',
+            color: '#111827',
           }}
         >
           {entry.points}

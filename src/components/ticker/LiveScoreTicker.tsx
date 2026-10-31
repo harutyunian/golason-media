@@ -311,9 +311,7 @@ export function LiveScoreTicker({
         activeLang === 'ru' ? 'Табло текущих матчей' : 'Live Match Score Ticker'
       }
       style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 50,
+        position: 'relative',
         width: '100%',
         backgroundColor: '#FFFFFF',
         borderBottom: '1px solid #E5E7EB',

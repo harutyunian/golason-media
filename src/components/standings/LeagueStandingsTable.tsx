@@ -812,24 +812,22 @@ export function LeagueStandingsTable({
   return (
     <div
       style={{
-        background:
-          'linear-gradient(165deg, rgba(13, 26, 48, 0.98) 0%, var(--bg-navy, #091324) 100%)',
-        border: '1px solid rgba(255, 196, 0, 0.2)',
-        borderRadius: '14px',
+        backgroundColor: '#FFFFFF',
+        border: '1px solid #E5E7EB',
+        borderRadius: '8px',
         overflow: 'hidden',
-        boxShadow: '0 14px 34px rgba(0, 0, 0, 0.42)',
-        color: '#F8FAFC',
+        color: '#111827',
         fontFamily:
-          'var(--font-sans, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif)',
+          'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       }}
     >
-      {/* Top Header Banner */}
+      {/* Top Editorial Header Banner */}
       <div
         style={{
           padding: '16px 18px 14px',
-          background:
-            'linear-gradient(90deg, rgba(255, 98, 0, 0.16) 0%, rgba(255, 196, 0, 0.07) 55%, rgba(9, 19, 36, 0.95) 100%)',
-          borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+          backgroundColor: '#FFFFFF',
+          borderBottom: '1px solid #E5E7EB',
+          borderTop: '3px solid #111827',
           display: 'flex',
           flexDirection: 'column',
           gap: '12px',
@@ -844,74 +842,57 @@ export function LeagueStandingsTable({
             flexWrap: 'wrap',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span
-              aria-hidden="true"
+          <div>
+            <div
               style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '10px',
-                background:
-                  'linear-gradient(135deg, #FF6200 0%, #FFC400 100%)',
-                display: 'inline-flex',
+                display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '18px',
-                boxShadow: '0 4px 12px rgba(255, 98, 0, 0.35)',
+                gap: '8px',
+                flexWrap: 'wrap',
               }}
             >
-              {currentLeagueConfig.countryFlag}
-            </span>
-            <div>
-              <div
+              <h3
                 style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                }}
-              >
-                <h3
-                  style={{
-                    margin: 0,
-                    fontSize: '16px',
-                    fontWeight: 800,
-                    letterSpacing: '-0.01em',
-                    color: '#FFFFFF',
-                  }}
-                >
-                  {activeLang === 'ru'
-                    ? currentLeagueConfig.nameRu
-                    : currentLeagueConfig.nameEn}
-                </h3>
-                <span
-                  style={{
-                    padding: '2px 7px',
-                    borderRadius: '999px',
-                    fontSize: '10px',
-                    fontWeight: 800,
-                    background: 'rgba(255, 196, 0, 0.15)',
-                    color: '#FFC400',
-                    border: '1px solid rgba(255, 196, 0, 0.35)',
-                  }}
-                >
-                  2025/26
-                </span>
-              </div>
-              <p
-                style={{
-                  margin: '2px 0 0',
-                  fontSize: '11.5px',
-                  color: '#94A3B8',
+                  margin: 0,
+                  fontFamily: "Georgia, 'Times New Roman', serif",
+                  fontSize: '18px',
+                  fontWeight: 700,
+                  letterSpacing: '-0.01em',
+                  color: '#111827',
                 }}
               >
                 {activeLang === 'ru'
-                  ? currentLeagueConfig.matchdayLabelRu
-                  : currentLeagueConfig.matchdayLabelEn}
-              </p>
+                  ? currentLeagueConfig.nameRu
+                  : currentLeagueConfig.nameEn}
+              </h3>
+              <span
+                style={{
+                  padding: '2px 8px',
+                  borderRadius: '4px',
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  backgroundColor: '#FEF2F2',
+                  color: '#DC2626',
+                  border: '1px solid #FECACA',
+                }}
+              >
+                2026/27
+              </span>
             </div>
+            <p
+              style={{
+                margin: '3px 0 0',
+                fontSize: '12px',
+                color: '#6B7280',
+              }}
+            >
+              {activeLang === 'ru'
+                ? currentLeagueConfig.matchdayLabelRu
+                : currentLeagueConfig.matchdayLabelEn}
+            </p>
           </div>
 
-          {/* Right Controls: Live Highlight Filter + Compact Toggle + Lang Toggle */}
+          {/* Right Controls: Compact Toggle */}
           <div
             style={{
               display: 'flex',
@@ -924,72 +905,47 @@ export function LeagueStandingsTable({
               type="button"
               onClick={() => setOnlyLiveTeams((prev: boolean) => !prev)}
               style={{
-                padding: '5px 10px',
-                borderRadius: '7px',
+                padding: '6px 10px',
+                borderRadius: '4px',
                 fontSize: '11px',
                 fontWeight: 700,
                 cursor: 'pointer',
                 border: onlyLiveTeams
-                  ? '1px solid #FFC400'
-                  : '1px solid rgba(255, 255, 255, 0.14)',
-                background: onlyLiveTeams
-                  ? 'rgba(255, 196, 0, 0.2)'
-                  : 'rgba(15, 29, 54, 0.75)',
-                color: onlyLiveTeams ? '#FFC400' : '#CBD5E1',
+                  ? '1px solid #DC2626'
+                  : '1px solid #D1D5DB',
+                backgroundColor: onlyLiveTeams ? '#FEF2F2' : '#FFFFFF',
+                color: onlyLiveTeams ? '#DC2626' : '#374151',
               }}
             >
-              ⚡ {activeLang === 'ru' ? 'В игре (LIVE)' : 'In Live Action'}
+              {activeLang === 'ru' ? 'В игре (LIVE)' : 'In Live Action'}
             </button>
 
             <button
               type="button"
               onClick={() => setIsCompact((prev: boolean) => !prev)}
               style={{
-                padding: '5px 9px',
-                borderRadius: '7px',
+                padding: '6px 10px',
+                borderRadius: '4px',
                 fontSize: '11px',
                 fontWeight: 600,
                 cursor: 'pointer',
-                border: '1px solid rgba(255, 255, 255, 0.12)',
-                background: 'rgba(15, 29, 54, 0.75)',
-                color: '#CBD5E1',
+                border: '1px solid #D1D5DB',
+                backgroundColor: isCompact ? '#111827' : '#FFFFFF',
+                color: isCompact ? '#FFFFFF' : '#374151',
               }}
             >
               {isCompact
                 ? activeLang === 'ru'
-                  ? 'Полная'
-                  : 'Full View'
+                  ? 'Полная таблица'
+                  : 'Full Table'
                 : activeLang === 'ru'
-                ? 'Компакт'
+                ? 'Компактный вид'
                 : 'Compact'}
             </button>
-
-            {!lang && !locale && (
-              <button
-                type="button"
-                onClick={() =>
-                  setInternalLang((prev: 'ru' | 'en') =>
-                    prev === 'ru' ? 'en' : 'ru'
-                  )
-                }
-                style={{
-                  padding: '5px 8px',
-                  borderRadius: '7px',
-                  fontSize: '11px',
-                  fontWeight: 800,
-                  cursor: 'pointer',
-                  border: '1px solid rgba(255, 98, 0, 0.4)',
-                  background: 'rgba(255, 98, 0, 0.14)',
-                  color: '#FFC400',
-                }}
-              >
-                {activeLang.toUpperCase()}
-              </button>
-            )}
           </div>
         </div>
 
-        {/* Multi-League Selector Tabs */}
+        {/* Multi-League Selector Tabs (Zero emoji clutter) */}
         <div
           role="tablist"
           aria-label={
@@ -1020,27 +976,20 @@ export function LeagueStandingsTable({
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '6px',
                   padding: '6px 12px',
-                  borderRadius: '8px',
+                  borderRadius: '4px',
                   fontSize: '12px',
                   fontWeight: isSelected ? 800 : 600,
                   cursor: 'pointer',
                   whiteSpace: 'nowrap',
-                  transition: 'all 0.15s ease',
+                  transition: 'all 0.12s ease',
                   border: isSelected
-                    ? '1px solid var(--accent-gold, #FFC400)'
-                    : '1px solid rgba(255, 255, 255, 0.09)',
-                  background: isSelected
-                    ? 'linear-gradient(135deg, #FF6200 0%, #FFC400 100%)'
-                    : 'rgba(9, 19, 36, 0.78)',
-                  color: isSelected ? '#091324' : '#E2E8F0',
-                  boxShadow: isSelected
-                    ? '0 3px 12px rgba(255, 98, 0, 0.35)'
-                    : 'none',
+                    ? '1px solid #111827'
+                    : '1px solid #D1D5DB',
+                  backgroundColor: isSelected ? '#111827' : '#F9FAFB',
+                  color: isSelected ? '#FFFFFF' : '#374151',
                 }}
               >
-                <span aria-hidden="true">{league.countryFlag}</span>
                 <span>{tabLabel}</span>
               </button>
             );
@@ -1057,18 +1006,18 @@ export function LeagueStandingsTable({
             }
             placeholder={
               activeLang === 'ru'
-                ? 'Поиск клуба (например, Реал Мадрид, Арсенал, Аль-Наср)...'
-                : 'Filter club (e.g., Real Madrid, Arsenal, Al-Nassr)...'
+                ? 'Поиск клуба в таблице (например, Барселона, Реал Мадрид, Ливерпуль)...'
+                : 'Filter club in table (e.g., Barcelona, Real Madrid, Liverpool)...'
             }
             style={{
               width: '100%',
               boxSizing: 'border-box',
-              padding: '7px 12px',
-              borderRadius: '8px',
-              border: '1px solid rgba(255, 255, 255, 0.12)',
-              background: 'rgba(9, 19, 36, 0.85)',
-              color: '#F8FAFC',
-              fontSize: '12px',
+              padding: '8px 12px',
+              borderRadius: '4px',
+              border: '1px solid #D1D5DB',
+              backgroundColor: '#F9FAFB',
+              color: '#111827',
+              fontSize: '13px',
               outline: 'none',
             }}
           />
@@ -1076,7 +1025,7 @@ export function LeagueStandingsTable({
       </div>
 
       {/* Standings Table */}
-      <div style={{ overflowX: 'auto' }}>
+      <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
         <table
           style={{
             width: '100%',
@@ -1087,13 +1036,13 @@ export function LeagueStandingsTable({
           <thead>
             <tr
               style={{
-                background: 'rgba(9, 19, 36, 0.95)',
-                borderBottom: '1px solid rgba(255, 196, 0, 0.22)',
-                fontSize: '10.5px',
+                backgroundColor: '#F9FAFB',
+                borderBottom: '1px solid #E5E7EB',
+                fontSize: '11px',
                 fontWeight: 800,
-                letterSpacing: '0.06em',
+                letterSpacing: '0.05em',
                 textTransform: 'uppercase',
-                color: '#94A3B8',
+                color: '#4B5563',
               }}
             >
               <th style={{ padding: '10px 8px 10px 12px', width: '44px' }}>#</th>
@@ -1140,7 +1089,7 @@ export function LeagueStandingsTable({
                 style={{
                   padding: '10px 10px',
                   textAlign: 'center',
-                  color: 'var(--accent-gold, #FFC400)',
+                  color: '#111827',
                 }}
               >
                 {activeLang === 'ru' ? 'ОЧК' : 'PTS'}
@@ -1181,8 +1130,8 @@ export function LeagueStandingsTable({
                   style={{
                     padding: '24px 16px',
                     textAlign: 'center',
-                    fontSize: '12.5px',
-                    color: '#94A3B8',
+                    fontSize: '13px',
+                    color: '#6B7280',
                   }}
                 >
                   {activeLang === 'ru'
@@ -1199,15 +1148,15 @@ export function LeagueStandingsTable({
       <div
         style={{
           padding: '10px 16px',
-          background: 'rgba(6, 13, 25, 0.9)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.07)',
+          backgroundColor: '#F9FAFB',
+          borderTop: '1px solid #E5E7EB',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
           flexWrap: 'wrap',
           gap: '10px',
           fontSize: '11px',
-          color: '#94A3B8',
+          color: '#4B5563',
         }}
       >
         <div
@@ -1230,13 +1179,12 @@ export function LeagueStandingsTable({
                 width: '8px',
                 height: '8px',
                 borderRadius: '2px',
-                backgroundColor: '#FFC400',
-                boxShadow: '0 0 6px #FFC400',
+                backgroundColor: '#16A34A',
               }}
             />
             <span>
               {activeLang === 'ru'
-                ? 'Лига чемпионов / Элита'
+                ? 'Лига чемпионов УЕФА'
                 : 'UCL Qualification'}
             </span>
           </span>
@@ -1253,7 +1201,7 @@ export function LeagueStandingsTable({
                 width: '8px',
                 height: '8px',
                 borderRadius: '2px',
-                backgroundColor: '#FF6200',
+                backgroundColor: '#2563EB',
               }}
             />
             <span>
@@ -1273,7 +1221,7 @@ export function LeagueStandingsTable({
                 width: '8px',
                 height: '8px',
                 borderRadius: '2px',
-                backgroundColor: '#38BDF8',
+                backgroundColor: '#D97706',
               }}
             />
             <span>
@@ -1295,7 +1243,7 @@ export function LeagueStandingsTable({
                 width: '8px',
                 height: '8px',
                 borderRadius: '2px',
-                backgroundColor: '#EF4444',
+                backgroundColor: '#DC2626',
               }}
             />
             <span>
@@ -1303,12 +1251,6 @@ export function LeagueStandingsTable({
             </span>
           </span>
         </div>
-
-        <span style={{ color: '#FFC400', fontWeight: 700 }}>
-          {activeLang === 'ru'
-            ? '● Золотым выделены клубы в LIVE-матчах'
-            : '● Fiery Gold = Active LIVE match'}
-        </span>
       </div>
     </div>
   );

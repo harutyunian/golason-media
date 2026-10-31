@@ -118,7 +118,7 @@ export function EditorialMasthead({
   return (
     <header
       role="banner"
-      className={className}
+      className={`golason-masthead ${className ?? ''}`}
       style={{
         width: '100%',
         backgroundColor: '#FFFFFF',
@@ -130,6 +130,35 @@ export function EditorialMasthead({
         ...style,
       }}
     >
+      <style>{`
+        @media (max-width: 900px) {
+          .golason-masthead-edition-label,
+          .golason-masthead-tagline {
+            display: none !important;
+          }
+          .golason-masthead-main-bar {
+            padding: 10px 14px !important;
+            gap: 10px !important;
+          }
+          .golason-masthead-top-bar {
+            padding: 5px 14px !important;
+            font-size: 10px !important;
+          }
+          .golason-masthead-nav {
+            width: 100% !important;
+            order: 3 !important;
+            gap: 14px !important;
+            border-top: 1px solid #F3F4F6 !important;
+            padding-top: 6px !important;
+            -webkit-overflow-scrolling: touch;
+          }
+          .golason-masthead-search {
+            flex: 1 1 100% !important;
+            order: 4 !important;
+            min-width: 0 !important;
+          }
+        }
+      `}</style>
       {/* Top Utility Strip: Date, Edition (RU / EN switch), Telegram Channel Link */}
       <div
         style={{
@@ -138,6 +167,7 @@ export function EditorialMasthead({
         }}
       >
         <div
+          className="golason-masthead-top-bar"
           style={{
             maxWidth: '1440px',
             margin: '0 auto',
@@ -171,6 +201,7 @@ export function EditorialMasthead({
               {displayDate}
             </time>
             <span
+              className="golason-masthead-edition-label"
               aria-hidden="true"
               style={{
                 width: '1px',
@@ -180,6 +211,7 @@ export function EditorialMasthead({
               }}
             />
             <span
+              className="golason-masthead-edition-label"
               style={{
                 fontWeight: 600,
                 color: '#6B7280',
@@ -308,6 +340,7 @@ export function EditorialMasthead({
 
       {/* Main Masthead Bar: Logo Crest + Wordmark, Multi-page Navigation, Working /search Form */}
       <div
+        className="golason-masthead-main-bar"
         style={{
           maxWidth: '1440px',
           margin: '0 auto',
@@ -334,11 +367,11 @@ export function EditorialMasthead({
           <img
             src="/logo.jpg"
             alt="GOLASON"
-            width={44}
-            height={44}
+            width={40}
+            height={40}
             style={{
-              width: '44px',
-              height: '44px',
+              width: '40px',
+              height: '40px',
               borderRadius: '50%',
               objectFit: 'cover',
               border: '1px solid #111827',
@@ -358,7 +391,7 @@ export function EditorialMasthead({
                   fontFamily:
                     "'Montserrat', Georgia, 'Times New Roman', serif",
                   fontWeight: 900,
-                  fontSize: 'clamp(22px, 2.6vw, 28px)',
+                  fontSize: 'clamp(20px, 2.6vw, 28px)',
                   letterSpacing: '-0.03em',
                   lineHeight: 1,
                   color: '#111827',
@@ -379,6 +412,7 @@ export function EditorialMasthead({
               </span>
             </div>
             <span
+              className="golason-masthead-tagline"
               style={{
                 fontFamily: "Georgia, 'Times New Roman', serif",
                 fontSize: '11.5px',
@@ -395,6 +429,7 @@ export function EditorialMasthead({
 
         {/* Primary Multi-Page Editorial Navigation (Zero Emojis) */}
         <nav
+          className="golason-masthead-nav"
           aria-label={isRu ? 'Основная навигация' : 'Primary navigation'}
           style={{
             display: 'flex',
@@ -453,6 +488,7 @@ export function EditorialMasthead({
 
         {/* Working Search Form: GET /search?q=... */}
         <form
+          className="golason-masthead-search"
           action="/search"
           method="GET"
           role="search"
@@ -462,8 +498,8 @@ export function EditorialMasthead({
             alignItems: 'center',
             border: '1px solid #D1D5DB',
             backgroundColor: '#F9FAFB',
-            minWidth: '240px',
-            flex: '0 1 290px',
+            minWidth: '220px',
+            flex: '0 1 280px',
           }}
         >
           <input
