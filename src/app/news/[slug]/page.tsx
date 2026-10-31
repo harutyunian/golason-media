@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import fs from "fs";
+import path from "path";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
@@ -8,6 +10,8 @@ import { EditorialMasthead } from "@/components/editorial/EditorialMasthead";
 import { EditorialFooter } from "@/components/editorial/EditorialFooter";
 import { AdBannerSlot } from "@/components/editorial/AdBannerSlot";
 import { LiveScoreTicker } from "@/components/ticker";
+
+export const dynamicParams = true;
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -39,6 +43,47 @@ interface UnifiedArticleView {
 }
 
 function findArticleBySlug(slug: string): UnifiedArticleView | null {
+  try {
+    const snapPath = path.join(process.cwd(), "src/lib/realDataSnapshot.json");
+    if (fs.existsSync(snapPath)) {
+      const snap = JSON.parse(fs.readFileSync(snapPath, "utf-8"));
+      const liveArt = (snap.articles || []).find(
+        (a: Record<string, unknown>) => a.slug === slug
+      );
+      if (liveArt) {
+        return {
+          slug: String(liveArt.slug),
+          category: String(liveArt.category || "epl"),
+          categoryRu: String(liveArt.categoryLabelRu || "Футбол"),
+          categoryEn: String(liveArt.categoryLabelEn || "Football"),
+          titleRu: String(liveArt.titleRu || ""),
+          titleEn: String(liveArt.titleEn || ""),
+          subtitleRu: String(liveArt.subtitleRu || ""),
+          subtitleEn: String(liveArt.subtitleEn || ""),
+          bodyRu: Array.isArray(liveArt.bodyRu) ? liveArt.bodyRu : [],
+          bodyEn: Array.isArray(liveArt.bodyEn) ? liveArt.bodyEn : [],
+          authorRu: String(liveArt.authorRu || "Редакция GOLASON"),
+          authorEn: String(liveArt.authorEn || "GOLASON Editorial Desk"),
+          authorRoleRu: String(liveArt.authorRoleRu || "Обозреватель GOLASON"),
+          publishedAtRu: String(liveArt.publishedAtRu || ""),
+          publishedAtEn: String(liveArt.publishedAtEn || ""),
+          readTimeMinutes: Number(liveArt.readTimeMinutes || 4),
+          imageUrl: String(liveArt.imageUrl || ""),
+          imageCaptionRu: String(liveArt.imageCaptionRu || ""),
+          clubNameRu: String(liveArt.clubNameRu || "Футбол"),
+          reliability: liveArt.transferReliability
+            ? Number(liveArt.transferReliability)
+            : undefined,
+          source: liveArt.transferSource
+            ? String(liveArt.transferSource)
+            : undefined,
+        };
+      }
+    }
+  } catch {
+    // Fallback to static bundle below
+  }
+
   const fromEditorial = (EDITORIAL_ARTICLES || []).find((a) => a.slug === slug);
   if (fromEditorial) {
     return {
