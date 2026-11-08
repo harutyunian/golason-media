@@ -270,24 +270,73 @@ export function LiveScoreTicker({
   const [internalSelectedId, setInternalSelectedId] = useState<string | undefined>(
     selectedMatchId
   );
+  const [liveTickerMatches, setLiveTickerMatches] = useState<TickerMatch[]>(matches);
   const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    let mounted = true;
+    const syncMatches = async () => {
+      try {
+        const res = await fetch('/api/articles', { cache: 'no-store' });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (mounted && Array.isArray(data.matches) && data.matches.length > 0) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const mapped: TickerMatch[] = data.matches.map((m: any) => ({
+            id: String(m.id),
+            league: m.tickerLeague || 'EPL',
+            leagueLabelRu: (m.competitionRu || '').split('•').pop()?.trim() || m.competitionRu || 'Футбол',
+            status: m.status || 'UPCOMING',
+            statusText: m.statusTextEn || '',
+            statusTextRu: m.statusTextRu || '',
+            homeTeam: {
+              id: m.homeTeam?.nameEn || 'Home',
+              name: m.homeTeam?.nameEn || 'Home',
+              nameRu: m.homeTeam?.nameRu || 'Хозяева',
+              shortName: m.homeTeam?.shortName || 'HOM',
+              crest: m.homeTeam?.shortName || 'HOM',
+              score: m.homeTeam?.score ?? 0,
+            },
+            awayTeam: {
+              id: m.awayTeam?.nameEn || 'Away',
+              name: m.awayTeam?.nameEn || 'Away',
+              nameRu: m.awayTeam?.nameRu || 'Гости',
+              shortName: m.awayTeam?.shortName || 'AWY',
+              crest: m.awayTeam?.shortName || 'AWY',
+              score: m.awayTeam?.score ?? 0,
+            },
+            telegramHighlightUrl: 'https://t.me/futbolnaya_jara',
+          }));
+          setLiveTickerMatches(mapped);
+        }
+      } catch {
+        // ignore network errors
+      }
+    };
+    syncMatches();
+    const timer = setInterval(syncMatches, 30000);
+    return () => {
+      mounted = false;
+      clearInterval(timer);
+    };
+  }, []);
 
   const activeLang: 'ru' | 'en' = lang ?? locale ?? 'ru';
   const currentSelectedId = selectedMatchId ?? internalSelectedId;
 
   const liveCount = useMemo(
-    () => matches.filter((m) => m.status === 'LIVE' || m.status === 'HT').length,
-    [matches]
+    () => liveTickerMatches.filter((m) => m.status === 'LIVE' || m.status === 'HT').length,
+    [liveTickerMatches]
   );
 
   const filteredMatches = useMemo(() => {
-    return matches.filter((m) => {
+    return liveTickerMatches.filter((m) => {
       return (
         activeLeague === 'ALL' ||
         m.league.toUpperCase() === activeLeague.toUpperCase()
       );
     });
-  }, [matches, activeLeague]);
+  }, [liveTickerMatches, activeLeague]);
 
   const handleLeagueSelect = (leagueId: TickerLeagueKey) => {
     setActiveLeague(leagueId);

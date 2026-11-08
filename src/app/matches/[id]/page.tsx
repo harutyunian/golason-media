@@ -1037,10 +1037,14 @@ const MATCH_DOSSIERS: Record<string, DetailedMatchDossier> = {
   },
 };
 
-function resolveMatchDossier(rawId: string): DetailedMatchDossier {
+function resolveMatchDossier(
+  rawId: string,
+  dynamicMatches?: typeof rawSnapshot.matches
+): DetailedMatchDossier {
   if (MATCH_DOSSIERS[rawId]) return MATCH_DOSSIERS[rawId];
 
-  const realMatch = (rawSnapshot.matches || []).find(
+  const pool = dynamicMatches && dynamicMatches.length > 0 ? dynamicMatches : (rawSnapshot.matches || []);
+  const realMatch = pool.find(
     (m) => String(m.id) === String(rawId)
   );
   if (realMatch) {
@@ -1137,9 +1141,26 @@ export default function MatchReportDetailPage() {
 
   const [lang, setLang] = useState<PortalLang>("ru");
   const [activeTab, setActiveTab] = useState<MatchDetailTab>("all");
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [liveMatchesPool, setLiveMatchesPool] = useState<any[]>(rawSnapshot.matches || []);
+
+  React.useEffect(() => {
+    let mounted = true;
+    fetch("/api/articles", { cache: "no-store" })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => {
+        if (mounted && d && Array.isArray(d.matches) && d.matches.length > 0) {
+          setLiveMatchesPool(d.matches);
+        }
+      })
+      .catch(() => {});
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const isRu = lang === "ru";
-  const dossier = useMemo(() => resolveMatchDossier(matchId), [matchId]);
+  const dossier = useMemo(() => resolveMatchDossier(matchId, liveMatchesPool), [matchId, liveMatchesPool]);
 
   const homeScorers = useMemo(
     () => dossier.scorers.filter((s) => s.team === "home"),

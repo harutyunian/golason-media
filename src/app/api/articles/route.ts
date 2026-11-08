@@ -12,6 +12,8 @@ export async function GET() {
       return NextResponse.json(
         {
           articles: snap.articles || [],
+          matches: snap.matches || [],
+          standings: snap.standings || {},
           generatedAt: snap.generatedAt || new Date().toISOString(),
         },
         {

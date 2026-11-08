@@ -31,8 +31,9 @@ for (const lg of Object.values(rawSnapshot.standings || {})) {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const REAL_EDITORIAL_ARTICLES: EditorialArticle[] = (
-  rawSnapshot.articles || []
+  (rawSnapshot.articles || []) as Record<string, any>[]
 ).map((a) => ({
   id: a.id,
   slug: a.slug,
@@ -53,15 +54,15 @@ export const REAL_EDITORIAL_ARTICLES: EditorialArticle[] = (
   publishedAtEn: a.publishedAtEn,
   publishedAtIso: a.publishedAtIso || new Date().toISOString(),
   readTimeMinutes: a.readTimeMinutes || 4,
-  imageUrl: a.imageUrl,
-  imageCaptionRu: a.imageCaptionRu,
-  imageCaptionEn: a.imageCaptionEn,
+  imageUrl: a.imageUrl || "",
+  imageCaptionRu: a.imageCaptionRu || "Аналитический разбор GOLASON",
+  imageCaptionEn: a.imageCaptionEn || "GOLASON Editorial Analysis",
   clubLogoUrl:
     SNAPSHOT_CLUB_LOGOS[(a.clubNameEn || "").toLowerCase()] ||
     SNAPSHOT_CLUB_LOGOS[(a.clubNameRu || "").toLowerCase()] ||
     "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
-  clubNameRu: a.clubNameRu,
-  clubNameEn: a.clubNameEn,
+  clubNameRu: a.clubNameRu || "Футбол",
+  clubNameEn: a.clubNameEn || "Football",
   relatedMatchId: a.relatedMatchId || "401879248",
   isLeadStory: Boolean(a.isLeadStory),
   isTrending: Boolean(a.isTrending),

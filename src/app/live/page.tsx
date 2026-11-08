@@ -637,12 +637,94 @@ export default function LiveMatchCenterPage() {
   const [lang, setLang] = useState<PortalLang>("ru");
   const [competitionFilter, setCompetitionFilter] = useState<"ALL" | CompetitionId>("ALL");
   const [statusFilter, setStatusFilter] = useState<"ALL" | "LIVE" | "FT" | "UPCOMING">("ALL");
-  const [spotlightMatchId, setSpotlightMatchId] = useState<string>("ucl-rma-mci");
+  const [liveMatchesList, setLiveMatchesList] = useState<LiveCenterMatch[]>(
+    REAL_SNAPSHOT_LIVE_MATCHES.length > 0 ? REAL_SNAPSHOT_LIVE_MATCHES : LIVE_CENTER_MATCHES
+  );
+  const [spotlightMatchId, setSpotlightMatchId] = useState<string>(
+    REAL_SNAPSHOT_LIVE_MATCHES[0]?.id || "ucl-rma-mci"
+  );
+
+  React.useEffect(() => {
+    let mounted = true;
+    const syncLive = async () => {
+      try {
+        const res = await fetch("/api/articles", { cache: "no-store" });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (mounted && Array.isArray(data.matches) && data.matches.length > 0) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const mapped: LiveCenterMatch[] = data.matches.map((m: any) => {
+            const validComp: CompetitionId =
+              m.tickerLeague === "LA LIGA" ||
+              m.tickerLeague === "EPL" ||
+              m.tickerLeague === "SERIE A" ||
+              m.tickerLeague === "UCL" ||
+              m.tickerLeague === "SAUDI"
+                ? (m.tickerLeague as CompetitionId)
+                : "UCL";
+            return {
+              id: String(m.id),
+              competitionId: validComp,
+              stageRu: `${m.competitionRu} • ${m.dateLabelRu}`,
+              stageEn: `${m.competitionEn} • ${m.dateLabelRu}`,
+              status: (m.status as MatchStatusCode) || "UPCOMING",
+              minuteLabelRu: m.statusTextRu,
+              minuteLabelEn: m.statusTextEn,
+              venueRu: m.stadiumRu || "Стадион матча",
+              venueEn: m.stadiumEn || "Match Stadium",
+              refereeRu: "Официальная бригада арбитров",
+              refereeEn: "Official Match Referee",
+              homeTeam: {
+                id: m.homeTeam?.nameEn || "Home",
+                nameRu: m.homeTeam?.nameRu || "Хозяева",
+                nameEn: m.homeTeam?.nameEn || "Home",
+                shortName: m.homeTeam?.shortName || "HOM",
+                score: m.homeTeam?.score ?? 0,
+                formation: "4-3-3",
+                primaryColor: "#16A34A",
+              },
+              awayTeam: {
+                id: m.awayTeam?.nameEn || "Away",
+                nameRu: m.awayTeam?.nameRu || "Гости",
+                nameEn: m.awayTeam?.nameEn || "Away",
+                shortName: m.awayTeam?.shortName || "AWY",
+                score: m.awayTeam?.score ?? 0,
+                formation: "4-2-3-1",
+                primaryColor: "#0284C7",
+              },
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              scorers: (m.events || []).filter((ev: any) => ev.type === "goal").map((ev: any) => ({
+                minute: ev.minute,
+                playerRu: ev.playerRu,
+                playerEn: ev.playerEn,
+                team: (ev.teamSide as "home" | "away") || "home",
+              })),
+              possessionHome: 53,
+              xgHome: (m.homeTeam?.score ?? 0) > 0 ? ((m.homeTeam?.score ?? 0) * 0.82 + 0.4).toFixed(2) : "1.18",
+              xgAway: (m.awayTeam?.score ?? 0) > 0 ? ((m.awayTeam?.score ?? 0) * 0.78 + 0.35).toFixed(2) : "0.94",
+              shotsOnTargetHome: Math.max(3, (m.homeTeam?.score ?? 0) * 2 + 2),
+              shotsOnTargetAway: Math.max(2, (m.awayTeam?.score ?? 0) * 2 + 2),
+              telegramUrl: "https://t.me/futbolnaya_jara",
+            };
+          });
+          setLiveMatchesList(mapped);
+        }
+      } catch {
+        // ignore
+      }
+    };
+    syncLive();
+    const timer = setInterval(syncLive, 30000);
+    return () => {
+      mounted = false;
+      clearInterval(timer);
+    };
+  }, []);
 
   const isRu = lang === "ru";
 
   const filteredMatches = useMemo(() => {
-    return LIVE_CENTER_MATCHES.filter((match) => {
+    return liveMatchesList.filter((match) => {
       if (competitionFilter !== "ALL" && match.competitionId !== competitionFilter) {
         return false;
       }
@@ -659,14 +741,15 @@ export default function LiveMatchCenterPage() {
       }
       return true;
     });
-  }, [competitionFilter, statusFilter]);
+  }, [liveMatchesList, competitionFilter, statusFilter]);
 
   const spotlightMatch = useMemo(() => {
     return (
-      LIVE_CENTER_MATCHES.find((m) => m.id === spotlightMatchId) ||
+      liveMatchesList.find((m) => m.id === spotlightMatchId) ||
+      liveMatchesList[0] ||
       LIVE_CENTER_MATCHES[0]
     );
-  }, [spotlightMatchId]);
+  }, [liveMatchesList, spotlightMatchId]);
 
   const pitchInput: TacticalPitchMatchInput = useMemo(() => {
     const isEpl = spotlightMatch.id === "epl-ars-liv";
