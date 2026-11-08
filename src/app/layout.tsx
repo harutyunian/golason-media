@@ -1,5 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import React from "react";
+import GolasonAnalytics from "@/components/GolasonAnalytics";
+
+const GTM_ID = "GTM-WWG6VJWJ";
+const GA4_ID = "G-ZPT15DVDBY";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -160,6 +164,29 @@ export default function RootLayout({
   return (
     <html lang="ru" data-golason-theme="light">
       <head>
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}
+        />
+        <script
+          async
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              window.dataLayer.push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${GA4_ID}', {
+                page_path: window.location.pathname + window.location.search,
+                page_location: window.location.href,
+                page_title: document.title
+              });
+            `,
+          }}
+        />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -249,6 +276,15 @@ export default function RootLayout({
           overflowX: "hidden",
         }}
       >
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+        <GolasonAnalytics />
         {children}
       </body>
     </html>

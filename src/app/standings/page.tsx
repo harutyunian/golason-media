@@ -10,6 +10,7 @@ import {
   DEFAULT_MULTI_LEAGUE_STANDINGS,
   type StandingsLeagueId,
 } from "@/components/standings";
+import { REAL_MULTI_LEAGUE_STANDINGS } from "@/lib/realDataBridge";
 import { LiveScoreTicker } from "@/components/ticker";
 
 type PortalLang = "ru" | "en";
@@ -594,13 +595,13 @@ export default function StandingsHubPage() {
                   >
                     <strong style={{ fontSize: "15px", color: "#0F172A" }}>
                       {isRu
-                        ? DEFAULT_MULTI_LEAGUE_STANDINGS[lgId].nameRu
-                        : DEFAULT_MULTI_LEAGUE_STANDINGS[lgId].nameEn}
+                        ? (REAL_MULTI_LEAGUE_STANDINGS[lgId] || DEFAULT_MULTI_LEAGUE_STANDINGS[lgId]).nameRu
+                        : (REAL_MULTI_LEAGUE_STANDINGS[lgId] || DEFAULT_MULTI_LEAGUE_STANDINGS[lgId]).nameEn}
                     </strong>
                     <span style={{ fontSize: "12px", color: "#64748B" }}>
                       {isRu
-                        ? DEFAULT_MULTI_LEAGUE_STANDINGS[lgId].matchdayLabelRu
-                        : DEFAULT_MULTI_LEAGUE_STANDINGS[lgId].matchdayLabelEn}
+                        ? (REAL_MULTI_LEAGUE_STANDINGS[lgId] || DEFAULT_MULTI_LEAGUE_STANDINGS[lgId]).matchdayLabelRu
+                        : (REAL_MULTI_LEAGUE_STANDINGS[lgId] || DEFAULT_MULTI_LEAGUE_STANDINGS[lgId]).matchdayLabelEn}
                     </span>
                   </div>
                   <LeagueStandingsTable lang={lang} initialLeague={lgId} />

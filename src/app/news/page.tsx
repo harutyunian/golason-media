@@ -11,6 +11,7 @@ import {
   EDITORIAL_CATEGORY_TABS,
   FRONT_PAGE_ARTICLES,
 } from "@/components/editorial/NewspaperFrontPage";
+import { REAL_EDITORIAL_ARTICLES } from "@/lib/realDataBridge";
 
 export default function EditorialNewsArchivePage() {
   const router = useRouter();
@@ -19,7 +20,9 @@ export default function EditorialNewsArchivePage() {
     useState<EditorialCategoryId>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<"river" | "grid">("river");
-  const [liveArticles, setLiveArticles] = useState(FRONT_PAGE_ARTICLES);
+  const [liveArticles, setLiveArticles] = useState(
+    REAL_EDITORIAL_ARTICLES.length > 0 ? REAL_EDITORIAL_ARTICLES : FRONT_PAGE_ARTICLES
+  );
 
   React.useEffect(() => {
     let mounted = true;
@@ -67,7 +70,7 @@ export default function EditorialNewsArchivePage() {
       }
       return true;
     });
-  }, [selectedCategory, searchQuery]);
+  }, [liveArticles, selectedCategory, searchQuery]);
 
   const featuredArticle = filteredArticles[0] ?? FRONT_PAGE_ARTICLES[0];
   const secondaryGridArticles = filteredArticles.slice(1, 3);
@@ -77,8 +80,8 @@ export default function EditorialNewsArchivePage() {
       : filteredArticles.slice(1);
 
   const mostReadArticles = useMemo(
-    () => FRONT_PAGE_ARTICLES.filter((a) => a.isTrending).slice(0, 5),
-    []
+    () => liveArticles.slice(0, 5),
+    [liveArticles]
   );
 
   const handleGlobalSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {

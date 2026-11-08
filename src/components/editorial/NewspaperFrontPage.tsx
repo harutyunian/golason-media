@@ -552,6 +552,9 @@ export function NewspaperFrontPage({
   const [liveArticles, setLiveArticles] = useState<EditorialArticleInput[]>(
     articles && articles.length > 0 ? articles : REAL_EDITORIAL_ARTICLES
   );
+  const [liveFrontMatches, setLiveFrontMatches] = useState<NewspaperFrontPageMatchItem[]>(
+    REAL_FRONT_PAGE_MATCHES
+  );
 
   React.useEffect(() => {
     let mounted = true;
@@ -563,12 +566,31 @@ export function NewspaperFrontPage({
         if (mounted && Array.isArray(data.articles) && data.articles.length > 0) {
           setLiveArticles(data.articles);
         }
+        if (mounted && Array.isArray(data.matches) && data.matches.length > 0) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          setLiveFrontMatches(data.matches.slice(0, 12).map((m: any) => ({
+            id: String(m.id),
+            competitionRu: m.competitionRu,
+            competitionEn: m.competitionEn,
+            status: m.status || "UPCOMING",
+            minuteLabelRu: m.statusTextRu,
+            minuteLabelEn: m.statusTextEn,
+            homeTeamRu: m.homeTeam?.nameRu || "Хозяева",
+            homeTeamEn: m.homeTeam?.nameEn || "Home",
+            homeShort: m.homeTeam?.shortName || "HOM",
+            homeScore: m.homeTeam?.score ?? 0,
+            awayTeamRu: m.awayTeam?.nameRu || "Гости",
+            awayTeamEn: m.awayTeam?.nameEn || "Away",
+            awayShort: m.awayTeam?.shortName || "AWY",
+            awayScore: m.awayTeam?.score ?? 0,
+          })));
+        }
       } catch {
         // Ignore
       }
     };
     fetchLatest();
-    const timer = setInterval(fetchLatest, 120000);
+    const timer = setInterval(fetchLatest, 60000);
     return () => {
       mounted = false;
       clearInterval(timer);
@@ -613,7 +635,7 @@ export function NewspaperFrontPage({
       }
       return true;
     });
-  }, [articles, selectedCategory, searchQuery]);
+  }, [liveArticles, articles, selectedCategory, searchQuery]);
 
   const leadStory =
     filteredArticles.find((a: EditorialArticleInput) => a.isLeadStory) ??
@@ -645,8 +667,9 @@ export function NewspaperFrontPage({
   }, [remainingStories, leadStory.id]);
 
   const mostReadTop5 = useMemo(() => {
-    const trending = FRONT_PAGE_ARTICLES.filter((a) => a.isTrending);
-    const pool = [...trending, ...FRONT_PAGE_ARTICLES];
+    const sourcePool = liveArticles && liveArticles.length > 0 ? liveArticles : REAL_EDITORIAL_ARTICLES;
+    const trending = sourcePool.filter((a) => a.isTrending);
+    const pool = [...trending, ...sourcePool];
     const unique: EditorialArticleInput[] = [];
     const seen = new Set<string>();
     for (const item of pool) {
@@ -657,11 +680,11 @@ export function NewspaperFrontPage({
       if (unique.length === 5) break;
     }
     return unique;
-  }, []);
+  }, [liveArticles]);
 
   const sidebarLiveMatches =
-    REAL_FRONT_PAGE_MATCHES.length > 0
-      ? REAL_FRONT_PAGE_MATCHES.slice(0, 7)
+    liveFrontMatches.length > 0
+      ? liveFrontMatches.slice(0, 7)
       : SIDEBAR_LIVE_MATCHES;
 
   const realStandingsEntries =

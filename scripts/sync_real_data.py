@@ -249,8 +249,15 @@ def collect_real_matches() -> list:
     seen_ids = set()
     names_to_translate = set()
 
+    now_msk = datetime.now(timezone(timedelta(hours=3)))
+    d_yest = (now_msk - timedelta(days=1)).strftime("%Y%m%d")
+    d_today = now_msk.strftime("%Y%m%d")
+    d_tom = (now_msk + timedelta(days=1)).strftime("%Y%m%d")
+    d_next = (now_msk + timedelta(days=2)).strftime("%Y%m%d")
+    date_queries = ["", f"?dates={d_today}", f"?dates={d_yest}", f"?dates={d_tom}", f"?dates={d_next}"]
+
     for espn_slug, cat_key, ticker_key, cat_ru, cat_en, full_ru, flag in LEAGUE_CONFIGS:
-        for q_suffix in ["", "?dates=20261030", "?dates=20261101"]:
+        for q_suffix in date_queries:
             url = f"https://site.api.espn.com/apis/site/v2/sports/soccer/{espn_slug}/scoreboard{q_suffix}"
             try:
                 data = fetch_json(url)
@@ -306,9 +313,11 @@ def collect_real_matches() -> list:
         date_str = ev.get("date") or ""
         msk_label_ru = detail
         msk_label_en = detail
-        date_only_ru = "31 октября 2026"
+        date_only_ru = now_msk.strftime("%d.%m.%Y")
+        match_day_iso = ""
         try:
             dt = datetime.fromisoformat(date_str.replace("Z", "+00:00")).astimezone(timezone(timedelta(hours=3)))
+            match_day_iso = dt.strftime("%Y%m%d")
             months_ru = ["", "янв", "фев", "мар", "апр", "мая", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"]
             date_only_ru = f"{dt.day} {months_ru[dt.month]}"
             if state == "pre":
@@ -404,9 +413,12 @@ def collect_real_matches() -> list:
 
     def match_sort_key(m: dict):
         names = (m["homeTeam"]["nameEn"] + " " + m["awayTeam"]["nameEn"]).lower()
-        is_live = 0 if m["status"] == "LIVE" else (1 if m["status"] == "FT" else 2)
+        is_live = 0 if m["status"] == "LIVE" else 1
+        k_iso = m.get("kickoffIso") or ""
+        is_today_or_tom = 0 if (d_today[:4] + "-" + d_today[4:6] + "-" + d_today[6:8] in k_iso or d_tom[:4] + "-" + d_tom[4:6] + "-" + d_tom[6:8] in k_iso) else 1
         is_top = 0 if any(k in names for k in top_keywords) else 1
-        return (is_live, is_top, m["kickoffIso"])
+        status_rank = 0 if m["status"] == "LIVE" else (1 if m["status"] == "UPCOMING" else 2)
+        return (is_live, is_today_or_tom, is_top, status_rank, k_iso)
 
     matches_out.sort(key=match_sort_key)
     print(f"Collected {len(matches_out)} real matches across 7 leagues.")
