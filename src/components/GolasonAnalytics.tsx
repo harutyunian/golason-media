@@ -31,16 +31,16 @@ function GolasonRouteTrackerInner() {
       return;
     }
 
-    window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: "page_view",
-      page_path: pagePath,
-      page_location: pageLocation,
-      page_title: pageTitle,
-    });
-
     if (typeof window.gtag === "function") {
       window.gtag("config", GA4_ID, {
+        page_path: pagePath,
+        page_location: pageLocation,
+        page_title: pageTitle,
+      });
+    } else {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event: "page_view",
         page_path: pagePath,
         page_location: pageLocation,
         page_title: pageTitle,

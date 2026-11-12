@@ -277,30 +277,12 @@ export async function getLiveFeedSnapshot(options?: {
   const trackerEntries = trackerState?.matches ?? {};
   const trackerIds = Object.keys(trackerEntries);
 
-  // Enrich our 6 curated flagship matches with live state from /root/futbolnaya_jara/state/matches_state.json
-  const enrichedFlagshipMatches: MatchItem[] = MOCK_MATCHES.map((match) => {
-    const trackerEntry = match.espnEventId ? trackerEntries[match.espnEventId] : undefined;
-    if (!trackerEntry) {
-      return match;
-    }
-
-    const parsedScorers = parseTrackerSeenEvents(trackerEntry.seen_events);
-    const derivedStatus = inferStatusFromTracker(trackerEntry);
-
-    return {
-      ...match,
-      isTrackedByBot: true,
-      status: match.status === 'LIVE' ? 'LIVE' : derivedStatus,
-      scorers: match.scorers.length > 0 ? match.scorers : parsedScorers,
-    };
-  });
-
   let espnMatches: MatchItem[] = [];
   if (includeEspn) {
     espnMatches = await fetchEspnScoreboard(ruDict);
   }
 
-  // Mark any ESPN matches that are actively tracked in matches_state.json
+  // Mark any ESPN matches that are actively tracked in matches_state.json (100% real ESPN data, zero fake MOCK_MATCHES)
   const syncedEspnMatches = espnMatches.map((item) => {
     if (item.espnEventId && trackerEntries[item.espnEventId]) {
       const trackerScorers = parseTrackerSeenEvents(trackerEntries[item.espnEventId].seen_events);
@@ -313,12 +295,7 @@ export async function getLiveFeedSnapshot(options?: {
     return item;
   });
 
-  // Deduplicate keeping all 6 flagship matches first so tactical pitch & substitutions always have rich data
-  const seenIds = new Set(enrichedFlagshipMatches.map((m) => m.espnEventId ?? m.id));
-  const mergedMatches = [
-    ...enrichedFlagshipMatches,
-    ...syncedEspnMatches.filter((m) => !seenIds.has(m.espnEventId ?? m.id)).slice(0, 4),
-  ];
+  const mergedMatches = syncedEspnMatches;
 
   const hasTracker = trackerIds.length > 0;
   const hasEspn = espnMatches.length > 0;
