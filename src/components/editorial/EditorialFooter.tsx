@@ -471,6 +471,30 @@ export function EditorialFooter({
             >
               /search
             </Link>
+            <Link
+              href="/about"
+              style={{ color: '#4B5563', textDecoration: 'none', fontWeight: 600 }}
+            >
+              {isRu ? 'О проекте' : 'About'}
+            </Link>
+            <Link
+              href="/contact"
+              style={{ color: '#4B5563', textDecoration: 'none', fontWeight: 600 }}
+            >
+              {isRu ? 'Контакты' : 'Contact'}
+            </Link>
+            <Link
+              href="/privacy"
+              style={{ color: '#4B5563', textDecoration: 'none', fontWeight: 600 }}
+            >
+              {isRu ? 'Конфиденциальность' : 'Privacy'}
+            </Link>
+            <Link
+              href="/terms"
+              style={{ color: '#4B5563', textDecoration: 'none', fontWeight: 600 }}
+            >
+              {isRu ? 'Условия' : 'Terms'}
+            </Link>
             <a
               href="/sitemap.xml"
               style={{ color: '#4B5563', textDecoration: 'none', fontWeight: 600 }}

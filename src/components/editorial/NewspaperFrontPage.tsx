@@ -825,7 +825,7 @@ export function NewspaperFrontPage({
           >
             <ins
               className="adsbygoogle"
-              data-ad-client="ca-pub-golason-media"
+              data-ad-client="ca-pub-2879690973470436"
               data-ad-slot="frontpage-top-970x90"
               data-ad-format="horizontal"
               data-full-width-responsive="true"

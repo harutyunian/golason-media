@@ -2,16 +2,34 @@ import type { Metadata } from "next";
 import fs from "fs";
 import path from "path";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import React from "react";
 import { EDITORIAL_ARTICLES } from "@/lib/editorialData";
-import { MOCK_NEWS } from "@/lib/mockData";
 import { EditorialMasthead } from "@/components/editorial/EditorialMasthead";
 import { EditorialFooter } from "@/components/editorial/EditorialFooter";
 import { AdBannerSlot } from "@/components/editorial/AdBannerSlot";
 import { LiveScoreTicker } from "@/components/ticker";
 
 export const dynamicParams = true;
+
+const OFFTOPIC_BLOCKED_SLUGS = new Set([
+  "what-is-xg-in-shimano-reel",
+  "what-is-xg-in-centrifugation",
+  "what-is-xg-in-hockey",
+  "how-does-var-work-in-java",
+  "how-does-var-work-in-css",
+  "how-does-var-work-in-tennis",
+  "how-does-var-work-in-rugby",
+]);
+
+const CANONICAL_SLUG_REDIRECTS: Record<string, string> = {
+  "how-does-champions-league-qualifying-work": "how-does-champions-league-qualification-work",
+  "what-is-xg-in-soccer": "what-is-xg-in-football",
+  "what-is-xg-in-football-stats": "what-is-xg-in-football",
+  "what-is-xg-in-soccer-stats": "what-is-xg-in-football",
+  "what-is-xg-in-football-terms": "what-is-xg-in-football",
+  "how-does-var-work-in-soccer": "how-does-var-work-in-football",
+};
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -114,44 +132,14 @@ function findArticleBySlug(slug: string): UnifiedArticleView | null {
     };
   }
 
-  const fromMock = (MOCK_NEWS || []).find((m) => m.slug === slug);
-  if (fromMock) {
-    return {
-      slug: fromMock.slug,
-      category: fromMock.category,
-      categoryRu: fromMock.categoryLabel?.ru ?? fromMock.category,
-      categoryEn: fromMock.categoryLabel?.en ?? fromMock.category,
-      titleRu: fromMock.title.ru,
-      titleEn: fromMock.title.en,
-      subtitleRu: fromMock.summary.ru,
-      subtitleEn: fromMock.summary.en,
-      bodyRu: fromMock.content.ru.split("\n\n"),
-      bodyEn: fromMock.content.en.split("\n\n"),
-      authorRu: fromMock.author?.ru ?? "Редакция GOLASON",
-      authorEn: fromMock.author?.en ?? "GOLASON Editorial Desk",
-      authorRoleRu: "Спортивный обозреватель",
-      publishedAtRu: "30 октября 2026",
-      publishedAtEn: "October 30, 2026",
-      readTimeMinutes: fromMock.readTimeMinutes,
-      imageUrl:
-        fromMock.imageUrl && fromMock.imageUrl.startsWith("http")
-          ? fromMock.imageUrl
-          : "https://a.espncdn.com/photo/2026/1030/r1738494_1296x729_16-9.jpg",
-      imageCaptionRu: "Фото: ESPN Images / GOLASON",
-      clubNameRu: fromMock.tags?.[0]?.ru ?? "Футбол",
-      relatedMatchId: fromMock.relatedMatchId || "ucl-rma-mci",
-      reliability: fromMock.transferReliabilityPercent,
-      source: fromMock.transferSource,
-    };
-  }
-
   return null;
 }
 
 export async function generateStaticParams() {
   const slugs = new Set<string>();
-  (EDITORIAL_ARTICLES || []).forEach((a) => slugs.add(a.slug));
-  (MOCK_NEWS || []).forEach((m) => slugs.add(m.slug));
+  (EDITORIAL_ARTICLES || []).forEach((a) => {
+    if (a.slug && !OFFTOPIC_BLOCKED_SLUGS.has(a.slug)) slugs.add(a.slug);
+  });
   return Array.from(slugs).map((slug) => ({ slug }));
 }
 
@@ -159,7 +147,15 @@ export async function generateMetadata({
   params,
 }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
-  const article = findArticleBySlug(slug);
+  if (OFFTOPIC_BLOCKED_SLUGS.has(slug)) {
+    return {
+      title: "Материал удалён | GOLASON.COM",
+      robots: { index: false, follow: false },
+    };
+  }
+  const canonicalTarget = CANONICAL_SLUG_REDIRECTS[slug];
+  const lookupSlug = canonicalTarget || slug;
+  const article = findArticleBySlug(lookupSlug);
   if (!article) {
     return {
       title: "Материал не найден | GOLASON.COM",
@@ -204,6 +200,12 @@ export async function generateMetadata({
 
 export default async function ArticleDetailPage({ params }: ArticlePageProps) {
   const { slug } = await params;
+  if (OFFTOPIC_BLOCKED_SLUGS.has(slug)) {
+    notFound();
+  }
+  if (CANONICAL_SLUG_REDIRECTS[slug]) {
+    permanentRedirect(`/news/${CANONICAL_SLUG_REDIRECTS[slug]}`);
+  }
   const article = findArticleBySlug(slug);
   if (!article) {
     notFound();

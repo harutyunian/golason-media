@@ -164,6 +164,12 @@ export default function RootLayout({
   return (
     <html lang="ru" data-golason-theme="light">
       <head>
+        <meta name="google-adsense-account" content="ca-pub-2879690973470436" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2879690973470436"
+          crossOrigin="anonymous"
+        />
         <script
           async
           src={`https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`}

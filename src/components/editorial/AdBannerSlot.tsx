@@ -85,7 +85,7 @@ export function AdBannerSlot({
   variant = 'leaderboard',
   slotId,
   adSlot,
-  adClient = 'ca-pub-golason-media',
+  adClient = 'ca-pub-2879690973470436',
   lang,
   locale,
   label = 'РЕКЛАМА • AD SLOT',
